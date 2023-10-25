@@ -1,5 +1,6 @@
 package Datenbank;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class Kontodaten {
@@ -42,26 +43,35 @@ public class Kontodaten {
                 PreparedStatement stmt = con.prepareStatement(sql);
                 int a = stmt.executeUpdate();
 
-                String einfügen = "INSERT INTO konto VALUES (?,?,?,?,?)";
-                PreparedStatement stm = con.prepareStatement(sql);
-                System.out.println("Geben Sie ein Datum an: ");
-                int datum = scanner.nextInt();
-                stm.setInt(2, datum);
+                String einfügen = "INSERT INTO konto (Datum , Bezeichnung, Betrag, Kontostand) VALUES ( TO_DATE(?, 'DD.MM.YYYY'), ? , ? , ?)";
+                PreparedStatement stm = con.prepareStatement(einfügen);
+
+                /*System.out.println("Geben Sie die ID ein: ");
+                int scan = scanner.nextInt();
+                stm.setInt(1,scan);
+                */
+                System.out.println("Geben Sie ein Datum im Format 'DD.MM.YYYY' an: ");
+                String dateString = scanner.nextLine();
+                stm.setString(1,dateString);
 
                 System.out.println("Geben Sie eine Bezeichnung ein: ");
                 String bezeichnung = scanner.nextLine();
-                stm.setString(3,bezeichnung);
+                stm.setString(2,bezeichnung);
 
                 System.out.println("Geben Sie einen Betrag an: ");
                 double betrag = scanner.nextDouble();
-                stm.setDouble(4, betrag);
+                stm.setDouble(3, betrag);
 
                 System.out.println("Geben Sie einen Kontostand an: ");
                 double kontostand = scanner.nextDouble();
-                stm.setDouble(5,kontostand);
+                stm.setDouble(4,kontostand);
 
-                ResultSet rs = stm.executeQuery();
-
+                int i = stm.executeUpdate();
+                if(i == 1){
+                    System.out.println("Es wurde eine Zeile geändert");
+                }else {
+                    System.out.println("Es wurden " + i + " Zeilen geändert.");
+                }
             }
 
             //rs.close();
