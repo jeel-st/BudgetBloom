@@ -1,35 +1,38 @@
 package mainpackage;
 
+import Datenbank.EingabeHinzufügen;
+import Datenbank.Kontodaten;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Controller {
     //@FXML
    // private void sayHello(ActionEvent event) {
-    public void controller(){
+    public void controller() throws SQLException {
 
 
         Scanner scanner = new Scanner(System.in);
         Kontoübersicht kontoübersicht = new Kontoübersicht();
+        Kontodaten kontodaten = new Kontodaten();
         Konto konto = new Konto();
+        EingabeHinzufügen eingabeHinzufügen = new EingabeHinzufügen();
 
 
         System.out.println("Welche Aktion wollen Sie durchführen? \n" +
                 "1: Kontostand anzeigen\n" +
-                "2: Einnahme hinzufügen\n" +
+                "2: Änderung hinzufügen\n" +
                 "3: Ausgabe hinzufügen\n");
 
         int aktion = scanner.nextInt();
 
         switch (aktion){
             case 1:
-                System.out.println(konto.Kontostand);controller();break;
+                kontodaten.Kontoabfrage();controller();break;
             case 2:
-                konto.Einnahmen();break;
-            case 3:
-                konto.Ausgaben();break;
+                eingabeHinzufügen.Eingabe();break;
             default:
                 System.err.println("Error");
         }
