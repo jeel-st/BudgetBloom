@@ -22,14 +22,21 @@ public class Login {
     public TextField username;
     @FXML
     public PasswordField password;
+    @FXML
+    private Button register;
+    Driver d = new Driver();
 
     public void userLogin(ActionEvent event) throws IOException, SQLException {
         checkLogin();
     }
 
+    public void registerButton(ActionEvent event) throws IOException{
+        d.changeScene("/FXML/register.fxml");
+    }
+
     public void checkLogin() throws IOException, SQLException {
 
-        Driver d = new Driver();
+
 
 
 
