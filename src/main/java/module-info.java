@@ -4,4 +4,7 @@ module SE2StartupProject {
     requires java.sql;
 
     opens mainpackage;
+    opens Applikation;
+
+    exports Applikation;
 }

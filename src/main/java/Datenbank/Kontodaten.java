@@ -1,4 +1,6 @@
 package Datenbank;
+import Applikation.Login;
+
 import java.sql.*;
 import java.util.Scanner;
 
@@ -6,17 +8,28 @@ public class Kontodaten {
 
 
 
+
         public void Kontoabfrage() throws SQLException {
 
+
+
             Scanner scanner = new Scanner(System.in);
+            /*
             System.out.println("Geben Sie Ihren Kürzel ein: ");
             String kürzel = scanner.nextLine();
-            String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/"+ kürzel;
+
 
             String user = kürzel;
+
+            String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/"+ user;
             System.out.println("Geben Sie ihr Passwort ein: ");
             String passwort = scanner.nextLine();
             String pass = passwort;
+            */
+
+            String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
+            String pass = "(JJS)2003";
+            String user = "js486";
 
             Connection con = DriverManager.getConnection(url, user, pass);
             try {
@@ -32,7 +45,7 @@ public class Kontodaten {
                     System.out.print(rs.getDouble("Ausgaben") + "€");
                     System.out.println(rs.getInt("Kontostand") + "€");
                 }
-            } catch ( final java.sql.SQLException e ){
+            } catch (  Exception e ){  // java.sql.SQL
                 String sql = "CREATE TABLE Konto(\n" +
                         "    id         SERIAL,\n" +
                         "    Datum\t   DATE DEFAULT CURRENT_DATE ,\n" +

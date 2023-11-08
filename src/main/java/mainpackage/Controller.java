@@ -1,5 +1,6 @@
 package mainpackage;
 
+import Applikation.Login;
 import Datenbank.EingabeHinzufügen;
 import Datenbank.Kontodaten;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ public class Controller {
    // private void sayHello(ActionEvent event) {
     public void controller() throws SQLException {
 
+    Login l = new Login();
 
         Scanner scanner = new Scanner(System.in);
         Kontoübersicht kontoübersicht = new Kontoübersicht();
