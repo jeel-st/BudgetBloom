@@ -30,7 +30,12 @@ public class Login {
         checkLogin();
     }
 
-    public void registerButton(ActionEvent event) throws IOException{
+    public void registerButton(ActionEvent event) throws IOException,SQLException{
+        checkRegister();
+    }
+
+    public void checkRegister()throws IOException{
+
         d.changeScene("/FXML/register.fxml");
     }
 

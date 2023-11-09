@@ -41,7 +41,7 @@
                </font>
             </PasswordField>
             <Button fx:id="button" layoutX="226.0" layoutY="318.0" mnemonicParsing="false" onAction="#userLogin" style="-fx-background-color: #4682B4;" text="Login" />
-            <Label fx:id="wrongLogin" layoutX="112.0" layoutY="191.0" prefHeight="18.0" prefWidth="243.0" textAlignment="CENTER" textFill="RED" />
+            <Label fx:id="wrongLogin" layoutX="70.0" layoutY="191.0" prefHeight="18.0" prefWidth="243.0" textAlignment="CENTER" textFill="RED" />
             <Button fx:id="register" layoutX="112.0" layoutY="318.0" mnemonicParsing="false" onAction="#registerButton" style="-fx-background-color: #4682B4;" text="Register" />
          </children>
       </AnchorPane>
