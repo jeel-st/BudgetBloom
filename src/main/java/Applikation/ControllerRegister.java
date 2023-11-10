@@ -11,6 +11,8 @@ import mainpackage.Driver;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ControllerRegister {
 
@@ -23,9 +25,11 @@ public class ControllerRegister {
     @FXML
     public TextField username;
     @FXML
-    public TextField password;
+    public PasswordField password;
     @FXML
-    private Label wrongRegister;
+    public Label wrongRegister;
+    @FXML
+    public PasswordField password2;
 
     Driver d = new Driver();
 
@@ -34,7 +38,28 @@ public class ControllerRegister {
     }
 
     public void userCreate(ActionEvent event) throws IOException{
+        passwordControl();
+    }
+    public void passwordControl() throws IOException {
+        if (!(password.getText().toString().equals(password2.getText().toString()))) {
+            wrongRegister.setText("Passwords do not match");
+        } else if (password.getText().toString().length() <= 6) {
+            wrongRegister.setText("Password must be longer than 6 characters");
+        } else {
 
+            String passwordText = password.getText().toString();
+            String regex = "[^a-zA-Z0-9]";
+
+            Pattern pattern = Pattern.compile(regex);
+
+            Matcher matcher = pattern.matcher(passwordText);
+
+            if (matcher.find()) {
+                d.changeScene("/FXML/übersicht.fxml");
+            } else {
+                wrongRegister.setText("The password contains no special characters");
+            }
+        }
     }
 
 }
