@@ -26,7 +26,7 @@ public class Login {
     private Button register;
     Driver d = new Driver();
 
-    public void userLogin(ActionEvent event) throws IOException, SQLException {
+    public void userLogin(ActionEvent event) throws SQLException {
         checkLogin();
     }
 
@@ -39,42 +39,40 @@ public class Login {
         d.changeScene("/FXML/register.fxml");
     }
 
-    public void checkLogin() throws IOException, SQLException {
+    public void checkLogin() throws SQLException {
 
 
         String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-        String pass = "(JJS)2003";
+        String pass = "(JJS)2003ab";
         String user = "js486";
 
         Connection con = DriverManager.getConnection(url, user, pass);
-        if (username.getText().isEmpty() && password.getText().isEmpty()) {
-            wrongLogin.setText("Please enter your data.");
+        if (username.getText().isEmpty() || password.getText().isEmpty()) {
+            wrongLogin.setText("Please enter your username and password.");
         } else {
             try {
                 String sql = "SELECT * FROM users WHERE username = ? AND pword = ?";
                 PreparedStatement stmt = con.prepareStatement(sql);
-                stmt.setString(1, String.valueOf(username));
-                stmt.setString(2, String.valueOf(password));
+                stmt.setString(1, username.getText());
+                stmt.setString(2, password.getText());
                 ResultSet rs = stmt.executeQuery();
 
+                if (rs.next()) {
+                    wrongLogin.setText("Success!");
+                    d.changeScene("/FXML/übersicht.fxml");
+                } else {
+                    wrongLogin.setText("Wrong username or password.");
+                }
 
-            } catch (  SQLException e ) {
-                wrongLogin.setText("Wrong username or password.");
+
+            } catch (SQLException e ) {
+                throw new SQLException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
 
     }
-
-
-       /* if(username.getText().toString().equals("javacoding") && password.getText().toString().equals("123456789")){
-            wrongLogin.setText("Success!");
-
-            d.changeScene("/FXML/übersicht.fxml");
-        }else if(username.getText().isEmpty() && password.getText().isEmpty()){
-            wrongLogin.setText("Please enter your data.");
-        }else {
-            wrongLogin.setText("Wrong username or password.");
-        } */
 
 
     }
