@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import mainpackage.Driver;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Login {
 
@@ -42,10 +42,31 @@ public class Login {
     public void checkLogin() throws IOException, SQLException {
 
 
+        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
+        String pass = "(JJS)2003";
+        String user = "js486";
+
+        Connection con = DriverManager.getConnection(url, user, pass);
+        if (username.getText().isEmpty() && password.getText().isEmpty()) {
+            wrongLogin.setText("Please enter your data.");
+        } else {
+            try {
+                String sql = "SELECT * FROM users WHERE username = ? AND pword = ?";
+                PreparedStatement stmt = con.prepareStatement(sql);
+                stmt.setString(1, String.valueOf(username));
+                stmt.setString(2, String.valueOf(password));
+                ResultSet rs = stmt.executeQuery();
 
 
+            } catch (  SQLException e ) {
+                wrongLogin.setText("Wrong username or password.");
+            }
+        }
 
-        if(username.getText().toString().equals("javacoding") && password.getText().toString().equals("123456789")){
+    }
+
+
+       /* if(username.getText().toString().equals("javacoding") && password.getText().toString().equals("123456789")){
             wrongLogin.setText("Success!");
 
             d.changeScene("/FXML/übersicht.fxml");
@@ -53,9 +74,7 @@ public class Login {
             wrongLogin.setText("Please enter your data.");
         }else {
             wrongLogin.setText("Wrong username or password.");
-        }
+        } */
 
 
     }
-
-}
