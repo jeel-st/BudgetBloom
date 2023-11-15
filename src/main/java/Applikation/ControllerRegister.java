@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 public class ControllerRegister {
 
+
     @FXML
     private Button back_to_login;
     @FXML
@@ -40,6 +41,7 @@ public class ControllerRegister {
     public void userCreate(ActionEvent event) throws IOException{
         passwordControl();
     }
+
     public void passwordControl() throws IOException {
         if (!(password.getText().toString().equals(password2.getText().toString()))) {
             wrongRegister.setText("Passwords do not match");

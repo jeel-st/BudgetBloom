@@ -7,3 +7,11 @@ CREATE TABLE users (
 	ldate DATE DEFAULT CURRENT_DATE
 	);
 
+CREATE TABLE konto+username(
+    id SERIAL,
+    edate DATE DEFAULT CURRENT_DATE,
+    note TEXT,
+    amount NUMERIC,
+    bankBalance NUMERIC,
+    importance INTEGER CHECK(importance >= 0 AND importance <=10)
+)
