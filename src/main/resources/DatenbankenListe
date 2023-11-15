@@ -1,11 +1,13 @@
 CREATE TABLE users (
-	id SERIAL,
+	id SERIAL UNIQUE,
 	username VARCHAR(20) NOT NULL,
 	pword VARCHAR(30) NOT NULL,
 	email VARCHAR(70) NOT NULL,
 	rdate DATE DEFAULT CURRENT_DATE,
 	ldate DATE DEFAULT CURRENT_DATE
 	);
+
+INSERT INTO users VALUES (DEFAULT, 'tester', '123456789', 'tester@web.de');
 
 CREATE TABLE konto+username(
     id SERIAL,

@@ -10,6 +10,9 @@ import javafx.scene.control.TextField;
 import mainpackage.Driver;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,14 +42,20 @@ public class ControllerRegister {
     }
 
     public void userCreate(ActionEvent event) throws IOException{
-        passwordControl();
+        if (passwordControl()) {
+            newUserEntry();
+            d.changeScene("/FXML/sample.fxml");
+        }
+
     }
 
-    public void passwordControl() throws IOException {
+    public boolean passwordControl() throws IOException {
         if (!(password.getText().toString().equals(password2.getText().toString()))) {
             wrongRegister.setText("Passwords do not match");
+            return false;
         } else if (password.getText().toString().length() <= 6) {
             wrongRegister.setText("Password must be longer than 6 characters");
+            return false;
         } else {
 
             String passwordText = password.getText().toString();
@@ -57,10 +66,31 @@ public class ControllerRegister {
             Matcher matcher = pattern.matcher(passwordText);
 
             if (matcher.find()) {
-                d.changeScene("/FXML/übersicht.fxml");
+                return true;
+
             } else {
                 wrongRegister.setText("The password contains no special characters");
+                return false;
             }
+        }
+    }
+
+    public void newUserEntry() {
+        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
+        String pass = "(JJS)2003ab";
+        String user = "js486";
+
+
+        try {
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String sql = "INSERT INTO users VALUES (DEFAULT, ?, ?, ?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, username.getText());
+            stmt.setString(2, password.getText());
+            stmt.setString(3, email.getText());
+            stmt.executeQuery();
+        } catch (SQLException e) {
+
         }
     }
 
