@@ -28,7 +28,7 @@ public class Kontodaten {
             */
 
             String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-            String pass = "(JJS)2003";
+            String pass = "(JJS)2003ab";
             String user = "js486";
 
             Connection con = DriverManager.getConnection(url, user, pass);

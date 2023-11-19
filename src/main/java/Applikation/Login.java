@@ -26,7 +26,7 @@ public class Login {
     private Button register;
     Driver d = new Driver();
 
-    public void userLogin(ActionEvent event) throws SQLException {
+    public void userLogin(ActionEvent event) throws SQLException, ClassNotFoundException{
         checkLogin();
     }
 

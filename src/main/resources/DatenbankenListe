@@ -1,6 +1,6 @@
 CREATE TABLE users (
 	id SERIAL UNIQUE,
-	username VARCHAR(20) NOT NULL,
+	username VARCHAR(20) UNIQUE NOT NULL,
 	pword VARCHAR(30) NOT NULL,
 	email VARCHAR(70) NOT NULL,
 	rdate DATE DEFAULT CURRENT_DATE,
@@ -9,11 +9,11 @@ CREATE TABLE users (
 
 INSERT INTO users VALUES (DEFAULT, 'tester', '123456789', 'tester@web.de');
 
-CREATE TABLE konto+username(
-    id SERIAL,
+"CREATE TABLE konto+username(
+    id SERIAL PRIMARY KEY,
     edate DATE DEFAULT CURRENT_DATE,
     note TEXT,
     amount NUMERIC,
     bankBalance NUMERIC,
     importance INTEGER CHECK(importance >= 0 AND importance <=10)
-)
+);
