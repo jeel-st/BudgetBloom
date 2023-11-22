@@ -10,10 +10,7 @@ import javafx.scene.control.TextField;
 import mainpackage.Driver;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,15 +38,45 @@ public class ControllerRegister {
         d.changeScene("/FXML/sample.fxml");
     }
 
-    public void userCreate(ActionEvent event) throws IOException{
-        if (passwordControl()) {
-            newUserEntry();
-            d.changeScene("/FXML/sample.fxml");
+    public void userCreate(ActionEvent event) throws IOException, SQLException {
+        if(fillingControl()) {
+            if (passwordControl()) {
+                if(checkingUsername()) {
+                    if (newUserEntry()) {
+                            newTable();
+                        d.changeScene("/FXML/sample.fxml");
+                    }
+                }
+            }
+        }
+    }
+    public boolean fillingControl(){
+        String checkingUsername = username.getText();
+        String checkingPassword1 = password.getText();
+        String checkingPassword2 = password2.getText();
+        String checkingEmail = email.getText();
+        if(checkingEmail.isEmpty() && checkingPassword1.isEmpty() && checkingPassword2.isEmpty() && checkingUsername.isEmpty()){
+            wrongRegister.setText("Please enter your data");
+            return false;
+        }
+        else if(checkingEmail.isEmpty()){
+            wrongRegister.setText("Please enter your email.");
+            return false;
+        }else if(checkingUsername.isEmpty()){
+            wrongRegister.setText("Please enter your username");
+            return false;
+        }else if(checkingPassword1.isEmpty()){
+            wrongRegister.setText("Please enter your password");
+            return false;
+        }else if(checkingPassword2.isEmpty()){
+            wrongRegister.setText("Please confirm your password");
+            return false;
+        }else{
+            return true;
         }
 
     }
-
-    public boolean passwordControl() throws IOException {
+    public boolean passwordControl() {
         if (!(password.getText().toString().equals(password2.getText().toString()))) {
             wrongRegister.setText("Passwords do not match");
             return false;
@@ -75,7 +102,7 @@ public class ControllerRegister {
         }
     }
 
-    public void newUserEntry() {
+    public boolean newUserEntry() {
         String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
         String pass = "(JJS)2003ab";
         String user = "js486";
@@ -88,9 +115,57 @@ public class ControllerRegister {
             stmt.setString(1, username.getText());
             stmt.setString(2, password.getText());
             stmt.setString(3, email.getText());
-            stmt.executeQuery();
+            stmt.executeUpdate();
+            return true;
         } catch (SQLException e) {
-
+            System.out.println("Es ist ein Fehler passiert");
+            return false;
         }
     }
+    public void newTable(){
+        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
+        String pass = "(JJS)2003ab";
+        String user = "js486";
+        try {
+                Connection con = DriverManager.getConnection(url, user, pass);
+                String sqlTable = "CREATE TABLE konto"+ username.getText() +"( \n"+
+                "id SERIAL PRIMARY KEY,\n"+
+                "edate DATE DEFAULT CURRENT_DATE,\n"+
+                "note TEXT,\n"+
+                "amount NUMERIC,\n"+
+                "bankBalance NUMERIC,\n"+
+                "importance INTEGER CHECK(importance >= 0 AND importance <=10) \n"+
+                ")";
+            PreparedStatement stm = con.prepareStatement(sqlTable);
+
+            stm.execute();
+            con.close();
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public boolean checkingUsername() throws SQLException{
+        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
+        String pass = "(JJS)2003ab";
+        String user = "js486";
+
+        String checkUsername = username.getText();
+        Connection con = DriverManager.getConnection(url, user, pass);
+        String query = "SELECT * FROM users WHERE username = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, checkUsername);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+
+                if(resultSet.next()){
+                    wrongRegister.setText("Der Benutzername ist bereits vergeben.");
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        }
+
+    }
+
 }
