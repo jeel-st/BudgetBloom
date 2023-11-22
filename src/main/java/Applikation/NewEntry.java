@@ -1,14 +1,14 @@
 package Applikation;
 
-public class User {
+public class NewEntry {
     private String datum;
     private String grund;
     private Double betrag;
     private Double kontostand;
-
+    public String user;
 
     //constructor:
-    public User(String datum, String grund, Double betrag, Double kontostand) {
+    public NewEntry(String datum, String grund, Double betrag, Double kontostand) {
         this.datum = datum;
         this.grund = grund;
         this.betrag = betrag;
@@ -33,4 +33,6 @@ public class User {
     public Double getKontostand() {
         return kontostand;
     }
+
+
 }

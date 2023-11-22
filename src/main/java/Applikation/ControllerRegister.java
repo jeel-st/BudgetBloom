@@ -34,6 +34,7 @@ public class ControllerRegister {
 
     Driver d = new Driver();
 
+
     public void userToLogin(ActionEvent event) throws IOException{
         d.changeScene("/FXML/sample.fxml");
     }
@@ -127,9 +128,10 @@ public class ControllerRegister {
         String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
         String pass = "(JJS)2003ab";
         String user = "js486";
+
         try {
                 Connection con = DriverManager.getConnection(url, user, pass);
-                String sqlTable = "CREATE TABLE konto " + username.getText() + "( \n"+
+                String sqlTable = "CREATE TABLE konto" + username.getText() + "( \n"+
                 "id SERIAL PRIMARY KEY,\n"+
                 "edate DATE DEFAULT CURRENT_DATE,\n"+
                 "note TEXT,\n"+

@@ -1,6 +1,5 @@
 package Applikation;
 
-import Datenbank.Kontodaten;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,12 +25,19 @@ public class Login {
     private Button register;
     Driver d = new Driver();
 
+
     public void userLogin(ActionEvent event) throws SQLException, ClassNotFoundException{
+
         checkLogin();
     }
 
     public void registerButton(ActionEvent event) throws IOException,SQLException{
+
         checkRegister();
+    }
+    public static String publicusername;
+    public String getUsername() {
+        return publicusername;
     }
 
     public void checkRegister()throws IOException{
@@ -39,12 +45,14 @@ public class Login {
         d.changeScene("/FXML/register.fxml");
     }
 
+
     public void checkLogin() throws SQLException {
 
 
         String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
         String pass = "(JJS)2003ab";
         String user = "js486";
+
 
         Connection con = DriverManager.getConnection(url, user, pass);
         if (username.getText().isEmpty() || password.getText().isEmpty()) {
@@ -59,6 +67,7 @@ public class Login {
 
                 if (rs.next()) {
                     wrongLogin.setText("Success!");
+                    publicusername = username.getText();
                     try {
                         String sql2 = "UPDATE users SET ldate = CURRENT_DATE WHERE username = ?";
                         PreparedStatement stmt2 = con.prepareStatement(sql2);
