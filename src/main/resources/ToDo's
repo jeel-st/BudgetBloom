@@ -1,10 +1,8 @@
 TO DO`s:
-- Username control                              Joel
-- Registrierung in Datenbank einfügen           Jana
-- neue Datenbank für jede Registrierung         Joel
-- Datenbank Schema Finanzen
-- Tabelle anzeigen in JAVAFX                    Ryan
-- Einnahmen und Ausgaben erstellen -> mit neuer fxml Datei      (Ryan)
-- Datensätze hinzufügen                         Joel
 
-+123
+- Datensätze hinzufügen                         Joel
+- Tabelle mit Datenbank verbinden               Joel
+- Eingaben und Ausgaben mit Datenbank verbinden und CoiceBox fertigstellen      Ryan
+- Nach erstem Login wird nach Kontostand gefragt        Jana
+- Filteroptionen einbauen (Datum)                       Jana
+- Wichtigkeitsskala der jeweiligen Ausgaben             Ryan

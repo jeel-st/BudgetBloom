@@ -50,6 +50,7 @@ public class ControllerRegister {
             }
         }
     }
+
     public boolean fillingControl(){
         String checkingUsername = username.getText();
         String checkingPassword1 = password.getText();
@@ -128,7 +129,7 @@ public class ControllerRegister {
         String user = "js486";
         try {
                 Connection con = DriverManager.getConnection(url, user, pass);
-                String sqlTable = "CREATE TABLE konto"+ username.getText() +"( \n"+
+                String sqlTable = "CREATE TABLE konto " + username.getText() + "( \n"+
                 "id SERIAL PRIMARY KEY,\n"+
                 "edate DATE DEFAULT CURRENT_DATE,\n"+
                 "note TEXT,\n"+
