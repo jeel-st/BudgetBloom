@@ -9,7 +9,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Driver extends Application {
     private static Stage stg;
@@ -27,8 +28,9 @@ public class Driver extends Application {
         Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)));
         stg.getScene().setRoot(pane);
     }
-
-    public static void main(String[] args) throws SQLException {
+    public static Logger log = LogManager.getLogger(Driver.class);
+    public static void main(String[] args){
+        log.info("Programm started");
         launch(args);
         //Controller controller = new Controller();
         //Kontodaten kontodaten = new Kontodaten();

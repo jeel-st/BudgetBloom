@@ -1,11 +1,15 @@
 package Applikation;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class NewEntry {
     private String datum;
     private String grund;
     private Double betrag;
     private Double kontostand;
     public String user;
+    public static Logger log = LogManager.getLogger(NewEntry.class);
 
     //constructor:
     public NewEntry(String datum, String grund, Double betrag, Double kontostand) {

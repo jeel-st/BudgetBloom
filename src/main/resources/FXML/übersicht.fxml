@@ -11,7 +11,7 @@
       <AnchorPane prefHeight="400.0" prefWidth="601.0" style="-fx-background-color: #FFA54F;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="logout" layoutX="32.0" layoutY="354.0" mnemonicParsing="false" onAction="#userLogout" text="Logout" />
-            <TableView fx:id="table" layoutX="127.0" layoutY="14.0" prefHeight="356.0" prefWidth="322.0" style="-fx-background-color: #BFEFFF;">
+            <TableView fx:id="table" layoutX="127.0" layoutY="14.0" prefHeight="356.0" prefWidth="322.0" style="-fx-background-color: #18D1E3;">
               <columns>
                   <TableColumn fx:id="datum" text="Datum" />
                 <TableColumn fx:id="grund" text="Grund" />

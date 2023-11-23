@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import mainpackage.Driver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.*;
@@ -25,14 +27,14 @@ public class Login {
     private Button register;
     Driver d = new Driver();
 
-
+    public static Logger log = LogManager.getLogger(Login.class);
     public void userLogin(ActionEvent event) throws SQLException, ClassNotFoundException{
-
+        log.info("Login button pushed");
         checkLogin();
     }
 
     public void registerButton(ActionEvent event) throws IOException,SQLException{
-
+        log.info("Registration button pushed");
         checkRegister();
     }
     public static String publicusername;
@@ -41,7 +43,7 @@ public class Login {
     }
 
     public void checkRegister()throws IOException{
-
+        log.info("Change scene to registration");
         d.changeScene("/FXML/register.fxml");
     }
 
@@ -55,7 +57,9 @@ public class Login {
 
 
         Connection con = DriverManager.getConnection(url, user, pass);
+        log.info("Connection to database succeed");
         if (username.getText().isEmpty() || password.getText().isEmpty()) {
+            log.warn("Password or username is empty");
             wrongLogin.setText("Please enter your username and password.");
         } else {
             try {
@@ -68,25 +72,30 @@ public class Login {
                 if (rs.next()) {
                     wrongLogin.setText("Success!");
                     publicusername = username.getText();
+                    log.info("Username found in database");
                     try {
                         String sql2 = "UPDATE users SET ldate = CURRENT_DATE WHERE username = ?";
                         PreparedStatement stmt2 = con.prepareStatement(sql2);
                         stmt2.setString(1, username.getText());
                         stmt2.executeQuery();
+                        log.info("Last login date updated in database");
                     } catch (SQLException e) {
+                        log.error("last login date update failed");
 
                     }
-
-
+                    log.info("Scene changed to übersicht.fxml successfully");
                     d.changeScene("/FXML/übersicht.fxml");
                 } else {
+                    log.warn("Wrong username or password");
                     wrongLogin.setText("Wrong username or password.");
                 }
 
 
             } catch (SQLException e ) {
+                log.error("SQL query failed");
                 throw new SQLException(e);
             } catch (IOException e) {
+                log.error("JavaFX failed");
                 throw new RuntimeException(e);
             }
         }

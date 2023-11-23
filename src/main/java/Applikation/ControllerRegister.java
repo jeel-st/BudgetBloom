@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import mainpackage.Driver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.*;
@@ -31,7 +33,7 @@ public class ControllerRegister {
     public Label wrongRegister;
     @FXML
     public PasswordField password2;
-
+    public static Logger log = LogManager.getLogger(ControllerRegister.class);
     Driver d = new Driver();
 
 
@@ -40,15 +42,24 @@ public class ControllerRegister {
     }
 
     public void userCreate(ActionEvent event) throws IOException, SQLException {
+        log.info("User creation started");
         if(fillingControl()) {
             if (passwordControl()) {
                 if(checkingUsername()) {
                     if (newUserEntry()) {
                             newTable();
                         d.changeScene("/FXML/sample.fxml");
+                    }else{
+                        log.error("NewUserEntry failed");
                     }
+                }else{
+                    log.error("checkingUsername failed");
                 }
+            }else{
+                log.error("passwordControl failed");
             }
+        }else{
+            log.error("fillingControl failed");
         }
     }
 
@@ -57,6 +68,7 @@ public class ControllerRegister {
         String checkingPassword1 = password.getText();
         String checkingPassword2 = password2.getText();
         String checkingEmail = email.getText();
+
         if(checkingEmail.isEmpty() && checkingPassword1.isEmpty() && checkingPassword2.isEmpty() && checkingUsername.isEmpty()){
             wrongRegister.setText("Please enter your data");
             return false;
@@ -74,6 +86,7 @@ public class ControllerRegister {
             wrongRegister.setText("Please confirm your password");
             return false;
         }else{
+
             return true;
         }
 
@@ -118,6 +131,7 @@ public class ControllerRegister {
             stmt.setString(2, password.getText());
             stmt.setString(3, email.getText());
             stmt.executeUpdate();
+            log.info("New user created successfully");
             return true;
         } catch (SQLException e) {
             System.out.println("Es ist ein Fehler passiert");
@@ -142,8 +156,10 @@ public class ControllerRegister {
             PreparedStatement stm = con.prepareStatement(sqlTable);
 
             stm.execute();
+            log.info("Table build successfully");
             con.close();
         }catch (SQLException ex){
+            log.error("table build failed");
             ex.printStackTrace();
         }
     }

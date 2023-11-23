@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class ControllerÜbersicht implements Initializable{
@@ -44,6 +46,7 @@ public class ControllerÜbersicht implements Initializable{
     private Button neueEingabe;
 
     private String username = Login.publicusername;
+    public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
 
     //Oberserver Liste weil Tabelle es als Input nutzt
     ObservableList<NewEntry> list = FXCollections.observableArrayList(
@@ -58,19 +61,22 @@ public class ControllerÜbersicht implements Initializable{
         kontostand.setCellValueFactory(new PropertyValueFactory <NewEntry, Double>("kontostand"));
         try{
             datenbank();
+            log.info("Searching for data succeed");
         }catch(Exception e){
-            System.out.println("Fehler bei Suche nach Datenbankeinträgen");
+            log.error("Searching for data failed");
         }
         table.setItems(list);
     }
 
     public void userLogout(ActionEvent event)throws IOException {
         Driver d = new Driver();
+        log.info("Logout button changed scene to sample.fxml");
         d.changeScene("/FXML/sample.fxml");
     }
 
     public void userNeueEingabe(ActionEvent event)throws IOException {
         Driver d = new Driver();
+        log.info("Changed Scene to eingabe.fxml");
         d.changeScene("/FXML/eingabe.fxml");
     }
 
@@ -82,19 +88,24 @@ public class ControllerÜbersicht implements Initializable{
 
         Connection con = DriverManager.getConnection(url, user, pass);
 
-        try {
-            String sql = "SELECT edate, note, amount, bankbalance FROM konto"+username;
-            PreparedStatement stmt = con.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            while(rs.next()){
-                String datum = (rs.getDate("edate").toString());
-                String grund = (rs.getString("note"));
-                double betrag = (rs.getDouble("amount"));
-                double kontostand = (rs.getDouble("bankbalance"));
-                list.add(new NewEntry(datum, grund, betrag, kontostand));
+        if(username != null) {
+            try {
+                String sql = "SELECT edate, note, amount, bankbalance FROM konto" + username;
+
+                PreparedStatement stmt = con.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    String datum = (rs.getDate("edate").toString());
+                    String grund = (rs.getString("note"));
+                    double betrag = (rs.getDouble("amount"));
+                    double kontostand = (rs.getDouble("bankbalance"));
+                    list.add(new NewEntry(datum, grund, betrag, kontostand));
+                }
+            } catch (Exception e) {
+                log.error("Failed to transfer data from database");
             }
-        }catch(Exception e){
-            System.out.println("Fehler! Bei der Übertragung von Tabellendaten");
+        }else{
+            log.error("Username is null");
         }
     }
 

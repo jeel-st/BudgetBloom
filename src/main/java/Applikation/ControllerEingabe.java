@@ -22,6 +22,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ControllerEingabe implements Initializable {
 
@@ -45,6 +47,7 @@ public class ControllerEingabe implements Initializable {
 
     @FXML
     private Button logout;
+    public static Logger log = LogManager.getLogger(ControllerEingabe.class);
 
 
     //kommt in die choicebox:
