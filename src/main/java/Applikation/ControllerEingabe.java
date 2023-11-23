@@ -23,8 +23,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-public class ControllerEingabe {
+public class ControllerEingabe implements Initializable {
 
+    @FXML
+    private Label eingabeText;
 
     @FXML
     private DatePicker eingabeDatum;
@@ -33,7 +35,7 @@ public class ControllerEingabe {
     private TextField eingabeGrund;
 
     @FXML
-    private ChoiceBox<String> eingabeAusgabe;
+    private ChoiceBox<String> myChoiceBox;
 
     @FXML
     private TextField eingabeZahl;
@@ -44,6 +46,23 @@ public class ControllerEingabe {
     @FXML
     private Button logout;
 
+
+    //kommt in die choicebox:
+    private String[] eingabe = {"Einnahme", "Ausgabe"};
+
+
+    //ChoicBox:
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        myChoiceBox.getItems().addAll(eingabe);
+        myChoiceBox.setOnAction(this::getEingabe);  //this:: ist ein reverence operator (zum Label)
+    }
+
+    //Label verknüpfen:
+    public void getEingabe(ActionEvent event){
+        String myEingabe = myChoiceBox.getValue();
+        eingabeText.setText("Neue " + myEingabe + ":" );
+    }
 
 
     public void userLogout(ActionEvent event)throws IOException {
@@ -56,6 +75,8 @@ public class ControllerEingabe {
         Driver d = new Driver();
         d.changeScene("/FXML/übersicht.fxml");
     }
+
+
 
 }
 
