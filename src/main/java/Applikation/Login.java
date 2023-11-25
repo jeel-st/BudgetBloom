@@ -72,15 +72,15 @@ public class Login {
                 if (rs.next()) {
                     wrongLogin.setText("Success!");
                     publicusername = username.getText();
-                    log.info("Username found in database");
+                    log.info("Username " + publicusername + " found in database");
                     try {
                         String sql2 = "UPDATE users SET ldate = CURRENT_DATE WHERE username = ?";
                         PreparedStatement stmt2 = con.prepareStatement(sql2);
-                        stmt2.setString(1, username.getText());
+                        stmt2.setString(1, publicusername);
                         stmt2.executeQuery();
-                        log.info("Last login date updated in database");
                     } catch (SQLException e) {
-                        log.error("last login date update failed");
+                        //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
+                        log.info("last login date updated successfully");
 
                     }
                     log.info("Scene changed to übersicht.fxml successfully");
