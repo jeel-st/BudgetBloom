@@ -1,4 +1,6 @@
 package Applikation;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -46,6 +48,14 @@ public class ControllerEingabe implements Initializable {
     private TextField eingabeZahl;
 
     @FXML
+    private Label skalaLabel;
+
+    int mySkalaZahl;
+
+    @FXML
+    private Slider skala;
+
+    @FXML
     private Button eingabeHinzufügen;
 
     @FXML
@@ -78,11 +88,27 @@ public class ControllerEingabe implements Initializable {
 
     }
 
-    //ChoicBox:
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //ChoicBox:
         myChoiceBox.getItems().addAll(eingabe);
         myChoiceBox.setOnAction(this::getEingabe);  //this:: ist ein reverence operator (zum Label)
+
+
+        //WichtigkeitsSkala (Slider + Label):
+        mySkalaZahl = (int) skala.getValue();
+        skalaLabel.setText(Integer.toString(mySkalaZahl));
+        skala.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+
+                mySkalaZahl = (int) skala.getValue();
+                skalaLabel.setText(Integer.toString(mySkalaZahl));
+
+            }
+        });
     }
 
     //Label verknüpfen:
@@ -105,6 +131,9 @@ public class ControllerEingabe implements Initializable {
 
     }
 
+
+
+
     public void kontoVeränderung() throws SQLException, IOException {
         String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
         String pass = "(JJS)2003ab";
@@ -113,7 +142,9 @@ public class ControllerEingabe implements Initializable {
         Connection con = DriverManager.getConnection(url, user, pass);
         log.info("Connection to database succeed");
 
-        String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?)";
+        int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
+
+        String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = con.prepareStatement(sql);
         try {
             stmt.setDate(1, Date.valueOf(eingabeDatum.getValue()));
@@ -134,6 +165,9 @@ public class ControllerEingabe implements Initializable {
         } catch (Exception e) {
             log.error("Aktueller Kontostand  konnte nicht aufgerufen werden");
         }
+
+        stmt.setInt(5, sliderWert);
+
         stmt.executeUpdate();
 
         d.changeScene("/FXML/übersicht.fxml");
