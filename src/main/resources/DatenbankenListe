@@ -17,3 +17,8 @@ INSERT INTO users VALUES (DEFAULT, 'tester', '123456789', 'tester@web.de');
     bankBalance NUMERIC,
     importance INTEGER CHECK(importance >= 0 AND importance <=10)
 );
+
+
+ALTER TABLE users ADD numlogin INTEGER DEFAULT 0;
+ALTER TABLE users ALTER numlogin SET NOT NULL;
+UPDATE users SET numlogin = 0 WHERE username = 'tester';

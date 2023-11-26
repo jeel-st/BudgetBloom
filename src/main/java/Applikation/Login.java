@@ -75,16 +75,45 @@ public class Login {
                     log.info("Username " + publicusername + " found in database");
                     try {
                         String sql2 = "UPDATE users SET ldate = CURRENT_DATE WHERE username = ?";
+
                         PreparedStatement stmt2 = con.prepareStatement(sql2);
+
                         stmt2.setString(1, publicusername);
+
                         stmt2.executeQuery();
+
                     } catch (SQLException e) {
                         //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
                         log.info("last login date updated successfully");
 
                     }
-                    log.info("Scene changed to übersicht.fxml successfully");
-                    d.changeScene("/FXML/übersicht.fxml");
+                    try {
+                        String sql3 = "UPDATE users SET numlogin = numlogin + 1 WHERE username = ?";
+                        PreparedStatement stmt3 = con.prepareStatement(sql3);
+                        stmt3.setString(1, publicusername);
+                        stmt3.executeQuery();
+                    } catch (SQLException e) {
+                        //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
+                        log.info("number of logins updated successfully");
+                    }
+                    try {
+                        String sql4 = "SELECT * FROM users WHERE username = ? AND numlogin = 1";
+                        PreparedStatement stmt4 = con.prepareStatement(sql4);
+                        stmt4.setString(1, publicusername);
+                        ResultSet rs2 = stmt4.executeQuery();
+                        if (rs2.next()) {
+                            log.info("Scene changed to firstLogin.fxml successfully");
+                            d.changeScene("/FXML/firstLogin.fxml");
+                        } else {
+                            log.info("Scene changed to übersicht.fxml successfully");
+                            d.changeScene("/FXML/übersicht.fxml");
+                        }
+                    } catch (SQLException e) {
+                        log.error("SQL Exception " + e + " while finding out if is first login");
+                    }
+
+
+
                 } else {
                     log.warn("Wrong username or password");
                     wrongLogin.setText("Wrong username or password.");

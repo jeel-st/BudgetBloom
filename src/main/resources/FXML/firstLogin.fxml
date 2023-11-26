@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Applikation.FirstLogin"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: #FFA54F;">
+    <left>
+        <ImageView fitHeight="402.0" fitWidth="240.0">
+            <Image url="@../LoginFoto.jpg" fx:id="image"/>
+        </ImageView>
+    </left>
+    <center>
+        <BorderPane style="-fx-padding: 10px;">
+            <top>
+                <Label maxWidth="350.0" text="Welcome to BudgetBloom!&#10;To start your journey to a better managed budget, we need you to enter your current konto balance." fx:id="welcomeText" wrapText="true"/>
+            </top>
+            <center>
+                <VBox maxHeight="250.0">
+                    <Label text="My current balance (in €):" fx:id="labelBalance"/>
+                    <TextField fx:id="balanceField" maxHeight="25.0" maxWidth="250.0" promptText="Balance" style="-fx-background-color: #BFEFFF;"/>
+                    <Button text="OK" fx:id="ok" onAction="#checkBalance"/>
+                </VBox>
+            </center>
+            <bottom>
+                <VBox maxWidth="350.0" maxHeight="300">
+                    <Label fx:id="skipText" text="If you don't want to enter your current balance, you can click the 'skip'-Button and add your balance as a new inflow later." wrapText="true"/>
+                    <Button text="Skip" fx:id="skip" onAction="#skipBalance"/>
+                </VBox>
+
+            </bottom>
+        </BorderPane>
+
+
+    </center>
+
+
+</BorderPane>
+
+
