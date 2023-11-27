@@ -25,7 +25,8 @@
                 <Label maxWidth="350.0" text="Welcome to BudgetBloom!&#10;To start your journey to a better managed budget, we need you to enter your current konto balance." fx:id="welcomeText" wrapText="true"/>
             </top>
             <center>
-                <VBox maxHeight="250.0">
+                <VBox maxHeight="250.0" maxWidth="350.0">
+                    <Label minHeight="50" fx:id="wrongBalance" textFill="RED" wrapText="true"/>
                     <Label text="My current balance (in €):" fx:id="labelBalance"/>
                     <TextField fx:id="balanceField" maxHeight="25.0" maxWidth="250.0" promptText="Balance" style="-fx-background-color: #BFEFFF;"/>
                     <Button text="OK" fx:id="ok" onAction="#checkBalance"/>
