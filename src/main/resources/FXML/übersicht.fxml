@@ -20,6 +20,7 @@
               </columns>
             </TableView>
             <Button fx:id="neueEingabe" layoutX="466.0" layoutY="354.0" mnemonicParsing="false" onAction="#userNeueEingabe" text="Eingabe hinzufügen" />
+            <Button fx:id="eintragLöschen" layoutX="467.0" layoutY="311.0" mnemonicParsing="false" onAction="#removeRow" prefHeight="25.0" prefWidth="120.0" text="Löschen" />
          </children>
       </AnchorPane>
    </right>

@@ -147,7 +147,7 @@ public class ControllerEingabe implements Initializable {
         String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = con.prepareStatement(sql);
         try {
-            stmt.setDate(1, Date.valueOf(eingabeDatum.getValue()));
+            stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
         } catch (Exception e) {
             log.error("Datum geht nicht");
         }

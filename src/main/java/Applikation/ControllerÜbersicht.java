@@ -45,6 +45,9 @@ public class ControllerÜbersicht implements Initializable{
     @FXML
     private Button neueEingabe;
 
+    @FXML
+    private Button eintragLöschen;
+
     private String username = Login.publicusername;
     public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
 
@@ -107,6 +110,40 @@ public class ControllerÜbersicht implements Initializable{
         }else{
             log.error("Username is null");
         }
+    }
+    public void removeRow(ActionEvent event) throws SQLException {
+        try{
+            double betrag = table.getSelectionModel().getSelectedItem().getBetrag();
+            String datum = table.getSelectionModel().getSelectedItem().getDatum();
+            String grund = table.getSelectionModel().getSelectedItem().getGrund();
+            double kontostand = table.getSelectionModel().getSelectedItem().getKontostand();
+            log.info(betrag + datum + grund + kontostand);
+            String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
+            String pass = "(JJS)2003ab";
+            String user = "js486";
+
+                Connection con = DriverManager.getConnection(url, user, pass);
+                log.info("Connection to database succeed");
+
+                    String sql = "DELETE FROM konto" + username + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ?";
+                    PreparedStatement stmt = con.prepareStatement(sql);
+                    stmt.setDate(1, Date.valueOf(datum));
+                    stmt.setString(2, grund);
+                    stmt.setDouble(3, betrag);
+                    stmt.setDouble(4, kontostand);
+                    int rowsAffected = stmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    log.info("Deletion successful. Rows affected: " + rowsAffected);
+                    table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
+                } else {
+                    log.info("No rows deleted. Check your criteria.");
+                }
+
+        }catch(Exception e){
+            log.error("no row selected");
+        }
+
     }
 
 

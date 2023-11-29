@@ -38,6 +38,5 @@ public class Driver extends Application {
         //controller.controller();
 
     }
-
-
+    
 }
