@@ -19,6 +19,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FirstLogin extends Application {
     @FXML
@@ -27,6 +33,8 @@ public class FirstLogin extends Application {
     public Label welcomeText;
     @FXML
     public Label labelBalance;
+    @FXML
+    public Label wrongBalance;
     @FXML
     public TextField balanceField;
     @FXML
@@ -46,10 +54,6 @@ public class FirstLogin extends Application {
         Parent par = FXMLLoader.load(getClass().getResource("/resources/FXML/firstLogin.fxml"));
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root);
-        //Image image = new Image(getClass().getResourceAsStream("LoginFoto.jpg"));
-        //Button skip = new Button();
-        //root.setLeft(image);
-        //root.setBottom(skip);
         stage.setScene(scene);
         stage.show();
 
@@ -60,7 +64,52 @@ public class FirstLogin extends Application {
     }
 
     @FXML private void checkBalance(ActionEvent event) throws IOException {
-        //TODO
-        d.changeScene("/FXML/übersicht.fxml");
+        String balanceString = balanceField.getText();
+        if (isBalanceNumber(balanceString)) {
+            double balance = Double.parseDouble(balanceString);
+            log.debug("Found Double is " + balance);
+
+
+            String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
+            String pass = "(JJS)2003ab";
+            String user = "js486";
+
+
+            try {
+                Connection con = DriverManager.getConnection(url, user, pass);
+                String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10)";
+                PreparedStatement stmt = con.prepareStatement(sql);
+                stmt.setDouble(1, balance);
+                stmt.setDouble(2, balance);
+                stmt.execute();
+                log.info("Initial balance inserted successfully");
+            } catch (SQLException e) {
+                System.out.println("Could not insert initial balance into db");
+            }
+
+            d.changeScene("/FXML/übersicht.fxml");
+
+        } else {
+            wrongBalance.setText("Please enter a number in one of the following formats: xxxxx.yy or xxx.y or xxx");
+        }
+
+
+
+
+
+    }
+
+    private boolean isBalanceNumber(String balance) {
+        String regex = "^[0-9]+([.][0-9][0-9]?)?$";
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(balance);
+
+        if (matcher.find()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -59,7 +59,7 @@ public class ControllerEingabe implements Initializable {
     private Button eingabeHinzufügen;
 
     @FXML
-    private Button logout;
+    private Button abbrechen;
     public static Logger log = LogManager.getLogger(ControllerEingabe.class);
 
 
@@ -118,9 +118,9 @@ public class ControllerEingabe implements Initializable {
     }
 
 
-    public void userLogout(ActionEvent event)throws IOException {
+    public void userAbbruch(ActionEvent event)throws IOException {
 
-        d.changeScene("/FXML/sample.fxml");
+        d.changeScene("/FXML/übersicht.fxml");
     }
 
 
