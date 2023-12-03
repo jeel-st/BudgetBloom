@@ -60,6 +60,7 @@ public class FirstLogin extends Application {
     }
 
     @FXML private void skipBalance(ActionEvent event) throws IOException {
+        insertInitialBalance(0);
         d.changeScene("/FXML/übersicht.fxml");
     }
 
@@ -68,25 +69,7 @@ public class FirstLogin extends Application {
         if (isBalanceNumber(balanceString)) {
             double balance = Double.parseDouble(balanceString);
             log.debug("Found Double is " + balance);
-
-
-            String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-            String pass = "(JJS)2003ab";
-            String user = "js486";
-
-
-            try {
-                Connection con = DriverManager.getConnection(url, user, pass);
-                String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10)";
-                PreparedStatement stmt = con.prepareStatement(sql);
-                stmt.setDouble(1, balance);
-                stmt.setDouble(2, balance);
-                stmt.execute();
-                log.info("Initial balance inserted successfully");
-            } catch (SQLException e) {
-                System.out.println("Could not insert initial balance into db");
-            }
-
+            insertInitialBalance(balance);
             d.changeScene("/FXML/übersicht.fxml");
 
         } else {
@@ -97,6 +80,24 @@ public class FirstLogin extends Application {
 
 
 
+    }
+
+    private void insertInitialBalance(double balance) {
+        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
+        String pass = "(JJS)2003ab";
+        String user = "js486";
+
+        try {
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setDouble(1, balance);
+            stmt.setDouble(2, balance);
+            stmt.execute();
+            log.info("Initial balance inserted successfully");
+        } catch (SQLException e) {
+            System.out.println("Could not insert initial balance into db");
+        }
     }
 
     private boolean isBalanceNumber(String balance) {

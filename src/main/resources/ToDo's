@@ -4,6 +4,6 @@ TO DO`s:
 - ControllerEingabe ErrorLabel hinzufügen               Ryan
 - Wichtigkeitsskala zu Tabelle hinzufügen               Ryan
 - Tabelle nach Datum automatisch sortieren (neustes Datum ganz oben)         Jana
-- Bei skip -> erster Kontostand = 0         Jana
+X Bei skip -> erster Kontostand = 0         Jana
 - Lösung für Zeilen auswählen finden        Joel
 
