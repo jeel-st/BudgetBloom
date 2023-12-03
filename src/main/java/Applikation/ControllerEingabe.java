@@ -182,7 +182,7 @@ public class ControllerEingabe implements Initializable {
         Connection con = DriverManager.getConnection(url, user, pass);
         log.info("Connection to database succeed");
 
-        String sql = "SELECT bankBalance FROM konto" +Login.publicusername +" ORDER BY id DESC LIMIT 1";
+        String sql = "SELECT bankBalance FROM konto" +Login.publicusername +" ORDER BY edate DESC, id DESC LIMIT 1";
         PreparedStatement stmt = con.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         try {

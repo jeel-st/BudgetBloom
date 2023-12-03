@@ -62,6 +62,9 @@ public class ControllerÜbersicht implements Initializable{
         grund.setCellValueFactory(new PropertyValueFactory <NewEntry, String>("grund"));
         betrag.setCellValueFactory(new PropertyValueFactory <NewEntry, Double>("betrag"));
         kontostand.setCellValueFactory(new PropertyValueFactory <NewEntry, Double>("kontostand"));
+        log.debug("Started to update balance");
+        Balance.updateBalance();
+        log.debug("Finished update of balance");
         try{
             datenbank();
             log.info("Searching for data succeed");
@@ -93,7 +96,7 @@ public class ControllerÜbersicht implements Initializable{
 
         if(username != null) {
             try {
-                String sql = "SELECT edate, note, amount, bankbalance FROM konto" + username;
+                String sql = "SELECT edate, note, amount, bankbalance FROM konto" + username + " ORDER BY edate DESC, id DESC";
 
                 PreparedStatement stmt = con.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery();
@@ -136,6 +139,18 @@ public class ControllerÜbersicht implements Initializable{
                 if (rowsAffected > 0) {
                     log.info("Deletion successful. Rows affected: " + rowsAffected);
                     table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
+                    //Updated die Kontostände und lädt die Tabelle neu
+                    /*Balance.updateBalance();
+                    try{
+                        datenbank();
+                        log.info("Searching for data succeed");
+                    }catch(Exception e){
+                        log.error("Searching for data failed");
+                    }
+                    table.setItems(list);*/
+                    Driver d = new Driver();
+                    log.info("Reload scene übersicht.fxml");
+                    d.changeScene("/FXML/übersicht.fxml");
                 } else {
                     log.info("No rows deleted. Check your criteria.");
                 }
