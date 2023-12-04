@@ -8,15 +8,18 @@ public class NewEntry {
     private String grund;
     private Double betrag;
     private Double kontostand;
+    private Integer wichtigkeit;
+
     public String user;
     public static Logger log = LogManager.getLogger(NewEntry.class);
 
     //constructor:
-    public NewEntry(String datum, String grund, Double betrag, Double kontostand) {
+    public NewEntry(String datum, String grund, Double betrag, Double kontostand, Integer wichtigkeit) {
         this.datum = datum;
         this.grund = grund;
         this.betrag = betrag;
         this.kontostand = kontostand;
+        this.wichtigkeit = wichtigkeit;
     }
 
     //Getters:
@@ -37,6 +40,8 @@ public class NewEntry {
     public Double getKontostand() {
         return kontostand;
     }
+
+    public Integer getWichtigkeit() {return wichtigkeit;}
 
 
 }

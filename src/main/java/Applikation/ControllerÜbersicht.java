@@ -38,6 +38,9 @@ public class ControllerÜbersicht implements Initializable{
     @FXML
     private TableColumn<NewEntry, Double> kontostand;
 
+    @FXML
+    private TableColumn<NewEntry, Integer> wichtigkeit;
+
 
     @FXML
     private Button logout;
@@ -64,6 +67,7 @@ public class ControllerÜbersicht implements Initializable{
         grund.setCellValueFactory(new PropertyValueFactory <NewEntry, String>("grund"));
         betrag.setCellValueFactory(new PropertyValueFactory <NewEntry, Double>("betrag"));
         kontostand.setCellValueFactory(new PropertyValueFactory <NewEntry, Double>("kontostand"));
+        wichtigkeit.setCellValueFactory(new PropertyValueFactory <NewEntry, Integer>("wichtigkeit"));
         log.debug("Started to update balance");
         Balance.updateBalance();
         log.debug("Finished update of balance");
@@ -98,7 +102,7 @@ public class ControllerÜbersicht implements Initializable{
 
         if(username != null) {
             try {
-                String sql = "SELECT edate, note, amount, bankbalance FROM konto" + username + " ORDER BY edate DESC, id DESC";
+                String sql = "SELECT edate, note, amount, bankbalance, importance FROM konto" + username + " ORDER BY edate DESC, id DESC";
 
                 PreparedStatement stmt = con.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery();
@@ -107,7 +111,8 @@ public class ControllerÜbersicht implements Initializable{
                     String grund = (rs.getString("note"));
                     double betrag = (rs.getDouble("amount"));
                     double kontostand = (rs.getDouble("bankbalance"));
-                    list.add(new NewEntry(datum, grund, betrag, kontostand));
+                    Integer wichtigkeit = (rs.getInt("importance"));
+                    list.add(new NewEntry(datum, grund, betrag, kontostand, wichtigkeit));
                 }
             } catch (Exception e) {
                 log.error("Failed to transfer data from database");
@@ -122,7 +127,8 @@ public class ControllerÜbersicht implements Initializable{
             String datum = table.getSelectionModel().getSelectedItem().getDatum();
             String grund = table.getSelectionModel().getSelectedItem().getGrund();
             double kontostand = table.getSelectionModel().getSelectedItem().getKontostand();
-            log.info(betrag + datum + grund + kontostand);
+            Integer wichtigkeit = table.getSelectionModel().getSelectedItem().getWichtigkeit();
+            log.info(betrag + datum + grund + kontostand + wichtigkeit);
             String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
             String pass = "(JJS)2003ab";
             String user = "js486";
@@ -130,12 +136,13 @@ public class ControllerÜbersicht implements Initializable{
                 Connection con = DriverManager.getConnection(url, user, pass);
                 log.info("Connection to database succeed");
 
-                    String sql = "DELETE FROM konto" + username + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ?";
+                    String sql = "DELETE FROM konto" + username + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ?";
                     PreparedStatement stmt = con.prepareStatement(sql);
                     stmt.setDate(1, Date.valueOf(datum));
                     stmt.setString(2, grund);
                     stmt.setDouble(3, betrag);
                     stmt.setDouble(4, kontostand);
+                    stmt.setInt(5, wichtigkeit);
                     int rowsAffected = stmt.executeUpdate();
 
                 if (rowsAffected > 0) {
