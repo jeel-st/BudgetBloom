@@ -56,6 +56,7 @@ public class ControllerEditEntry implements Initializable {
     public static String note;
     public static double bankBalance;
     public static double amount;
+    public static int importance;
     Driver d = new Driver();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
     @FXML
@@ -84,7 +85,7 @@ public class ControllerEditEntry implements Initializable {
         eingabeDatum.setValue(LocalDate.parse(date));
         eingabeGrund.setText(note);
         eingabeZahl.setText(String.valueOf(amount));
-
+        skala.setValue(importance);
 
 
         //ChoiceBox:
@@ -120,10 +121,7 @@ public class ControllerEditEntry implements Initializable {
         log.info("Connection to database succeed");
 
         int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
-        log.info(date);
-        log.info(bankBalance);
-        log.info(amount);
-        log.info(note);
+
         String sql = "UPDATE konto" + Login.publicusername + " SET edate = ?, note = ?, amount = ?, importance = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ?";
         PreparedStatement stmt = con.prepareStatement(sql);
         try {

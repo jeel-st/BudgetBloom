@@ -176,12 +176,12 @@ public class ControllerÜbersicht implements Initializable{
             String datum = table.getSelectionModel().getSelectedItem().getDatum();
             String grund = table.getSelectionModel().getSelectedItem().getGrund();
             double kontostand = table.getSelectionModel().getSelectedItem().getKontostand();
-
+            int wichtigkeit = table.getSelectionModel().getSelectedItem().getWichtigkeit();
             ControllerEditEntry.amount = betrag;
             ControllerEditEntry.bankBalance = kontostand;
             ControllerEditEntry.date = datum;
             ControllerEditEntry.note = grund;
-
+            ControllerEditEntry.importance = wichtigkeit;
             d.changeScene("/FXML/editEntry.fxml");
         }catch(Exception e ){
             log.error("Keine Zeile wurde ausgewählt");
