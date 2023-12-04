@@ -92,7 +92,7 @@ public class ControllerEingabe implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //ChoicBox:
+        //ChoiceBox:
         myChoiceBox.getItems().addAll(eingabe);
         myChoiceBox.setOnAction(this::getEingabe);  //this:: ist ein reverence operator (zum Label)
 
@@ -159,7 +159,7 @@ public class ControllerEingabe implements Initializable {
             log.error("Kontoänderung geht nicht");
         }
         try {
-            double neuerKontostand = aktuellerKontostand(Double.parseDouble(eingabeZahl.getText()));
+            double neuerKontostand = aktuellerKontostand();
             log.info(neuerKontostand);
             stmt.setDouble(4, neuerKontostand);
         } catch (Exception e) {
@@ -174,7 +174,7 @@ public class ControllerEingabe implements Initializable {
     }
 
 
-    public double aktuellerKontostand (double kontoVeränderung) throws SQLException {
+    public double aktuellerKontostand () throws SQLException {
         String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
         String pass = "(JJS)2003ab";
         String user = "js486";
@@ -182,7 +182,7 @@ public class ControllerEingabe implements Initializable {
         Connection con = DriverManager.getConnection(url, user, pass);
         log.info("Connection to database succeed");
 
-        String sql = "SELECT bankBalance FROM konto" +Login.publicusername +" ORDER BY edate DESC, id DESC LIMIT 1";
+        String sql = "SELECT bankBalance FROM konto" + Login.publicusername + " ORDER BY edate DESC, id DESC LIMIT 1";
         PreparedStatement stmt = con.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         try {
@@ -193,14 +193,13 @@ public class ControllerEingabe implements Initializable {
                 double neuerKontostand = Kontostand + kontoVeränderungsÜberprüfer();
                 return neuerKontostand;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("kein Kontostand gefunden");
         }
 
-        return kontoVeränderung;
+
+        return 0;
     }
-
-
 
 
 }

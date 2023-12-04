@@ -32,10 +32,6 @@ public class Driver extends Application {
     public static void main(String[] args){
         log.info("Programm started");
         launch(args);
-        //Controller controller = new Controller();
-        //Kontodaten kontodaten = new Kontodaten();
-        //kontodaten.Kontoabfrage();
-        //controller.controller();
 
     }
     

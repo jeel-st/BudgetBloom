@@ -47,6 +47,8 @@ public class ControllerÜbersicht implements Initializable{
 
     @FXML
     private Button eintragLöschen;
+    @FXML
+    private Button eintragBearbeiten;
 
     private String username = Login.publicusername;
     public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
@@ -152,13 +154,31 @@ public class ControllerÜbersicht implements Initializable{
                     log.info("Reload scene übersicht.fxml");
                     d.changeScene("/FXML/übersicht.fxml");
                 } else {
-                    log.info("No rows deleted. Check your criteria.");
+                    log.info("No rows deleted.");
                 }
 
         }catch(Exception e){
             log.error("no row selected");
         }
 
+    }
+    public void editRow(ActionEvent event) throws IOException {
+        Driver d = new Driver();
+        try {
+            double betrag = table.getSelectionModel().getSelectedItem().getBetrag();
+            String datum = table.getSelectionModel().getSelectedItem().getDatum();
+            String grund = table.getSelectionModel().getSelectedItem().getGrund();
+            double kontostand = table.getSelectionModel().getSelectedItem().getKontostand();
+
+            ControllerEditEntry.amount = betrag;
+            ControllerEditEntry.bankBalance = kontostand;
+            ControllerEditEntry.date = datum;
+            ControllerEditEntry.note = grund;
+
+            d.changeScene("/FXML/editEntry.fxml");
+        }catch(Exception e ){
+            log.error("Keine Zeile wurde ausgewählt");
+        }
     }
 
 

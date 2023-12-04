@@ -21,6 +21,7 @@
             </TableView>
             <Button fx:id="neueEingabe" layoutX="466.0" layoutY="354.0" mnemonicParsing="false" onAction="#userNeueEingabe" text="Eingabe hinzufügen" />
             <Button fx:id="eintragLöschen" layoutX="467.0" layoutY="311.0" mnemonicParsing="false" onAction="#removeRow" prefHeight="25.0" prefWidth="120.0" text="Löschen" />
+            <Button fx:id="eintragBearbeiten" layoutX="468.0" layoutY="269.0" mnemonicParsing="false" onAction="#editRow" prefHeight="25.0" prefWidth="119.0" text="Bearbeiten" />
          </children>
       </AnchorPane>
    </right>
