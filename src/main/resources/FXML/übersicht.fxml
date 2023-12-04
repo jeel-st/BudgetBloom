@@ -11,12 +11,13 @@
       <AnchorPane prefHeight="400.0" prefWidth="601.0" style="-fx-background-color: #FFA54F;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="logout" layoutX="32.0" layoutY="354.0" mnemonicParsing="false" onAction="#userLogout" text="Logout" />
-            <TableView fx:id="table" layoutX="127.0" layoutY="14.0" prefHeight="356.0" prefWidth="322.0" style="-fx-background-color: #18D1E3;">
+            <TableView fx:id="table" layoutX="91.0" layoutY="14.0" prefHeight="356.0" prefWidth="375.0" style="-fx-background-color: #18D1E3;">
               <columns>
                   <TableColumn fx:id="datum" text="Datum" />
                 <TableColumn fx:id="grund" text="Grund" />
                 <TableColumn fx:id="betrag" text="Betrag" />
                   <TableColumn fx:id="kontostand" text="Kontostand" />
+                  <TableColumn fx:id="wichtigkeit" prefWidth="75.0" text="Wichtigkeit" />
               </columns>
             </TableView>
             <Button fx:id="neueEingabe" layoutX="466.0" layoutY="354.0" mnemonicParsing="false" onAction="#userNeueEingabe" text="Eingabe hinzufügen" />
