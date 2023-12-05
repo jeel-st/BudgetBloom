@@ -66,7 +66,12 @@ public class ControllerEditEntry implements Initializable {
 
     @FXML
     void userEingabeSpeichern(ActionEvent event) throws SQLException, IOException {
-        saveEdit();
+        ControllerEingabe c = new ControllerEingabe();
+        if(c.überprüfungDatentypDouble(eingabeZahl.getText())) {
+            saveEdit();
+        }else{
+            log.error("Geben sie eine Zahl in dem vorgegebenen Format an");
+        }
     }
 
 

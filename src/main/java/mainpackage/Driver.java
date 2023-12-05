@@ -5,9 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +16,7 @@ public class Driver extends Application {
     public void start(Stage stage) throws IOException {
         stg = stage;
         stage.setResizable(false);
+
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/FXML/sample.fxml")));
         stage.setTitle("BudgetBloom");
         stage.setScene(new Scene(root, 600,400));

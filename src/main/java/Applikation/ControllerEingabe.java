@@ -10,6 +10,7 @@ import mainpackage.Driver;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -58,27 +59,6 @@ public class ControllerEingabe implements Initializable {
     private String[] eingabe = {"Einnahme", "Ausgabe"};
     Driver d = new Driver();
 
-    public double kontoVeränderungsÜberprüfer(){
-        double d = Double.parseDouble(eingabeZahl.getText());
-        if (myChoiceBox.getValue().equals("Einnahme")){
-
-            log.info(d);
-            return d;
-        }else{
-
-            log.info(d);
-            if(d == 0){
-                return d;
-            }else if(d > 0){
-                return -d;
-            }else{
-                return d;
-            }
-
-        }
-
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -103,26 +83,26 @@ public class ControllerEingabe implements Initializable {
     }
 
     //Label verknüpfen:
-    public void getEingabe(ActionEvent event){
+    public void getEingabe(ActionEvent event) {
         String myEingabe = myChoiceBox.getValue();
-        eingabeText.setText("Neue " + myEingabe + ":" );
+        eingabeText.setText("Neue " + myEingabe + ":");
     }
 
 
-    public void userAbbruch(ActionEvent event)throws IOException {
+    public void userAbbruch(ActionEvent event) throws IOException {
 
         d.changeScene("/FXML/übersicht.fxml");
     }
 
 
-    public void userEingabeHinzufügen(ActionEvent event)throws IOException,SQLException {
-
-        log.info(eingabeDatum.getValue());
-        kontoVeränderung();
-
+    public void userEingabeHinzufügen(ActionEvent event) throws IOException, SQLException {
+        if(überprüfungDatentypDouble(eingabeZahl.getText())) {
+            log.info(eingabeDatum.getValue());
+            kontoVeränderung();
+        }else{
+            log.error("Geben sie eine Zahl in dem vorgegebenen Format an");
+        }
     }
-
-
 
 
     public void kontoVeränderung() throws SQLException, IOException {
@@ -144,10 +124,11 @@ public class ControllerEingabe implements Initializable {
         }
         stmt.setString(2, eingabeGrund.getText());
         try {
-            stmt.setDouble(3, kontoVeränderungsÜberprüfer() );
+            stmt.setDouble(3, kontoVeränderungsÜberprüfer());
             log.info("Kontoänderungseingabe erfolgreich");
         } catch (Exception e) {
-            log.error("Kontoänderung geht nicht");
+            log.error("Kontoänderungseingabe hat nicht geklappt");
+
         }
         try {
             double neuerKontostand = aktuellerKontostand();
@@ -165,7 +146,7 @@ public class ControllerEingabe implements Initializable {
     }
 
 
-    public double aktuellerKontostand () throws SQLException {
+    public double aktuellerKontostand() throws SQLException {
         String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
         String pass = "(JJS)2003ab";
         String user = "js486";
@@ -190,6 +171,36 @@ public class ControllerEingabe implements Initializable {
 
 
         return 0;
+    }
+
+    public double kontoVeränderungsÜberprüfer() throws Exception {
+
+            double d = Double.parseDouble(eingabeZahl.getText());
+            if (myChoiceBox.getValue().equals("Einnahme")) {
+
+                log.info(d);
+                return d;
+            } else {
+
+                log.info(d);
+                if (d == 0) {
+                    return d;
+                } else if (d > 0) {
+                    return -d;
+                } else {
+                    return d;
+                }
+
+        }
+
+    }
+    public boolean überprüfungDatentypDouble (String s){
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 

@@ -5,18 +5,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import mainpackage.Driver;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -52,6 +51,8 @@ public class ControllerÜbersicht implements Initializable{
     private Button eintragLöschen;
     @FXML
     private Button eintragBearbeiten;
+    @FXML
+    private Label errorLabel;
 
     private String username = Login.publicusername;
     public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
@@ -122,6 +123,28 @@ public class ControllerÜbersicht implements Initializable{
         }
     }
     public void removeRow(ActionEvent event) throws SQLException {
+        if(safetyCheck()){
+            deleteRow();
+        }
+
+    }
+    public boolean safetyCheck(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Warning");
+        alert.setContentText("Are you sure you want to delete this row? The data cannot be restored afterwards.");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.isEmpty()){
+            log.info("Sicherheitsfenster wurde geschlossen");
+            return false;
+        }else if(result.get()== ButtonType.OK){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+    public void deleteRow(){
         try{
             double betrag = table.getSelectionModel().getSelectedItem().getBetrag();
             String datum = table.getSelectionModel().getSelectedItem().getDatum();
@@ -133,22 +156,22 @@ public class ControllerÜbersicht implements Initializable{
             String pass = "(JJS)2003ab";
             String user = "js486";
 
-                Connection con = DriverManager.getConnection(url, user, pass);
-                log.info("Connection to database succeed");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            log.info("Connection to database succeed");
 
-                    String sql = "DELETE FROM konto" + username + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ?";
-                    PreparedStatement stmt = con.prepareStatement(sql);
-                    stmt.setDate(1, Date.valueOf(datum));
-                    stmt.setString(2, grund);
-                    stmt.setDouble(3, betrag);
-                    stmt.setDouble(4, kontostand);
-                    stmt.setInt(5, wichtigkeit);
-                    int rowsAffected = stmt.executeUpdate();
+            String sql = "DELETE FROM konto" + username + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setDate(1, Date.valueOf(datum));
+            stmt.setString(2, grund);
+            stmt.setDouble(3, betrag);
+            stmt.setDouble(4, kontostand);
+            stmt.setInt(5, wichtigkeit);
+            int rowsAffected = stmt.executeUpdate();
 
-                if (rowsAffected > 0) {
-                    log.info("Deletion successful. Rows affected: " + rowsAffected);
-                    table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
-                    //Updated die Kontostände und lädt die Tabelle neu
+            if (rowsAffected > 0) {
+                log.info("Deletion successful. Rows affected: " + rowsAffected);
+                table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
+                //Updated die Kontostände und lädt die Tabelle neu
                     /*Balance.updateBalance();
                     try{
                         datenbank();
@@ -157,17 +180,17 @@ public class ControllerÜbersicht implements Initializable{
                         log.error("Searching for data failed");
                     }
                     table.setItems(list);*/
-                    Driver d = new Driver();
-                    log.info("Reload scene übersicht.fxml");
-                    d.changeScene("/FXML/übersicht.fxml");
-                } else {
-                    log.info("No rows deleted.");
-                }
+                Driver d = new Driver();
+                log.info("Reload scene übersicht.fxml");
+                d.changeScene("/FXML/übersicht.fxml");
+            } else {
+                log.info("No rows deleted.");
+            }
 
         }catch(Exception e){
-            log.error("no row selected");
+            errorLabel.setText("No row selected");
+            log.error("Keine Zeile wurde ausgewählt");
         }
-
     }
     public void editRow(ActionEvent event) throws IOException {
         Driver d = new Driver();
@@ -184,6 +207,7 @@ public class ControllerÜbersicht implements Initializable{
             ControllerEditEntry.importance = wichtigkeit;
             d.changeScene("/FXML/editEntry.fxml");
         }catch(Exception e ){
+            errorLabel.setText("No row selected");
             log.error("Keine Zeile wurde ausgewählt");
         }
     }
