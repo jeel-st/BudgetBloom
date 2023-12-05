@@ -1,9 +1,12 @@
 TO DO`s:
 
-- ControllerEingabe Kontostand berechnen                Joel
+
 - ControllerEingabe ErrorLabel hinzufügen               Ryan
 - Wichtigkeitsskala zu Tabelle hinzufügen               Ryan
-X Tabelle nach Datum automatisch sortieren (neustes Datum ganz oben)         Jana
-X Bei skip -> erster Kontostand = 0         Jana
-- Lösung für Zeilen auswählen finden        Joel
+- Minuszahl bei erster Registrierung geht nicht
+- Zweites Auswahlfeld mit einmalig oder regelmäßig
+- Bei regelmäßig: Dropdownmenü mit täglich, monatlich, jährlich
+- Präsentation
 
+
+- optional: Kontovorhersage

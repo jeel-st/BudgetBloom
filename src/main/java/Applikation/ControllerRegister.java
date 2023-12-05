@@ -1,6 +1,5 @@
 package Applikation;
 
-import Datenbank.Kontodaten;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
