@@ -146,11 +146,13 @@ public class ControllerRegister {
                 Connection con = DriverManager.getConnection(url, user, pass);
                 String sqlTable = "CREATE TABLE konto" + username.getText() + "( \n"+
                 "id SERIAL PRIMARY KEY,\n"+
-                "edate DATE DEFAULT CURRENT_DATE,\n"+
+                "edate DATE DEFAULT CURRENT_DATE NOT NULL,\n"+
                 "note TEXT,\n"+
-                "amount NUMERIC,\n"+
-                "bankBalance NUMERIC,\n"+
-                "importance INTEGER CHECK(importance >= 0 AND importance <=10) \n"+
+                "amount NUMERIC NOT NULL,\n"+
+                "bankBalance NUMERIC NOT NULL,\n"+
+                "importance INTEGER CHECK(importance >= 0 AND importance <=10) NOT NULL,\n"+
+                "isregular BOOLEAN DEFAULT false NOT NULL,\n"+
+                "frequency VARCHAR(10) CHECK(frequency IN ('täglich', 'monatlich', 'jährlich'))\n" +
                 ")";
             PreparedStatement stm = con.prepareStatement(sqlTable);
 

@@ -9,17 +9,22 @@ CREATE TABLE users (
 
 INSERT INTO users VALUES (DEFAULT, 'tester', '123456789', 'tester@web.de');
 
-"CREATE TABLE konto+username(
+CREATE TABLE konto+username(
     id SERIAL PRIMARY KEY,
-    edate DATE DEFAULT CURRENT_DATE,
+    edate DATE DEFAULT CURRENT_DATE NOT NULL,
     note TEXT,
-    amount NUMERIC,
-    bankBalance NUMERIC,
-    importance INTEGER CHECK(importance >= 0 AND importance <=10)
-
+    amount NUMERIC NOT NULL,
+    bankBalance NUMERIC NOT NULL,
+    importance INTEGER CHECK(importance >= 0 AND importance <=10) NOT NULL,
+    isregular BOOLEAN DEFAULT false NOT NULL,
+    frequency VARCHAR(10) CHECK(frequency IN ('täglich', 'monatlich', 'jährlich'))
 );
 
 
 ALTER TABLE users ADD numlogin INTEGER DEFAULT 0;
 ALTER TABLE users ALTER numlogin SET NOT NULL;
 UPDATE users SET numlogin = 0 WHERE username = 'tester';
+
+
+ALTER TABLE kontotester ADD isregular BOOLEAN DEFAULT false NOT NULL;
+ALTER TABLE kontotester ADD frequency VARCHAR(10) CHECK(frequency IN ('täglich', 'monatlich', 'jährlich'));
