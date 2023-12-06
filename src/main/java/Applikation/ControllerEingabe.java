@@ -52,11 +52,17 @@ public class ControllerEingabe implements Initializable {
 
     @FXML
     private Button abbrechen;
+    @FXML
+    private ChoiceBox<String> repeatBox;
+    @FXML
+    private ChoiceBox<String> wiederholungshaeufigkeitBox;
+
     public static Logger log = LogManager.getLogger(ControllerEingabe.class);
 
-
+    private String[] wiederholungen = {"Einmalig", "Regelmäßig"};
     //kommt in die choicebox:
     private String[] eingabe = {"Einnahme", "Ausgabe"};
+    private String[] wiederholungsHäufigkeit = {"täglich", "monatlich", "jährlich"};
     Driver d = new Driver();
 
 
@@ -66,8 +72,11 @@ public class ControllerEingabe implements Initializable {
         //ChoiceBox:
         myChoiceBox.getItems().addAll(eingabe);
         myChoiceBox.setOnAction(this::getEingabe);  //this:: ist ein reverence operator (zum Label)
-
-
+        repeatBox.getItems().addAll(wiederholungen);
+        repeatBox.setOnAction(this::getRepeat);
+        repeatBox.setValue("Einmalig");
+        wiederholungshaeufigkeitBox.getItems().addAll(wiederholungsHäufigkeit);
+        wiederholungshaeufigkeitBox.setVisible(false);
         //WichtigkeitsSkala (Slider + Label):
         mySkalaZahl = (int) skala.getValue();
         skalaLabel.setText(Integer.toString(mySkalaZahl));
@@ -81,7 +90,16 @@ public class ControllerEingabe implements Initializable {
             }
         });
     }
-
+    public void getRepeat(ActionEvent event){
+        String repetition = repeatBox.getValue();
+        if ("Regelmäßig".equalsIgnoreCase(repetition)) {
+            // Zeige die Wiederholungshäufigkeit-ChoiceBox an
+            wiederholungshaeufigkeitBox.setVisible(true);
+        } else {
+            // Verberge die Wiederholungshäufigkeit-ChoiceBox
+            wiederholungshaeufigkeitBox.setVisible(false);
+        }
+    }
     //Label verknüpfen:
     public void getEingabe(ActionEvent event) {
         String myEingabe = myChoiceBox.getValue();
@@ -146,7 +164,7 @@ public class ControllerEingabe implements Initializable {
     }
 
 
-    public double aktuellerKontostand() throws SQLException {
+    public double aktuellerKontostand() throws Exception,SQLException{
         String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
         String pass = "(JJS)2003ab";
         String user = "js486";
@@ -169,8 +187,7 @@ public class ControllerEingabe implements Initializable {
             log.error("kein Kontostand gefunden");
         }
 
-
-        return 0;
+        throw new Exception();
     }
 
     public double kontoVeränderungsÜberprüfer() {
