@@ -92,6 +92,11 @@ public class ControllerÜbersicht implements Initializable{
         log.info("Changed Scene to eingabe.fxml");
         d.changeScene("/FXML/eingabe.fxml");
     }
+    public void removeRow(ActionEvent event) throws SQLException {
+        if(safetyCheck()){
+            deleteRow();
+        }
+    }
 
     public void datenbank() throws SQLException{
 
@@ -122,12 +127,7 @@ public class ControllerÜbersicht implements Initializable{
             log.error("Username is null");
         }
     }
-    public void removeRow(ActionEvent event) throws SQLException {
-        if(safetyCheck()){
-            deleteRow();
-        }
 
-    }
     public boolean safetyCheck(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Warning");

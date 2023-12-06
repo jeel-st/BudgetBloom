@@ -2,11 +2,13 @@ TO DO`s:
 
 
 - ControllerEingabe ErrorLabel hinzufügen               Ryan
-- Wichtigkeitsskala zu Tabelle hinzufügen               Ryan
-- Minuszahl bei erster Registrierung geht nicht
-- Zweites Auswahlfeld mit einmalig oder regelmäßig
-- Bei regelmäßig: Dropdownmenü mit täglich, monatlich, jährlich
+- Minuszahl bei erster Registrierung geht nicht         jana
+- Zweites Auswahlfeld mit einmalig oder regelmäßig      Joel
+- Bei regelmäßig: Dropdownmenü mit täglich, monatlich, jährlich     Joel
 - Präsentation
-
+- Einnahme/Ausgabe negativ bearbeiten           Joel
+- ErrorLabel bei ControllerEdit                 Joel
+- ErrorLabel                                       Ryan
+- Jana Datenbank einmalig/regelmäßig + Kategorien  Jana
 
 - optional: Kontovorhersage
