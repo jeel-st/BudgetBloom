@@ -136,7 +136,7 @@ public class ControllerEditEntry implements Initializable {
         }
         stmt.setString(2, eingabeGrund.getText());
         try {
-            stmt.setDouble(3, Double.parseDouble(eingabeZahl.getText()));
+            stmt.setDouble(3, kontoVeränderungsÜberprüferEdit());
             log.info("Kontoänderungseingabe erfolgreich");
         } catch (Exception e) {
             log.error("Kontoänderung geht nicht");
@@ -150,6 +150,27 @@ public class ControllerEditEntry implements Initializable {
         stmt.executeUpdate();
 
         d.changeScene("/FXML/übersicht.fxml");
+    }
+    public double kontoVeränderungsÜberprüferEdit() {
+
+        double d = Double.parseDouble(eingabeZahl.getText());
+        if (myChoiceBox.getValue().equals("Einnahme")) {
+
+            log.info(d);
+            return d;
+        } else {
+
+            log.info(d);
+            if (d == 0) {
+                return d;
+            } else if (d > 0) {
+                return -d;
+            } else {
+                return d;
+            }
+
+        }
+
     }
 
 }

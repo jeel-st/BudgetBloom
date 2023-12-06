@@ -173,7 +173,7 @@ public class ControllerEingabe implements Initializable {
         return 0;
     }
 
-    public double kontoVeränderungsÜberprüfer() throws Exception {
+    public double kontoVeränderungsÜberprüfer() {
 
             double d = Double.parseDouble(eingabeZahl.getText());
             if (myChoiceBox.getValue().equals("Einnahme")) {
