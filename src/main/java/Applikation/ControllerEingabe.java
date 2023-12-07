@@ -28,6 +28,9 @@ public class ControllerEingabe implements Initializable {
     private Label eingabeText;
 
     @FXML
+    private Label errorLabel;
+
+    @FXML
     private DatePicker eingabeDatum;
 
     @FXML
@@ -72,6 +75,7 @@ public class ControllerEingabe implements Initializable {
         //ChoiceBox:
         myChoiceBox.getItems().addAll(eingabe);
         myChoiceBox.setOnAction(this::getEingabe);  //this:: ist ein reverence operator (zum Label)
+        myChoiceBox.setValue("Einnahme");
         repeatBox.getItems().addAll(wiederholungen);
         repeatBox.setOnAction(this::getRepeat);
         repeatBox.setValue("Einmalig");
@@ -111,17 +115,14 @@ public class ControllerEingabe implements Initializable {
 
 
     public void userEingabeHinzufügen(ActionEvent event) throws IOException, SQLException {
-        if(überprüfungDatentypDouble(eingabeZahl.getText())) {
-            log.info(eingabeDatum.getValue());
+
             if(wiederholungshaeufigkeitBox.getValue() != null && checkIsRegularBoolean() == true || wiederholungshaeufigkeitBox.getValue() == null && checkIsRegularBoolean() == false) {
                 kontoVeränderung();
             }else{
                 log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
             }
-        }else{
-            log.error("Geben sie eine Zahl in dem vorgegebenen Format an");
         }
-    }
+
 
 
     public void kontoVeränderung() throws SQLException, IOException {
@@ -137,32 +138,55 @@ public class ControllerEingabe implements Initializable {
         String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = con.prepareStatement(sql);
         try {
-            stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
-        } catch (Exception e) {
-            log.error("Datum geht nicht");
-        }
-        stmt.setString(2, eingabeGrund.getText());
-        try {
             stmt.setDouble(3, kontoVeränderungsÜberprüfer());
             log.info("Kontoänderungseingabe erfolgreich");
         } catch (Exception e) {
             log.error("Kontoänderungseingabe hat nicht geklappt");
-
+            errorLabel.setText("Bitte achten Sie auf das vorgegebene Format (xxx.xx)!");
         }
+
+        try {
+            String grund = eingabeGrund.getText();
+            if (grund.isEmpty()) {
+                throw new IllegalArgumentException("Grund ist ein Pflichtfeld");
+            }
+            stmt.setString(2, grund);
+        } catch (Exception e) {
+            log.error("Grund geht nicht");
+            errorLabel.setText("Bitte fügen Sie einen Grund hinzu!" );
+        }
+
+        try {
+            stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
+        } catch (Exception e) {
+            log.error("Datum geht nicht");
+            errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
+        }
+
+
         try {
             double neuerKontostand = aktuellerKontostand();
-            log.info(neuerKontostand);
+            log.info("Neuer Kontostand: " + neuerKontostand);
             stmt.setDouble(4, neuerKontostand);
         } catch (Exception e) {
             log.error("Aktueller Kontostand  konnte nicht aufgerufen werden");
         }
 
-        stmt.setInt(5, sliderWert);
-        stmt.setBoolean(6, checkIsRegularBoolean());
-        stmt.setString(7, checkFrequency());
-        stmt.executeUpdate();
 
-        d.changeScene("/FXML/übersicht.fxml");
+
+        stmt.setInt(5, sliderWert);
+
+        try {
+            stmt.executeUpdate();
+            d.changeScene("/FXML/übersicht.fxml");
+            stmt.setBoolean(6, checkIsRegularBoolean());
+            stmt.setString(7, checkFrequency());
+            stmt.executeUpdate();
+
+        }catch (Exception e){
+            log.info("Eingabe konnte nicht hinzugefügt werden");
+        }
+
     }
 
     public boolean checkIsRegularBoolean(){
