@@ -93,10 +93,8 @@ public class ControllerEingabe implements Initializable {
     public void getRepeat(ActionEvent event){
         String repetition = repeatBox.getValue();
         if ("Regelmäßig".equalsIgnoreCase(repetition)) {
-            // Zeige die Wiederholungshäufigkeit-ChoiceBox an
             wiederholungshaeufigkeitBox.setVisible(true);
         } else {
-            // Verberge die Wiederholungshäufigkeit-ChoiceBox
             wiederholungshaeufigkeitBox.setVisible(false);
         }
     }
@@ -108,7 +106,6 @@ public class ControllerEingabe implements Initializable {
 
 
     public void userAbbruch(ActionEvent event) throws IOException {
-
         d.changeScene("/FXML/übersicht.fxml");
     }
 
@@ -116,7 +113,11 @@ public class ControllerEingabe implements Initializable {
     public void userEingabeHinzufügen(ActionEvent event) throws IOException, SQLException {
         if(überprüfungDatentypDouble(eingabeZahl.getText())) {
             log.info(eingabeDatum.getValue());
-            kontoVeränderung();
+            if(wiederholungshaeufigkeitBox.getValue() != null && checkIsRegularBoolean() == true || wiederholungshaeufigkeitBox.getValue() == null && checkIsRegularBoolean() == false) {
+                kontoVeränderung();
+            }else{
+                log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
+            }
         }else{
             log.error("Geben sie eine Zahl in dem vorgegebenen Format an");
         }
@@ -133,7 +134,7 @@ public class ControllerEingabe implements Initializable {
 
         int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
 
-        String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = con.prepareStatement(sql);
         try {
             stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
@@ -157,10 +158,31 @@ public class ControllerEingabe implements Initializable {
         }
 
         stmt.setInt(5, sliderWert);
-
+        stmt.setBoolean(6, checkIsRegularBoolean());
+        stmt.setString(7, checkFrequency());
         stmt.executeUpdate();
 
         d.changeScene("/FXML/übersicht.fxml");
+    }
+
+    public boolean checkIsRegularBoolean(){
+        if(repeatBox.getValue().equals("Einmalig")){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public String checkFrequency(){
+        if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("täglich")){
+            return "täglich";
+        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
+            return "monatlich";
+        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
+            return "jährlich";
+        }else {
+            return null;
+        }
     }
 
 
