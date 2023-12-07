@@ -11,7 +11,7 @@
    <right>
       <AnchorPane prefHeight="400.0" prefWidth="601.0" style="-fx-background-color: #FFA54F;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="logout" layoutX="527.0" layoutY="14.0" mnemonicParsing="false" onAction="#userLogout" text="Logout" />
+            <Button fx:id="logout" layoutX="14.0" layoutY="354.0" mnemonicParsing="false" onAction="#userLogout" text="Logout" />
             <TableView fx:id="table" layoutX="65.0" layoutY="49.0" prefHeight="293.0" prefWidth="472.0" style="-fx-background-color: #18D1E3;">
               <columns>
                   <TableColumn fx:id="datum" text="Datum" />
@@ -25,7 +25,7 @@
             <Button fx:id="neueEingabe" layoutX="466.0" layoutY="354.0" mnemonicParsing="false" onAction="#userNeueEingabe" text="Eingabe hinzufügen" />
             <Button fx:id="eintragLöschen" layoutX="336.0" layoutY="354.0" mnemonicParsing="false" onAction="#removeRow" prefHeight="25.0" prefWidth="120.0" text="Löschen" />
             <Button fx:id="eintragBearbeiten" layoutX="206.0" layoutY="354.0" mnemonicParsing="false" onAction="#editRow" prefHeight="25.0" prefWidth="119.0" text="Bearbeiten" />
-            <Label fx:id="errorLabel" layoutX="265.0" layoutY="358.0" textFill="RED" />
+            <Label fx:id="errorLabel" layoutX="75.0" layoutY="358.0" prefHeight="17.0" prefWidth="131.0" textFill="RED" />
          </children>
       </AnchorPane>
    </right>
