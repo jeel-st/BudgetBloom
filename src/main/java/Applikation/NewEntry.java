@@ -11,17 +11,18 @@ public class NewEntry {
     private Double betrag;
     private Double kontostand;
     private Integer wichtigkeit;
-
+    private String regelmäßigkeit;
     public String user;
     public static Logger log = LogManager.getLogger(NewEntry.class);
 
     //constructor:
-    public NewEntry(String datum, String grund, Double betrag, Double kontostand, Integer wichtigkeit) {
+    public NewEntry(String datum, String grund, Double betrag, Double kontostand, Integer wichtigkeit, String regelmäßigkeit) {
         this.datum = datum;
         this.grund = grund;
         this.betrag = betrag;
         this.kontostand = kontostand;
         this.wichtigkeit = wichtigkeit;
+        this.regelmäßigkeit = regelmäßigkeit;
     }
 
     //Getters:
@@ -45,5 +46,5 @@ public class NewEntry {
 
     public Integer getWichtigkeit() {return wichtigkeit;}
 
-
+    public String getRegelmäßigkeit(){return regelmäßigkeit;}
 }

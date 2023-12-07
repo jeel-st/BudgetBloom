@@ -12,7 +12,6 @@ import java.net.URL;
 import java.sql.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutionException;
 
 
 import javafx.scene.control.Button;
@@ -27,9 +26,6 @@ public class ControllerEingabe implements Initializable {
 
     @FXML
     private Label eingabeText;
-
-    @FXML
-    private Label errorLabel;
 
     @FXML
     private DatePicker eingabeDatum;
@@ -76,7 +72,6 @@ public class ControllerEingabe implements Initializable {
         //ChoiceBox:
         myChoiceBox.getItems().addAll(eingabe);
         myChoiceBox.setOnAction(this::getEingabe);  //this:: ist ein reverence operator (zum Label)
-        myChoiceBox.setValue("Einnahme");
         repeatBox.getItems().addAll(wiederholungen);
         repeatBox.setOnAction(this::getRepeat);
         repeatBox.setValue("Einmalig");
@@ -98,10 +93,8 @@ public class ControllerEingabe implements Initializable {
     public void getRepeat(ActionEvent event){
         String repetition = repeatBox.getValue();
         if ("Regelmäßig".equalsIgnoreCase(repetition)) {
-            // Zeige die Wiederholungshäufigkeit-ChoiceBox an
             wiederholungshaeufigkeitBox.setVisible(true);
         } else {
-            // Verberge die Wiederholungshäufigkeit-ChoiceBox
             wiederholungshaeufigkeitBox.setVisible(false);
         }
     }
@@ -113,15 +106,25 @@ public class ControllerEingabe implements Initializable {
 
 
     public void userAbbruch(ActionEvent event) throws IOException {
-
         d.changeScene("/FXML/übersicht.fxml");
     }
 
 
+    public void userEingabeHinzufügen(ActionEvent event) throws IOException, SQLException {
+        if(überprüfungDatentypDouble(eingabeZahl.getText())) {
+            log.info(eingabeDatum.getValue());
+            if(wiederholungshaeufigkeitBox.getValue() != null && checkIsRegularBoolean() == true || wiederholungshaeufigkeitBox.getValue() == null && checkIsRegularBoolean() == false) {
+                kontoVeränderung();
+            }else{
+                log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
+            }
+        }else{
+            log.error("Geben sie eine Zahl in dem vorgegebenen Format an");
+        }
+    }
 
 
-
-    public void kontoVeränderung() throws Exception,SQLException {
+    public void kontoVeränderung() throws SQLException, IOException {
         String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
         String pass = "(JJS)2003ab";
         String user = "js486";
@@ -131,65 +134,54 @@ public class ControllerEingabe implements Initializable {
 
         int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
 
-        String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = con.prepareStatement(sql);
-
-
-
+        try {
+            stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
+        } catch (Exception e) {
+            log.error("Datum geht nicht");
+        }
+        stmt.setString(2, eingabeGrund.getText());
         try {
             stmt.setDouble(3, kontoVeränderungsÜberprüfer());
             log.info("Kontoänderungseingabe erfolgreich");
         } catch (Exception e) {
             log.error("Kontoänderungseingabe hat nicht geklappt");
-            errorLabel.setText("Bitte achten Sie auf das vorgegebene Format (xxx.xx)!");
+
         }
-
-        try {
-            String grund = eingabeGrund.getText();
-            if (grund.isEmpty()) {
-                throw new IllegalArgumentException("Grund ist ein Pflichtfeld");
-            }
-            stmt.setString(2, grund);
-        } catch (Exception e) {
-            log.error("Grund geht nicht");
-            errorLabel.setText("Bitte fügen Sie einen Grund hinzu!" );
-        }
-
-        try {
-            stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
-        } catch (Exception e) {
-            log.error("Datum geht nicht");
-            errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
-        }
-
-
         try {
             double neuerKontostand = aktuellerKontostand();
-            log.info("Neuer Kontostand: " + neuerKontostand);
+            log.info(neuerKontostand);
             stmt.setDouble(4, neuerKontostand);
         } catch (Exception e) {
             log.error("Aktueller Kontostand  konnte nicht aufgerufen werden");
         }
 
-
-
         stmt.setInt(5, sliderWert);
+        stmt.setBoolean(6, checkIsRegularBoolean());
+        stmt.setString(7, checkFrequency());
+        stmt.executeUpdate();
 
-        try {
-            stmt.executeUpdate();
-            d.changeScene("/FXML/übersicht.fxml");
-
-        }catch (Exception e){
-            log.info("Eingabe konnte nicht hinzugefügt werden");
-        }
-
+        d.changeScene("/FXML/übersicht.fxml");
     }
 
-    public void userEingabeHinzufügen(ActionEvent event) throws IOException, SQLException {
-        try{
-            kontoVeränderung();
-        }catch(Exception e){
-            log.error("Kontoveränderung konnte nicht durchgeführt werden");
+    public boolean checkIsRegularBoolean(){
+        if(repeatBox.getValue().equals("Einmalig")){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public String checkFrequency(){
+        if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("täglich")){
+            return "täglich";
+        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
+            return "monatlich";
+        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
+            return "jährlich";
+        }else {
+            return null;
         }
     }
 
@@ -209,7 +201,7 @@ public class ControllerEingabe implements Initializable {
             while (rs.next()) {
                 double Kontostand = rs.getDouble("bankBalance");
 
-                log.info("Kontostand: " + Kontostand);
+                log.info(Kontostand);
                 double neuerKontostand = Kontostand + kontoVeränderungsÜberprüfer();
                 return neuerKontostand;
             }
@@ -225,7 +217,7 @@ public class ControllerEingabe implements Initializable {
             double d = Double.parseDouble(eingabeZahl.getText());
             if (myChoiceBox.getValue().equals("Einnahme")) {
 
-                log.info("Kontoveränderung: " + d);
+                log.info(d);
                 return d;
             } else {
 
