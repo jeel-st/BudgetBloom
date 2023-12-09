@@ -227,6 +227,7 @@ public class ControllerEingabe implements Initializable {
 
                 log.info(Kontostand);
                 double neuerKontostand = Kontostand + kontoVeränderungsÜberprüfer();
+                neuerKontostand = Math.round(neuerKontostand * 100.0) / 100.0;
                 return neuerKontostand;
             }
         } catch (Exception e) {

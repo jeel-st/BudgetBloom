@@ -101,7 +101,7 @@ public class FirstLogin extends Application {
     }
 
     private boolean isBalanceNumber(String balance) {
-        String regex = "^[0-9]+([.][0-9][0-9]?)?$";
+        String regex = "^[-]?[0-9]+([.][0-9][0-9]?)?$";
 
         Pattern pattern = Pattern.compile(regex);
 
