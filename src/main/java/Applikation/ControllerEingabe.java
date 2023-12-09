@@ -177,11 +177,10 @@ public class ControllerEingabe implements Initializable {
         stmt.setInt(5, sliderWert);
 
         try {
-            stmt.executeUpdate();
-            d.changeScene("/FXML/übersicht.fxml");
             stmt.setBoolean(6, checkIsRegularBoolean());
             stmt.setString(7, checkFrequency());
             stmt.executeUpdate();
+            d.changeScene("/FXML/übersicht.fxml");
 
         }catch (Exception e){
             log.info("Eingabe konnte nicht hinzugefügt werden");
