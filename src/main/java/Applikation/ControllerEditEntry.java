@@ -166,6 +166,7 @@ public class ControllerEditEntry implements Initializable {
                 log.info(s);
                 return s;
             }else{
+                log.error("Es wurde kein passender Datensatz gefunden");
                 throw new Exception();
             }
         }catch (Exception e){

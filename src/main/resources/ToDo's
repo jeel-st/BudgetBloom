@@ -8,6 +8,9 @@ TO DO`s:
 - Präsentation
 - ErrorLabel                                       Ryan
 X Datenbank einmalig/regelmäßig + Kategorien        Jana
+- Datum wird doch nicht gecatched
+- Wenn alles leer ist, kommt kein Text im Errorlabel
+- try catches im editEntry Controller
 
 - optional: Kontovorhersage
 
