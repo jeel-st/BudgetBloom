@@ -116,13 +116,12 @@ public class ControllerEingabe implements Initializable {
 
     public void userEingabeHinzufügen(ActionEvent event) throws IOException, SQLException {
 
-            if(wiederholungshaeufigkeitBox.getValue() != null && checkIsRegularBoolean() == true || wiederholungshaeufigkeitBox.getValue() == null && checkIsRegularBoolean() == false) {
+            if(wiederholungshaeufigkeitBox.getValue() != null && checkIsRegularBoolean()|| wiederholungshaeufigkeitBox.getValue() == null && checkIsRegularBoolean() == false) {
                 kontoVeränderung();
             }else{
                 log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
             }
         }
-
 
 
     public void kontoVeränderung() throws SQLException, IOException {

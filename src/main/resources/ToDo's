@@ -1,20 +1,18 @@
 TO DO`s:
 
 
-- ControllerEingabe ErrorLabel hinzufügen               Ryan
-- Minuszahl bei erster Registrierung geht nicht         jana
-- Zweites Auswahlfeld mit einmalig oder regelmäßig      Joel
-- Bei regelmäßig: Dropdownmenü mit täglich, monatlich, jährlich     Joel
-- Präsentation
-- ErrorLabel                                       Ryan
-X Datenbank einmalig/regelmäßig + Kategorien        Jana
 - Datum wird doch nicht gecatched
-- Wenn alles leer ist, kommt kein Text im Errorlabel
 - try catches im editEntry Controller
+- Thread hinzufügen und Datenbankklasse mit Verbindung aufbauen     Ryan
+- Stream und Thread in Bezug auf Filtern der Tabelle nach dem neusten Kontostand nach einer bestimmten Zeit     Jana
+- Singleton Methode für Username mit Interface (evtl. noch Factory)     Joel
 
-- optional: Kontovorhersage
 
 
+Besprechung zum Schluss:
+- Streams und Threads müssen nicht unbedingt visuell dargestellt werden, können auch geloggt werden zum Beispiel
+- doppelter Code -> andere Klasse oder abstrakte Klasse erstellen
+- User kann Interface + Factory bekommen
 
 Ganz am Ende:
 Usertabelle leeren und neu befüllen,
