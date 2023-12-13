@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 
+import mainpackage.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -56,7 +57,8 @@ public class ControllerÜbersicht implements Initializable{
     @FXML
     private Label errorLabel;
 
-    private String username = Login.publicusername;
+    User u = User.getInstance();
+    private String localUser = u.getLocalUser();
     public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
 
     //Oberserver Liste weil Tabelle es als Input nutzt
@@ -109,9 +111,9 @@ public class ControllerÜbersicht implements Initializable{
 
         Connection con = DriverManager.getConnection(url, user, pass);
 
-        if(username != null) {
+        if(localUser != null) {
             try {
-                String sql = "SELECT edate, note, amount, bankbalance, importance, isregular FROM konto" + username + " ORDER BY edate DESC, id DESC";
+                String sql = "SELECT edate, note, amount, bankbalance, importance, isregular FROM konto" + localUser + " ORDER BY edate DESC, id DESC";
 
                 PreparedStatement stmt = con.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery();
@@ -176,7 +178,7 @@ public class ControllerÜbersicht implements Initializable{
             Connection con = DriverManager.getConnection(url, user, pass);
             log.info("Connection to database succeed");
 
-            String sql = "DELETE FROM konto" + username + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";
+            String sql = "DELETE FROM konto" + localUser + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setDate(1, Date.valueOf(datum));
             stmt.setString(2, grund);

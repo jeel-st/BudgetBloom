@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import mainpackage.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -66,8 +67,10 @@ public class ControllerEingabe implements Initializable {
     //kommt in die choicebox:
     private String[] eingabe = {"Einnahme", "Ausgabe"};
     private String[] wiederholungsHäufigkeit = {"täglich", "monatlich", "jährlich"};
-    Driver d = new Driver();
 
+    Driver d = new Driver();
+    User u = User.getInstance();
+    private final String localUser = u.getLocalUser();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -116,7 +119,7 @@ public class ControllerEingabe implements Initializable {
 
     public void userEingabeHinzufügen(ActionEvent event) throws IOException, SQLException {
 
-            if(wiederholungshaeufigkeitBox.getValue() != null && checkIsRegularBoolean()|| wiederholungshaeufigkeitBox.getValue() == null && checkIsRegularBoolean() == false) {
+            if(wiederholungshaeufigkeitBox.getValue() != null && checkIsRegularBoolean()|| wiederholungshaeufigkeitBox.getValue() == null && !checkIsRegularBoolean()) {
                 kontoVeränderung();
             }else{
                 log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
@@ -134,7 +137,7 @@ public class ControllerEingabe implements Initializable {
 
         int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
 
-        String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO konto" + localUser + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = con.prepareStatement(sql);
         try {
             stmt.setDouble(3, kontoVeränderungsÜberprüfer());
@@ -196,11 +199,11 @@ public class ControllerEingabe implements Initializable {
     }
 
     public String checkFrequency(){
-        if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("täglich")){
+        if(checkIsRegularBoolean()&& wiederholungshaeufigkeitBox.getValue().equals("täglich")){
             return "täglich";
-        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
+        }else if(checkIsRegularBoolean()&& wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
             return "monatlich";
-        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
+        }else if(checkIsRegularBoolean() && wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
             return "jährlich";
         }else {
             return null;
@@ -216,7 +219,7 @@ public class ControllerEingabe implements Initializable {
         Connection con = DriverManager.getConnection(url, user, pass);
         log.info("Connection to database succeed");
 
-        String sql = "SELECT bankBalance FROM konto" + Login.publicusername + " ORDER BY edate DESC, id DESC LIMIT 1";
+        String sql = "SELECT bankBalance FROM konto" + localUser + " ORDER BY edate DESC, id DESC LIMIT 1";
         PreparedStatement stmt = con.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         try {

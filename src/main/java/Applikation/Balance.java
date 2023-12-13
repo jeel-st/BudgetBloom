@@ -1,26 +1,30 @@
 package Applikation;
 
+import mainpackage.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
-import static Applikation.Login.publicusername;
+
 
 
 public class Balance {
+
+
     public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
 
     public static void updateBalance() {
         String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
         String pass = "(JJS)2003ab";
         String user = "js486";
-
+        User u = User.getInstance();
+        String localUser = u.getLocalUser();
         try {
             Connection con = DriverManager.getConnection(url, user, pass);
 
             try {
-                String sql = "SELECT id, amount, bankbalance FROM konto" + publicusername + " ORDER BY edate ASC, id ASC";
+                String sql = "SELECT id, amount, bankbalance FROM konto" + localUser + " ORDER BY edate ASC, id ASC";
 
                 PreparedStatement stmt = con.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery();
@@ -39,7 +43,7 @@ public class Balance {
                         double neuerKontostand2 = kontostand1 + betrag2;
 
                         try {
-                            String sql2 = "UPDATE konto" + publicusername + " SET bankbalance = ? WHERE id = ?";
+                            String sql2 = "UPDATE konto" + localUser + " SET bankbalance = ? WHERE id = ?";
                             PreparedStatement stmt2 = con.prepareStatement(sql2);
                             stmt2.setDouble(1, neuerKontostand2);
                             stmt2.setInt(2, id2);

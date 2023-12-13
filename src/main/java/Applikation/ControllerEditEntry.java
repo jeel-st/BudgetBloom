@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import mainpackage.Driver;
+import mainpackage.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javafx.fxml.Initializable;
@@ -65,6 +66,8 @@ public class ControllerEditEntry implements Initializable {
     public static int importance;
     public static String isregular;
     Driver d = new Driver();
+    User u = User.getInstance();
+    private final String localUser = u.getLocalUser();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
     @FXML
     void userAbbruch(ActionEvent event) throws IOException {
@@ -152,7 +155,7 @@ public class ControllerEditEntry implements Initializable {
 
         log.info(isregularBool(isregular));
         try {
-            String sql = "SELECT frequency FROM konto" + Login.publicusername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
+            String sql = "SELECT frequency FROM konto" + localUser + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setDate(1, Date.valueOf(date));
             stmt.setString(2,note);
@@ -207,7 +210,7 @@ public class ControllerEditEntry implements Initializable {
 
         int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
 
-        String sql = "UPDATE konto" + Login.publicusername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
+        String sql = "UPDATE konto" + localUser + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
         PreparedStatement stmt = con.prepareStatement(sql);
         try {
             stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));

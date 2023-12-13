@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import mainpackage.Driver;
+import mainpackage.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,10 +27,12 @@ public class Login {
     @FXML
     private Button register;
     Driver d = new Driver();
+    User u = User.getInstance();
 
     public static Logger log = LogManager.getLogger(Login.class);
     public void userLogin(ActionEvent event) throws SQLException, ClassNotFoundException{
         log.info("Login button pushed");
+        setUsername();
         checkLogin();
     }
 
@@ -37,9 +40,11 @@ public class Login {
         log.info("Registration button pushed");
         checkRegister();
     }
-    public static String publicusername;
-    public String getUsername() {
-        return publicusername;
+    private String localUser;
+    public void setUsername(){
+        u.setLocalUser(username.getText());
+        localUser =  u.getLocalUser();
+
     }
 
     public void checkRegister()throws IOException{
@@ -71,14 +76,14 @@ public class Login {
 
                 if (rs.next()) {
                     wrongLogin.setText("Success!");
-                    publicusername = username.getText();
-                    log.info("Username " + publicusername + " found in database");
+                    localUser = username.getText();
+                    log.info("Username " + localUser + " found in database");
                     try {
                         String sql2 = "UPDATE users SET ldate = CURRENT_DATE WHERE username = ?";
 
                         PreparedStatement stmt2 = con.prepareStatement(sql2);
 
-                        stmt2.setString(1, publicusername);
+                        stmt2.setString(1, localUser);
 
                         stmt2.executeQuery();
 
@@ -90,7 +95,7 @@ public class Login {
                     try {
                         String sql3 = "UPDATE users SET numlogin = numlogin + 1 WHERE username = ?";
                         PreparedStatement stmt3 = con.prepareStatement(sql3);
-                        stmt3.setString(1, publicusername);
+                        stmt3.setString(1, localUser);
                         stmt3.executeQuery();
                     } catch (SQLException e) {
                         //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
@@ -99,7 +104,7 @@ public class Login {
                     try {
                         String sql4 = "SELECT * FROM users WHERE username = ? AND numlogin = 1";
                         PreparedStatement stmt4 = con.prepareStatement(sql4);
-                        stmt4.setString(1, publicusername);
+                        stmt4.setString(1, localUser);
                         ResultSet rs2 = stmt4.executeQuery();
                         if (rs2.next()) {
                             log.info("Scene changed to firstLogin.fxml successfully");
