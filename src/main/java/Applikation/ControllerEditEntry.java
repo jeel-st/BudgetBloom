@@ -69,6 +69,7 @@ public class ControllerEditEntry implements Initializable {
     public static String isregular;
     Driver d = new Driver();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
+
     @FXML
     void userAbbruch(ActionEvent event) throws IOException {
         d.changeScene("/FXML/übersicht.fxml");
@@ -77,9 +78,9 @@ public class ControllerEditEntry implements Initializable {
     @FXML
     void userEingabeSpeichern(ActionEvent event) throws SQLException, IOException {
         ControllerEingabe c = new ControllerEingabe();
-        if(repeatBox.getValue().equals("Regelmäßig") && wiederholungshaeufigkeitBox.getValue()==null) {
+        if (repeatBox.getValue().equals("Regelmäßig") && wiederholungshaeufigkeitBox.getValue() == null) {
             log.error("Geben sie eine Frequenz an");
-        }else{
+        } else {
             if (c.überprüfungDatentypDouble(eingabeZahl.getText())) {
                 saveEdit();
             } else {
@@ -90,14 +91,13 @@ public class ControllerEditEntry implements Initializable {
     }
 
 
-
     public void initialize(URL url, ResourceBundle resourceBundle) {
         repeatBox.getItems().addAll(wiederholungen);
         repeatBox.setOnAction(this::getRepeat);
-        if(isregular.equals("Einmalig")){
+        if (isregular.equals("Einmalig")) {
             repeatBox.setValue(isregular);
             wiederholungshaeufigkeitBox.setVisible(false);
-        }else{
+        } else {
             repeatBox.setValue(isregular);
             wiederholungshaeufigkeitBox.setVisible(true);
             try {
@@ -108,21 +108,20 @@ public class ControllerEditEntry implements Initializable {
         }
         wiederholungshaeufigkeitBox.getItems().addAll(wiederholungsHäufigkeit);
 
-        try{
-            if(amount >= 0){
+        try {
+            if (amount >= 0) {
                 myChoiceBox.setValue("Einnahme");
-            }else{
+            } else {
                 myChoiceBox.setValue("Ausgabe");
             }
             log.info("Date was set successfully");
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("Date wasn't set");
         }
         eingabeDatum.setValue(LocalDate.parse(date));
         eingabeGrund.setText(note);
         eingabeZahl.setText(String.valueOf(amount));
         skala.setValue(importance);
-
 
 
         //ChoiceBox:
@@ -144,154 +143,154 @@ public class ControllerEditEntry implements Initializable {
         });
 
     }
+
     public String showContentOfWiederholungshaeufigkeitBox() throws Exception, SQLException {
 
-        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-        String pass = "(JJS)2003ab";
-        String user = "js486";
-
-        Connection con = DriverManager.getConnection(url, user, pass);
-        log.info("Connection to database succeed");
-
-
-        log.info(isregularBool(isregular));
-        try {
+        try (Connection con = DatenbankConnector.getConnection()) {
+            log.info("Connection to database succeed");
+            log.info(isregularBool(isregular));
             String sql = "SELECT frequency FROM konto" + Login.publicusername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setDate(1, Date.valueOf(date));
-            stmt.setString(2,note);
-            stmt.setDouble(3,amount);
-            stmt.setDouble(4, bankBalance);
-            stmt.setInt(5, importance);
-            stmt.setBoolean(6, isregularBool(isregular));
-            ResultSet rs = stmt.executeQuery();
-            if(rs.next()) {
-                String s = rs.getString("frequency");
-                log.info(s);
-                return s;
-            }else{
-                log.error("Es wurde kein passender Datensatz gefunden");
-                throw new Exception();
+            try (PreparedStatement stmt = con.prepareStatement(sql)) {
+
+                stmt.setDate(1, Date.valueOf(date));
+                stmt.setString(2, note);
+                stmt.setDouble(3, amount);
+                stmt.setDouble(4, bankBalance);
+                stmt.setInt(5, importance);
+                stmt.setBoolean(6, isregularBool(isregular));
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        String s = rs.getString("frequency");
+                        log.info(s);
+                        return s;
+                    } else {
+                        log.error("Es wurde kein passender Datensatz gefunden");
+                        throw new Exception();
+                    }
+                }
+            } catch (Exception e) {
+                log.error("Datenbank funktioniert nicht", e);
+                throw e;
             }
-        }catch (Exception e){
-            log.error("Datenbank funktioniert nicht");
-        }
-        throw new Exception();
-    }
-    public boolean isregularBool(String s){
-        boolean isregularBool;
-        if(s.equals("Einmalig")){
-            isregularBool = false;
-            return isregularBool;
-        }else{
-            isregularBool = true;
-            return isregularBool;
+        } catch (SQLException e) {
+            log.error("Error closing connection", e);
+            throw e;
         }
     }
-    public void getRepeat(ActionEvent event){
-        String repetition = repeatBox.getValue();
-        if ("Regelmäßig".equalsIgnoreCase(repetition)) {
-            wiederholungshaeufigkeitBox.setVisible(true);
-        } else {
-            wiederholungshaeufigkeitBox.setVisible(false);
-        }
-    }
-    public void getEingabe(ActionEvent event){
-        String myEingabe = myChoiceBox.getValue();
-        eingabeText.setText("Neue " + myEingabe + ":" );
-    }
-    public void saveEdit() throws SQLException, IOException {
-
-        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-        String pass = "(JJS)2003ab";
-        String user = "js486";
-
-        Connection con = DriverManager.getConnection(url, user, pass);
-        log.info("Connection to database succeed");
-
-        int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
-
-        String sql = "UPDATE konto" + Login.publicusername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
-        PreparedStatement stmt = con.prepareStatement(sql);
-        try {
-            stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
-        } catch (Exception e) {
-            log.error("Datum geht nicht");
-            errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
-            return;
-        }
-
-        try {
-            String grund = eingabeGrund.getText();
-            if (grund.isEmpty()) {
-                throw new IllegalArgumentException("Grund ist ein Pflichtfeld");
+            public boolean isregularBool (String s){
+                boolean isregularBool;
+                if (s.equals("Einmalig")) {
+                    isregularBool = false;
+                    return isregularBool;
+                } else {
+                    isregularBool = true;
+                    return isregularBool;
+                }
             }
-            stmt.setString(2, grund);
-        } catch (IllegalArgumentException e) {
-            log.error("Grund leer");
-            errorLabel.setText("Bitte fügen Sie einen Grund hinzu!");
-            return;
-        }catch (Exception e){
-            log.error("Grund geht nicht");
-            errorLabel.setText("Irgendetwas stimmt mit dem Grund nicht!");
-            return;
-        }
+            public void getRepeat (ActionEvent event){
+                String repetition = repeatBox.getValue();
+                if ("Regelmäßig".equalsIgnoreCase(repetition)) {
+                    wiederholungshaeufigkeitBox.setVisible(true);
+                } else {
+                    wiederholungshaeufigkeitBox.setVisible(false);
+                }
+            }
+            public void getEingabe (ActionEvent event){
+                String myEingabe = myChoiceBox.getValue();
+                eingabeText.setText("Neue " + myEingabe + ":");
+            }
+            public void saveEdit () throws SQLException, IOException {
 
-        try {
-            stmt.setDouble(3, kontoVeränderungsÜberprüferEdit());
-            log.info("Kontoänderungseingabe erfolgreich");
-        } catch (Exception e) {
-            log.error("Kontoänderung geht nicht");
-            errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
-        }
+                try (Connection con = DatenbankConnector.getConnection()) {
+                    log.info("Connection to database succeed");
+
+                    int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
+
+                    String sql = "UPDATE konto" + Login.publicusername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
+                    PreparedStatement stmt = con.prepareStatement(sql);
+                    try {
+                        stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
+                    } catch (Exception e) {
+                        log.error("Datum geht nicht");
+                        errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
+                        return;
+                    }
+
+                    try {
+                        String grund = eingabeGrund.getText();
+                        if (grund.isEmpty()) {
+                            throw new IllegalArgumentException("Grund ist ein Pflichtfeld");
+                        }
+                        stmt.setString(2, grund);
+                    } catch (IllegalArgumentException e) {
+                        log.error("Grund leer");
+                        errorLabel.setText("Bitte fügen Sie einen Grund hinzu!");
+                        return;
+                    } catch (Exception e) {
+                        log.error("Grund geht nicht");
+                        errorLabel.setText("Irgendetwas stimmt mit dem Grund nicht!");
+                        return;
+                    }
+
+                    try {
+                        stmt.setDouble(3, kontoVeränderungsÜberprüferEdit());
+                        log.info("Kontoänderungseingabe erfolgreich");
+                    } catch (Exception e) {
+                        log.error("Kontoänderung geht nicht");
+                        errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
+                    }
 
 
+                    stmt.setInt(4, sliderWert);
+                    stmt.setBoolean(5, isregularBool(repeatBox.getValue()));
+                    stmt.setString(6, checkFrequency());
+                    stmt.setDate(7, Date.valueOf(date));
+                    stmt.setString(8, note);
+                    stmt.setDouble(9, amount);
+                    stmt.setDouble(10, bankBalance);
+                    stmt.setBoolean(11, isregularBool(isregular));
+                    stmt.executeUpdate();
 
+                    d.changeScene("/FXML/übersicht.fxml");
+                } catch (SQLException e) {
+                    log.error("Couldn't connect to Database");
+                }
+            }
 
-        stmt.setInt(4, sliderWert);
-        stmt.setBoolean(5, isregularBool(repeatBox.getValue()));
-        stmt.setString(6,checkFrequency());
-        stmt.setDate(7, Date.valueOf(date));
-        stmt.setString(8, note);
-        stmt.setDouble(9, amount);
-        stmt.setDouble(10, bankBalance);
-        stmt.setBoolean(11, isregularBool(isregular));
-        stmt.executeUpdate();
-
-        d.changeScene("/FXML/übersicht.fxml");
-    }
-    public String checkFrequency(){
-        if(isregularBool(repeatBox.getValue())&& wiederholungshaeufigkeitBox.getValue().equals("täglich")){
-            return "täglich";
-        }else if(isregularBool(repeatBox.getValue()) && wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
-            return "monatlich";
-        }else if(isregularBool(repeatBox.getValue())&& wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
-            return "jährlich";
-        }else {
-            return null;
-        }
-    }
-
-    public double kontoVeränderungsÜberprüferEdit() {
-
-        double d = Double.parseDouble(eingabeZahl.getText());
-        if (myChoiceBox.getValue().equals("Einnahme")) {
-
-            log.info(d);
-            return d;
-        } else {
-
-            log.info(d);
-            if (d == 0) {
-                return d;
-            } else if (d > 0) {
-                return -d;
+        public String checkFrequency () {
+            if (isregularBool(repeatBox.getValue()) && wiederholungshaeufigkeitBox.getValue().equals("täglich")) {
+                return "täglich";
+            } else if (isregularBool(repeatBox.getValue()) && wiederholungshaeufigkeitBox.getValue().equals("monatlich")) {
+                return "monatlich";
+            } else if (isregularBool(repeatBox.getValue()) && wiederholungshaeufigkeitBox.getValue().equals("jährlich")) {
+                return "jährlich";
             } else {
+                return null;
+            }
+        }
+
+        public double kontoVeränderungsÜberprüferEdit () {
+
+            double d = Double.parseDouble(eingabeZahl.getText());
+            if (myChoiceBox.getValue().equals("Einnahme")) {
+
+                log.info(d);
                 return d;
+            } else {
+
+                log.info(d);
+                if (d == 0) {
+                    return d;
+                } else if (d > 0) {
+                    return -d;
+                } else {
+                    return d;
+                }
+
             }
 
         }
 
     }
 
-}

@@ -50,86 +50,83 @@ public class Login {
 
     public void checkLogin() throws SQLException {
 
+        try(Connection con = DatenbankConnector.getConnection()) {
 
-        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-        String pass = "(JJS)2003ab";
-        String user = "js486";
+            log.info("Connection to database succeed");
+            if (username.getText().isEmpty() || password.getText().isEmpty()) {
+                log.warn("Password or username is empty");
+                wrongLogin.setText("Please enter your username and password.");
+            } else {
+                try {
+                    String sql = "SELECT * FROM users WHERE username = ? AND pword = ?";
+                    PreparedStatement stmt = con.prepareStatement(sql);
+                    stmt.setString(1, username.getText());
+                    stmt.setString(2, password.getText());
+                    ResultSet rs = stmt.executeQuery();
 
+                    if (rs.next()) {
+                        wrongLogin.setText("Success!");
+                        publicusername = username.getText();
+                        log.info("Username " + publicusername + " found in database");
+                        try {
+                            String sql2 = "UPDATE users SET ldate = CURRENT_DATE WHERE username = ?";
 
-        Connection con = DriverManager.getConnection(url, user, pass);
-        log.info("Connection to database succeed");
-        if (username.getText().isEmpty() || password.getText().isEmpty()) {
-            log.warn("Password or username is empty");
-            wrongLogin.setText("Please enter your username and password.");
-        } else {
-            try {
-                String sql = "SELECT * FROM users WHERE username = ? AND pword = ?";
-                PreparedStatement stmt = con.prepareStatement(sql);
-                stmt.setString(1, username.getText());
-                stmt.setString(2, password.getText());
-                ResultSet rs = stmt.executeQuery();
+                            PreparedStatement stmt2 = con.prepareStatement(sql2);
 
-                if (rs.next()) {
-                    wrongLogin.setText("Success!");
-                    publicusername = username.getText();
-                    log.info("Username " + publicusername + " found in database");
-                    try {
-                        String sql2 = "UPDATE users SET ldate = CURRENT_DATE WHERE username = ?";
+                            stmt2.setString(1, publicusername);
 
-                        PreparedStatement stmt2 = con.prepareStatement(sql2);
+                            stmt2.executeQuery();
 
-                        stmt2.setString(1, publicusername);
+                        } catch (SQLException e) {
+                            //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
+                            log.info("last login date updated successfully");
 
-                        stmt2.executeQuery();
-
-                    } catch (SQLException e) {
-                        //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
-                        log.info("last login date updated successfully");
-
-                    }
-                    try {
-                        String sql3 = "UPDATE users SET numlogin = numlogin + 1 WHERE username = ?";
-                        PreparedStatement stmt3 = con.prepareStatement(sql3);
-                        stmt3.setString(1, publicusername);
-                        stmt3.executeQuery();
-                    } catch (SQLException e) {
-                        //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
-                        log.info("number of logins updated successfully");
-                    }
-                    try {
-                        String sql4 = "SELECT * FROM users WHERE username = ? AND numlogin = 1";
-                        PreparedStatement stmt4 = con.prepareStatement(sql4);
-                        stmt4.setString(1, publicusername);
-                        ResultSet rs2 = stmt4.executeQuery();
-                        if (rs2.next()) {
-                            log.info("Scene changed to firstLogin.fxml successfully");
-                            d.changeScene("/FXML/firstLogin.fxml");
-                        } else {
-                            log.info("Scene changed to übersicht.fxml successfully");
-                            d.changeScene("/FXML/übersicht.fxml");
                         }
-                    } catch (SQLException e) {
-                        log.error("SQL Exception " + e + " while finding out if is first login");
+                        try {
+                            String sql3 = "UPDATE users SET numlogin = numlogin + 1 WHERE username = ?";
+                            PreparedStatement stmt3 = con.prepareStatement(sql3);
+                            stmt3.setString(1, publicusername);
+                            stmt3.executeQuery();
+                        } catch (SQLException e) {
+                            //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
+                            log.info("number of logins updated successfully");
+                        }
+                        try {
+                            String sql4 = "SELECT * FROM users WHERE username = ? AND numlogin = 1";
+                            PreparedStatement stmt4 = con.prepareStatement(sql4);
+                            stmt4.setString(1, publicusername);
+                            ResultSet rs2 = stmt4.executeQuery();
+                            if (rs2.next()) {
+                                log.info("Scene changed to firstLogin.fxml successfully");
+                                d.changeScene("/FXML/firstLogin.fxml");
+                            } else {
+                                log.info("Scene changed to übersicht.fxml successfully");
+                                d.changeScene("/FXML/übersicht.fxml");
+                            }
+                        } catch (SQLException e) {
+                            log.error("SQL Exception " + e + " while finding out if is first login");
+                        }
+
+
+
+                    } else {
+                        log.warn("Wrong username or password");
+                        wrongLogin.setText("Wrong username or password.");
                     }
 
 
-
-                } else {
-                    log.warn("Wrong username or password");
-                    wrongLogin.setText("Wrong username or password.");
+                } catch (SQLException e ) {
+                    log.error("SQL query failed");
+                    throw new SQLException(e);
+                } catch (IOException e) {
+                    log.error("JavaFX failed");
+                    throw new RuntimeException(e);
                 }
-
-
-            } catch (SQLException e ) {
-                log.error("SQL query failed");
-                throw new SQLException(e);
-            } catch (IOException e) {
-                log.error("JavaFX failed");
-                throw new RuntimeException(e);
             }
+
+        }catch (SQLException e) {
+            log.error("Couldn't connect to Database", e);
+            throw e;
         }
-
     }
-
-
-    }
+}

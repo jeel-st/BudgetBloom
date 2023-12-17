@@ -12,13 +12,7 @@ public class Balance {
     public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
 
     public static void updateBalance() {
-        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-        String pass = "(JJS)2003ab";
-        String user = "js486";
-
-        try {
-            Connection con = DriverManager.getConnection(url, user, pass);
-
+        try(Connection con = DatenbankConnector.getConnection()){
             try {
                 String sql = "SELECT id, amount, bankbalance FROM konto" + publicusername + " ORDER BY edate ASC, id ASC";
 

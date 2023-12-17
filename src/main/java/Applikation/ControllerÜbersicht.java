@@ -101,40 +101,39 @@ public class ControllerÜbersicht implements Initializable{
         }
     }
 
-    public void datenbank() throws SQLException{
+    public void datenbank() throws SQLException {
 
-        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-        String pass = "(JJS)2003ab";
-        String user = "js486";
+        try (Connection con = DatenbankConnector.getConnection()) {
+            if (username != null) {
+                try {
+                    String sql = "SELECT edate, note, amount, bankbalance, importance, isregular FROM konto" + username + " ORDER BY edate DESC, id DESC";
 
-        Connection con = DriverManager.getConnection(url, user, pass);
-
-        if(username != null) {
-            try {
-                String sql = "SELECT edate, note, amount, bankbalance, importance, isregular FROM konto" + username + " ORDER BY edate DESC, id DESC";
-
-                PreparedStatement stmt = con.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    String datum = (rs.getDate("edate").toString());
-                    String grund = (rs.getString("note"));
-                    double betrag = (rs.getDouble("amount"));
-                    double kontostand = (rs.getDouble("bankbalance"));
-                    Integer wichtigkeit = (rs.getInt("importance"));
-                    Boolean regelmäßigkeitBool = (rs.getBoolean("isregular"));
-                    String regelmäßigkeit;
-                    if(regelmäßigkeitBool){
-                        regelmäßigkeit = "Regelmäßig";
-                    }else{
-                        regelmäßigkeit = "Einmalig";
+                    PreparedStatement stmt = con.prepareStatement(sql);
+                    ResultSet rs = stmt.executeQuery();
+                    while (rs.next()) {
+                        String datum = (rs.getDate("edate").toString());
+                        String grund = (rs.getString("note"));
+                        double betrag = (rs.getDouble("amount"));
+                        double kontostand = (rs.getDouble("bankbalance"));
+                        Integer wichtigkeit = (rs.getInt("importance"));
+                        Boolean regelmäßigkeitBool = (rs.getBoolean("isregular"));
+                        String regelmäßigkeit;
+                        if (regelmäßigkeitBool) {
+                            regelmäßigkeit = "Regelmäßig";
+                        } else {
+                            regelmäßigkeit = "Einmalig";
+                        }
+                        list.add(new NewEntry(datum, grund, betrag, kontostand, wichtigkeit, regelmäßigkeit));
                     }
-                    list.add(new NewEntry(datum, grund, betrag, kontostand, wichtigkeit, regelmäßigkeit));
+                } catch (Exception e) {
+                    log.error("Failed to transfer data from database");
                 }
-            } catch (Exception e) {
-                log.error("Failed to transfer data from database");
+            } else {
+                log.error("Username is null");
             }
-        }else{
-            log.error("Username is null");
+        }catch (SQLException e) {
+            log.error("Couldn't connect to Database", e);
+            throw e;
         }
     }
 
@@ -155,7 +154,7 @@ public class ControllerÜbersicht implements Initializable{
 
     }
     public void deleteRow(){
-        try{
+        try {
             double betrag = table.getSelectionModel().getSelectedItem().getBetrag();
             String datum = table.getSelectionModel().getSelectedItem().getDatum();
             String grund = table.getSelectionModel().getSelectedItem().getGrund();
@@ -163,33 +162,29 @@ public class ControllerÜbersicht implements Initializable{
             Integer wichtigkeit = table.getSelectionModel().getSelectedItem().getWichtigkeit();
             String regelmäßigkeit = table.getSelectionModel().getSelectedItem().getRegelmäßigkeit();
             Boolean regelmäßigkeitBool;
-            if(regelmäßigkeit.equals("Regelmäßig")){
+            if (regelmäßigkeit.equals("Regelmäßig")) {
                 regelmäßigkeitBool = true;
-            }else{
+            } else {
                 regelmäßigkeitBool = false;
             }
             log.info(betrag + datum + grund + kontostand + wichtigkeit + regelmäßigkeit);
-            String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-            String pass = "(JJS)2003ab";
-            String user = "js486";
+            try (Connection con = DatenbankConnector.getConnection()) {
+                log.info("Connection to database succeed");
 
-            Connection con = DriverManager.getConnection(url, user, pass);
-            log.info("Connection to database succeed");
+                String sql = "DELETE FROM konto" + username + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";
+                PreparedStatement stmt = con.prepareStatement(sql);
+                stmt.setDate(1, Date.valueOf(datum));
+                stmt.setString(2, grund);
+                stmt.setDouble(3, betrag);
+                stmt.setDouble(4, kontostand);
+                stmt.setInt(5, wichtigkeit);
+                stmt.setBoolean(6, regelmäßigkeitBool);
+                int rowsAffected = stmt.executeUpdate();
 
-            String sql = "DELETE FROM konto" + username + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setDate(1, Date.valueOf(datum));
-            stmt.setString(2, grund);
-            stmt.setDouble(3, betrag);
-            stmt.setDouble(4, kontostand);
-            stmt.setInt(5, wichtigkeit);
-            stmt.setBoolean(6,regelmäßigkeitBool);
-            int rowsAffected = stmt.executeUpdate();
-
-            if (rowsAffected > 0) {
-                log.info("Deletion successful. Rows affected: " + rowsAffected);
-                table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
-                //Updated die Kontostände und lädt die Tabelle neu
+                if (rowsAffected > 0) {
+                    log.info("Deletion successful. Rows affected: " + rowsAffected);
+                    table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
+                    //Updated die Kontostände und lädt die Tabelle neu
                     /*Balance.updateBalance();
                     try{
                         datenbank();
@@ -198,17 +193,21 @@ public class ControllerÜbersicht implements Initializable{
                         log.error("Searching for data failed");
                     }
                     table.setItems(list);*/
-                Driver d = new Driver();
-                log.info("Reload scene übersicht.fxml");
-                d.changeScene("/FXML/übersicht.fxml");
-            } else {
-                log.info("No rows deleted.");
+                    Driver d = new Driver();
+                    log.info("Reload scene übersicht.fxml");
+                    d.changeScene("/FXML/übersicht.fxml");
+                } else {
+                    log.info("No rows deleted.");
+                    }
+                }catch (SQLException e) {
+                log.error("Couldn't connect to Database", e);
+                throw e;
+                    }
+            } catch (Exception e) {
+                errorLabel.setText("No row selected");
+                log.error("Keine Zeile wurde ausgewählt");
             }
 
-        }catch(Exception e){
-            errorLabel.setText("No row selected");
-            log.error("Keine Zeile wurde ausgewählt");
-        }
     }
     public void editRow(ActionEvent event) throws IOException {
         Driver d = new Driver();

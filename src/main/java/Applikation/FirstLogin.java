@@ -83,12 +83,8 @@ public class FirstLogin extends Application {
     }
 
     private void insertInitialBalance(double balance) {
-        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-        String pass = "(JJS)2003ab";
-        String user = "js486";
 
-        try {
-            Connection con = DriverManager.getConnection(url, user, pass);
+        try(Connection con = DatenbankConnector.getConnection()) {
             String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setDouble(1, balance);
@@ -96,7 +92,7 @@ public class FirstLogin extends Application {
             stmt.execute();
             log.info("Initial balance inserted successfully");
         } catch (SQLException e) {
-            System.out.println("Could not insert initial balance into db");
+            log.error("Couldn't connect to Database", e);
         }
     }
 

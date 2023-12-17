@@ -1,6 +1,7 @@
 package Threads;
 
 import Applikation.ControllerÜbersicht;
+import Applikation.DatenbankConnector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,12 +26,8 @@ public class BalanceThread implements Runnable {
 
     static Runnable task1 = () -> {
         log.info("Task1 is running");
-        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-        String pass = "(JJS)2003ab";
-        String user = "js486";
 
-        try {
-            Connection con = DriverManager.getConnection(url, user, pass);
+        try (Connection con = DatenbankConnector.getConnection()){
 
             try {
                 String sql = "SELECT bankbalance FROM konto" + publicusername + " ORDER BY edate DESC, id DESC";
@@ -65,9 +62,7 @@ public class BalanceThread implements Runnable {
 
 
         } catch (SQLException e) {
-            log.error("Couldn't connect to database");
+            log.error("Couldn't connect to Database", e);
         }
     };
-
-
 }
