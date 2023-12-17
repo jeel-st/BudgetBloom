@@ -9,6 +9,7 @@ import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static Applikation.Login.publicusername;
 
@@ -45,13 +46,19 @@ public class BalanceThread implements Runnable {
                 }
 
 
-                double sum = newList.stream().reduce(0.0, Double::sum);
+                double sum = newList.parallelStream().reduce(0.0, Double::sum);
+                Optional<Double> maxBalance = newList.parallelStream().max(Double::compareTo);
                 double average = sum / newList.size();
 
                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
                 String roundedAverage = decimalFormat.format(average);
 
+
                 log.info("The average account balance is " + roundedAverage);
+                if (maxBalance.isPresent()) {
+                    log.info("The overall highest balance was " + maxBalance.get());
+                }
+
             } catch (SQLException e) {
                 log.warn("Couldn't get average account balance");
             }
