@@ -10,6 +10,10 @@ import mainpackage.Driver;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -157,9 +161,10 @@ public class ControllerEingabe implements Initializable {
 
         try {
             stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
-        } catch (Exception e) {
+        }catch (Exception e){
             log.error("Datum geht nicht");
             errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
+            return;
         }
 
 
