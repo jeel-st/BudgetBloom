@@ -15,7 +15,7 @@
       <AnchorPane>
          <children>
             <TextField fx:id="eingabeGrund" layoutX="221.0" layoutY="187.0" prefHeight="25.0" prefWidth="160.0" promptText="Grund" />
-            <DatePicker fx:id="eingabeDatum" layoutX="221.0" layoutY="144.0" prefWidth="160.0" promptText="Datum" />
+            <DatePicker fx:id="eingabeDatum" editable="false" layoutX="221.0" layoutY="144.0" prefWidth="160.0" promptText="Datum" />
             <ChoiceBox fx:id="myChoiceBox" layoutX="52.0" layoutY="231.0" prefWidth="160.0" />
             <TextField fx:id="eingabeZahl" layoutX="221.0" layoutY="231.0" prefWidth="160.0" promptText="Einnahme/Ausgabe" />
             <Button fx:id="eingabeHinzufügen" layoutX="238.0" layoutY="335.0" mnemonicParsing="false" onAction="#userEingabeHinzufügen" text="Eingabe hinzufügen" />
