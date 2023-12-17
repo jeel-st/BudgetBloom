@@ -145,7 +145,7 @@ public class ControllerEingabe implements Initializable {
             log.info("Kontoänderungseingabe erfolgreich");
         } catch (Exception e) {
             log.error("Kontoänderungseingabe hat nicht geklappt");
-            errorLabel.setText("Bitte achten Sie auf das vorgegebene Format (xxx.xx)!");
+            errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
         }
 
         try {

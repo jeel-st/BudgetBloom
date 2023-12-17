@@ -24,6 +24,9 @@ import java.util.ResourceBundle;
 public class ControllerEditEntry implements Initializable {
 
     @FXML
+    private Label errorLabel;
+
+    @FXML
     private Button abbrechen;
 
     @FXML
@@ -81,6 +84,7 @@ public class ControllerEditEntry implements Initializable {
                 saveEdit();
             } else {
                 log.error("Geben sie eine Zahl in dem vorgegebenen Format an");
+                errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
             }
         }
     }
@@ -213,14 +217,37 @@ public class ControllerEditEntry implements Initializable {
             stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
         } catch (Exception e) {
             log.error("Datum geht nicht");
+            errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
+            return;
         }
-        stmt.setString(2, eingabeGrund.getText());
+
+        try {
+            String grund = eingabeGrund.getText();
+            if (grund.isEmpty()) {
+                throw new IllegalArgumentException("Grund ist ein Pflichtfeld");
+            }
+            stmt.setString(2, grund);
+        } catch (IllegalArgumentException e) {
+            log.error("Grund leer");
+            errorLabel.setText("Bitte fügen Sie einen Grund hinzu!");
+            return;
+        }catch (Exception e){
+            log.error("Grund geht nicht");
+            errorLabel.setText("Irgendetwas stimmt mit dem Grund nicht!");
+            return;
+        }
+
         try {
             stmt.setDouble(3, kontoVeränderungsÜberprüferEdit());
             log.info("Kontoänderungseingabe erfolgreich");
         } catch (Exception e) {
             log.error("Kontoänderung geht nicht");
+            errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
         }
+
+
+
+
         stmt.setInt(4, sliderWert);
         stmt.setBoolean(5, isregularBool(repeatBox.getValue()));
         stmt.setString(6,checkFrequency());
