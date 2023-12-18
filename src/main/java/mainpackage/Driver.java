@@ -1,5 +1,6 @@
 package mainpackage;
 
+import Threads.BalanceThread;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +8,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,7 +35,13 @@ public class Driver extends Application {
     public static Logger log = LogManager.getLogger(Driver.class);
     public static void main(String[] args){
         log.info("Programm started");
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        // Startet den Thread sofort und führe ihn jede Minute aus
+        executor.scheduleAtFixedRate(new BalanceThread(), 0, 1, TimeUnit.MINUTES);
+
         launch(args);
+
+        executor.shutdown();
 
     }
     

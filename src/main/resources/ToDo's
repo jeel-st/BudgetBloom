@@ -1,8 +1,8 @@
 TO DO`s:
 
 
-- Datum wird doch nicht gecatched
-- try catches im editEntry Controller
+X Datum wird doch nicht gecatched
+X try catches im editEntry Controller
 - Thread hinzufügen und Datenbankklasse mit Verbindung aufbauen     Ryan
 - Stream und Thread in Bezug auf Filtern der Tabelle nach dem neusten Kontostand nach einer bestimmten Zeit     Jana
 - Singleton Methode für Username mit Interface (evtl. noch Factory)     Joel

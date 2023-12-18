@@ -10,6 +10,10 @@ import mainpackage.Driver;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -19,7 +23,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import mainpackage.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -67,10 +70,8 @@ public class ControllerEingabe implements Initializable {
     //kommt in die choicebox:
     private String[] eingabe = {"Einnahme", "Ausgabe"};
     private String[] wiederholungsHäufigkeit = {"täglich", "monatlich", "jährlich"};
-
     Driver d = new Driver();
-    User u = User.getInstance();
-    private final String localUser = u.getLocalUser();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -119,7 +120,7 @@ public class ControllerEingabe implements Initializable {
 
     public void userEingabeHinzufügen(ActionEvent event) throws IOException, SQLException {
 
-            if(wiederholungshaeufigkeitBox.getValue() != null && checkIsRegularBoolean()|| wiederholungshaeufigkeitBox.getValue() == null && !checkIsRegularBoolean()) {
+            if(wiederholungshaeufigkeitBox.getValue() != null && checkIsRegularBoolean()|| wiederholungshaeufigkeitBox.getValue() == null && checkIsRegularBoolean() == false) {
                 kontoVeränderung();
             }else{
                 log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
@@ -128,66 +129,66 @@ public class ControllerEingabe implements Initializable {
 
 
     public void kontoVeränderung() throws SQLException, IOException {
-        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-        String pass = "(JJS)2003ab";
-        String user = "js486";
+        try(Connection con = DatenbankConnector.getConnection()){
+            log.info("Connection to database succeed");
 
-        Connection con = DriverManager.getConnection(url, user, pass);
-        log.info("Connection to database succeed");
+            int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
 
-        int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
-
-        String sql = "INSERT INTO konto" + localUser + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement stmt = con.prepareStatement(sql);
-        try {
-            stmt.setDouble(3, kontoVeränderungsÜberprüfer());
-            log.info("Kontoänderungseingabe erfolgreich");
-        } catch (Exception e) {
-            log.error("Kontoänderungseingabe hat nicht geklappt");
-            errorLabel.setText("Bitte achten Sie auf das vorgegebene Format (xxx.xx)!");
-        }
-
-        try {
-            String grund = eingabeGrund.getText();
-            if (grund.isEmpty()) {
-                throw new IllegalArgumentException("Grund ist ein Pflichtfeld");
+            String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            try {
+                stmt.setDouble(3, kontoVeränderungsÜberprüfer());
+                log.info("Kontoänderungseingabe erfolgreich");
+            } catch (Exception e) {
+                log.error("Kontoänderungseingabe hat nicht geklappt");
+                errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
             }
-            stmt.setString(2, grund);
-        } catch (Exception e) {
-            log.error("Grund geht nicht");
-            errorLabel.setText("Bitte fügen Sie einen Grund hinzu!" );
+
+            try {
+                String grund = eingabeGrund.getText();
+                if (grund.isEmpty()) {
+                    throw new IllegalArgumentException("Grund ist ein Pflichtfeld");
+                }
+                stmt.setString(2, grund);
+            } catch (Exception e) {
+                log.error("Grund geht nicht");
+                errorLabel.setText("Bitte fügen Sie einen Grund hinzu!" );
+            }
+
+            try {
+                stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
+            }catch (Exception e){
+                log.error("Datum geht nicht");
+                errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
+                return;
+            }
+
+
+            try {
+                double neuerKontostand = aktuellerKontostand();
+                log.info("Neuer Kontostand: " + neuerKontostand);
+                stmt.setDouble(4, neuerKontostand);
+            } catch (Exception e) {
+                log.error("Aktueller Kontostand  konnte nicht aufgerufen werden");
+            }
+
+
+
+            stmt.setInt(5, sliderWert);
+
+            try {
+                stmt.setBoolean(6, checkIsRegularBoolean());
+                stmt.setString(7, checkFrequency());
+                stmt.executeUpdate();
+                d.changeScene("/FXML/übersicht.fxml");
+
+            }catch (Exception e){
+                log.info("Eingabe konnte nicht hinzugefügt werden");
+            }
+        }catch (SQLException e) {
+            log.error("Couldn't connect to Database", e);
+            throw e;
         }
-
-        try {
-            stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
-        } catch (Exception e) {
-            log.error("Datum geht nicht");
-            errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
-        }
-
-
-        try {
-            double neuerKontostand = aktuellerKontostand();
-            log.info("Neuer Kontostand: " + neuerKontostand);
-            stmt.setDouble(4, neuerKontostand);
-        } catch (Exception e) {
-            log.error("Aktueller Kontostand  konnte nicht aufgerufen werden");
-        }
-
-
-
-        stmt.setInt(5, sliderWert);
-
-        try {
-            stmt.setBoolean(6, checkIsRegularBoolean());
-            stmt.setString(7, checkFrequency());
-            stmt.executeUpdate();
-            d.changeScene("/FXML/übersicht.fxml");
-
-        }catch (Exception e){
-            log.info("Eingabe konnte nicht hinzugefügt werden");
-        }
-
     }
 
     public boolean checkIsRegularBoolean(){
@@ -199,11 +200,11 @@ public class ControllerEingabe implements Initializable {
     }
 
     public String checkFrequency(){
-        if(checkIsRegularBoolean()&& wiederholungshaeufigkeitBox.getValue().equals("täglich")){
+        if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("täglich")){
             return "täglich";
-        }else if(checkIsRegularBoolean()&& wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
+        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
             return "monatlich";
-        }else if(checkIsRegularBoolean() && wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
+        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
             return "jährlich";
         }else {
             return null;
@@ -211,33 +212,32 @@ public class ControllerEingabe implements Initializable {
     }
 
 
-    public double aktuellerKontostand() throws Exception,SQLException{
-        String url = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-        String pass = "(JJS)2003ab";
-        String user = "js486";
+    public double aktuellerKontostand() throws Exception,SQLException {
+        try (Connection con = DatenbankConnector.getConnection()) {
+            log.info("Connection to database succeed");
 
-        Connection con = DriverManager.getConnection(url, user, pass);
-        log.info("Connection to database succeed");
+            String sql = "SELECT bankBalance FROM konto" + Login.publicusername + " ORDER BY edate DESC, id DESC LIMIT 1";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            try {
+                while (rs.next()) {
+                    double Kontostand = rs.getDouble("bankBalance");
 
-        String sql = "SELECT bankBalance FROM konto" + localUser + " ORDER BY edate DESC, id DESC LIMIT 1";
-        PreparedStatement stmt = con.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
-        try {
-            while (rs.next()) {
-                double Kontostand = rs.getDouble("bankBalance");
-
-                log.info(Kontostand);
-                double neuerKontostand = Kontostand + kontoVeränderungsÜberprüfer();
-                neuerKontostand = Math.round(neuerKontostand * 100.0) / 100.0;
-                return neuerKontostand;
+                    log.info(Kontostand);
+                    double neuerKontostand = Kontostand + kontoVeränderungsÜberprüfer();
+                    neuerKontostand = Math.round(neuerKontostand * 100.0) / 100.0;
+                    return neuerKontostand;
+                }
+            } catch (Exception e) {
+                log.error("kein Kontostand gefunden");
             }
-        } catch (Exception e) {
-            log.error("kein Kontostand gefunden");
+
+            throw new Exception();
+        }catch (SQLException e) {
+            log.error("Couldn't connect to Database", e);
+            throw e;
         }
-
-        throw new Exception();
     }
-
     public double kontoVeränderungsÜberprüfer() {
 
             double d = Double.parseDouble(eingabeZahl.getText());

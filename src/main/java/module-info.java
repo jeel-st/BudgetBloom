@@ -8,4 +8,6 @@ module SE2StartupProject {
     opens Applikation;
 
     exports Applikation;
+    exports Threads;
+    opens Threads;
 }
