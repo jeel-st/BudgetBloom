@@ -1,6 +1,7 @@
 package Controller;
 
 import Logic.LogicDatabase;
+import Singleton.SingletonPattern;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -70,6 +71,8 @@ public class ControllerEditEntry implements Initializable {
     public static String isregular;
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
+    SingletonPattern sp = SingletonPattern.getInstance();
+    private String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
     @FXML
@@ -151,7 +154,7 @@ public class ControllerEditEntry implements Initializable {
         try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
             log.info(isregularBool(isregular));
-            String sql = "SELECT frequency FROM konto" + ControllerLogin.publicusername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
+            String sql = "SELECT frequency FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
                 stmt.setDate(1, Date.valueOf(date));
@@ -209,7 +212,7 @@ public class ControllerEditEntry implements Initializable {
 
                     int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
 
-                    String sql = "UPDATE konto" + ControllerLogin.publicusername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
+                    String sql = "UPDATE konto" + localUsername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
                     PreparedStatement stmt = con.prepareStatement(sql);
                     try {
                         stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));

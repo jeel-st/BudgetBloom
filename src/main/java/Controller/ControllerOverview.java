@@ -3,6 +3,7 @@ package Controller;
 import Logic.LogicDatabase;
 import Logic.LogicBalance;
 import Logic.LogicTableEntry;
+import Singleton.SingletonPattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,7 +60,9 @@ public class ControllerOverview implements Initializable{
     @FXML
     private Label errorLabel;
     LogicDatabase dc = new LogicDatabase();
-    private String username = ControllerLogin.publicusername;
+    SingletonPattern sp = SingletonPattern.getInstance();
+    private String localUsername = sp.getName();
+
     public static Logger log = LogManager.getLogger(ControllerOverview.class);
 
     //Oberserver Liste weil Tabelle es als Input nutzt
@@ -108,9 +111,9 @@ public class ControllerOverview implements Initializable{
 
 
         try (Connection con = dc.getConnection()) {
-            if (username != null) {
+            if (localUsername != null) {
                 try {
-                    String sql = "SELECT edate, note, amount, bankbalance, importance, isregular FROM konto" + username + " ORDER BY edate DESC, id DESC";
+                    String sql = "SELECT edate, note, amount, bankbalance, importance, isregular FROM konto" + localUsername + " ORDER BY edate DESC, id DESC";
 
                     PreparedStatement stmt = con.prepareStatement(sql);
                     ResultSet rs = stmt.executeQuery();
@@ -175,7 +178,7 @@ public class ControllerOverview implements Initializable{
             try (Connection con = dc.getConnection()) {
                 log.info("Connection to database succeed");
 
-                String sql = "DELETE FROM konto" + username + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";
+                String sql = "DELETE FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";
                 PreparedStatement stmt = con.prepareStatement(sql);
                 stmt.setDate(1, Date.valueOf(datum));
                 stmt.setString(2, grund);

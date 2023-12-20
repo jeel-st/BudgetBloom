@@ -2,6 +2,7 @@ package Controller;
 
 
 import Logic.LogicDatabase;
+import Singleton.SingletonPattern;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,6 +45,8 @@ public class ControllerFirstLogin extends Application {
     public Image image;
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
+    SingletonPattern sp = SingletonPattern.getInstance();
+    private String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(ControllerLogin.class);
 
 
@@ -84,7 +87,7 @@ public class ControllerFirstLogin extends Application {
     private void insertInitialBalance(double balance) {
 
         try(Connection con = dc.getConnection()) {
-            String sql = "INSERT INTO konto" + ControllerLogin.publicusername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10)";
+            String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setDouble(1, balance);
             stmt.setDouble(2, balance);

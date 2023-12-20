@@ -1,6 +1,7 @@
 package Controller;
 
 import Logic.LogicDatabase;
+import Singleton.SingletonPattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,24 +32,26 @@ public class ControllerLogin {
     public static Logger log = LogManager.getLogger(ControllerLogin.class);
     public void userLogin(ActionEvent event) throws SQLException, ClassNotFoundException{
         log.info("Login button pushed");
+        setLocalUsername();
         checkLogin();
+
     }
 
     public void registerButton(ActionEvent event) throws IOException,SQLException{
         log.info("Registration button pushed");
         checkRegister();
     }
-    public static String publicusername;
-    public String getUsername() {
-        return publicusername;
-    }
-
+    public String localUsername;
     public void checkRegister()throws IOException{
         log.info("Change scene to registration");
         d.changeScene("/FXML/register.fxml");
     }
 
-
+    public void setLocalUsername(){
+        SingletonPattern s = SingletonPattern.getInstance();
+        s.setName(username.getText());
+        localUsername = s.getName();
+    }
     public void checkLogin() throws SQLException {
 
         try(Connection con = dc.getConnection()) {
@@ -67,14 +70,13 @@ public class ControllerLogin {
 
                     if (rs.next()) {
                         wrongLogin.setText("Success!");
-                        publicusername = username.getText();
-                        log.info("Username " + publicusername + " found in database");
+                        log.info("Username " + localUsername + " found in database");
                         try {
                             String sql2 = "UPDATE users SET ldate = CURRENT_DATE WHERE username = ?";
 
                             PreparedStatement stmt2 = con.prepareStatement(sql2);
 
-                            stmt2.setString(1, publicusername);
+                            stmt2.setString(1, localUsername);
 
                             stmt2.executeQuery();
 
@@ -86,7 +88,7 @@ public class ControllerLogin {
                         try {
                             String sql3 = "UPDATE users SET numlogin = numlogin + 1 WHERE username = ?";
                             PreparedStatement stmt3 = con.prepareStatement(sql3);
-                            stmt3.setString(1, publicusername);
+                            stmt3.setString(1, localUsername);
                             stmt3.executeQuery();
                         } catch (SQLException e) {
                             //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
@@ -95,7 +97,7 @@ public class ControllerLogin {
                         try {
                             String sql4 = "SELECT * FROM users WHERE username = ? AND numlogin = 1";
                             PreparedStatement stmt4 = con.prepareStatement(sql4);
-                            stmt4.setString(1, publicusername);
+                            stmt4.setString(1, localUsername);
                             ResultSet rs2 = stmt4.executeQuery();
                             if (rs2.next()) {
                                 log.info("Scene changed to firstLogin.fxml successfully");

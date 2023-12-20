@@ -1,5 +1,6 @@
 package Controller;
 import Logic.LogicDatabase;
+import Singleton.SingletonPattern;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -68,6 +69,8 @@ public class ControllerNewEntry implements Initializable {
     private String[] wiederholungsHäufigkeit = {"täglich", "monatlich", "jährlich"};
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
+    SingletonPattern sp = SingletonPattern.getInstance();
+    private String localUsername = sp.getName();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -130,7 +133,7 @@ public class ControllerNewEntry implements Initializable {
 
             int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
 
-            String sql = "INSERT INTO konto" + ControllerLogin.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             try {
                 stmt.setDouble(3, kontoVeränderungsÜberprüfer());
@@ -212,7 +215,7 @@ public class ControllerNewEntry implements Initializable {
         try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
 
-            String sql = "SELECT bankBalance FROM konto" + ControllerLogin.publicusername + " ORDER BY edate DESC, id DESC LIMIT 1";
+            String sql = "SELECT bankBalance FROM konto" + localUsername + " ORDER BY edate DESC, id DESC LIMIT 1";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             try {
