@@ -1,5 +1,6 @@
 package mainpackage;
 
+import Controller.ControllerEditEntry;
 import Threads.BalanceThread;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,9 @@ public class Driver extends Application {
     }
 
     public void changeScene(String fxml) throws IOException{
+        FXMLLoader scene = new FXMLLoader(getClass().getResource(fxml));
+        scene.load();
+        scene.getController();
         Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)));
         stg.getScene().setRoot(pane);
     }

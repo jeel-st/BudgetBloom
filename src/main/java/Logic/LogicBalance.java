@@ -1,20 +1,23 @@
-package Applikation;
+package Logic;
 
+import Controller.ControllerOverview;
+import Singleton.SingletonUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
-import static Applikation.Login.publicusername;
+public class LogicBalance {
 
-
-public class Balance {
-    public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
+    public static Logger log = LogManager.getLogger(ControllerOverview.class);
 
     public static void updateBalance() {
-        try(Connection con = DatenbankConnector.getConnection()){
+        SingletonUser sp = SingletonUser.getInstance();
+        String localUsername = sp.getName();
+        LogicDatabase dc = new LogicDatabase();
+        try(Connection con = dc.getConnection()){
             try {
-                String sql = "SELECT id, amount, bankbalance FROM konto" + publicusername + " ORDER BY edate ASC, id ASC";
+                String sql = "SELECT id, amount, bankbalance FROM konto" + localUsername + " ORDER BY edate ASC, id ASC";
 
                 PreparedStatement stmt = con.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery();
@@ -33,7 +36,7 @@ public class Balance {
                         double neuerKontostand2 = kontostand1 + betrag2;
 
                         try {
-                            String sql2 = "UPDATE konto" + publicusername + " SET bankbalance = ? WHERE id = ?";
+                            String sql2 = "UPDATE konto" + localUsername + " SET bankbalance = ? WHERE id = ?";
                             PreparedStatement stmt2 = con.prepareStatement(sql2);
                             stmt2.setDouble(1, neuerKontostand2);
                             stmt2.setInt(2, id2);

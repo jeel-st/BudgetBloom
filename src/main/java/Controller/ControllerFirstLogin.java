@@ -1,6 +1,8 @@
-package Applikation;
+package Controller;
 
 
+import Logic.LogicDatabase;
+import Singleton.SingletonUser;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -20,13 +21,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FirstLogin extends Application {
+public class ControllerFirstLogin extends Application {
     @FXML
     public Button ok;
     @FXML
@@ -44,8 +44,10 @@ public class FirstLogin extends Application {
     @FXML
     public Image image;
     Driver d = new Driver();
-
-    public static Logger log = LogManager.getLogger(Login.class);
+    LogicDatabase dc = new LogicDatabase();
+    SingletonUser sp = SingletonUser.getInstance();
+    private String localUsername = sp.getName();
+    public static Logger log = LogManager.getLogger(ControllerLogin.class);
 
 
 
@@ -61,7 +63,7 @@ public class FirstLogin extends Application {
 
     @FXML private void skipBalance(ActionEvent event) throws IOException {
         insertInitialBalance(0);
-        d.changeScene("/FXML/übersicht.fxml");
+        d.changeScene("/FXML/overview.fxml");
     }
 
     @FXML private void checkBalance(ActionEvent event) throws IOException {
@@ -70,7 +72,7 @@ public class FirstLogin extends Application {
             double balance = Double.parseDouble(balanceString);
             log.debug("Found Double is " + balance);
             insertInitialBalance(balance);
-            d.changeScene("/FXML/übersicht.fxml");
+            d.changeScene("/FXML/overview.fxml");
 
         } else {
             wrongBalance.setText("Please enter a number in one of the following formats: xxxxx.yy or xxx.y or xxx");
@@ -84,8 +86,8 @@ public class FirstLogin extends Application {
 
     private void insertInitialBalance(double balance) {
 
-        try(Connection con = DatenbankConnector.getConnection()) {
-            String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10)";
+        try(Connection con = dc.getConnection()) {
+            String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setDouble(1, balance);
             stmt.setDouble(2, balance);

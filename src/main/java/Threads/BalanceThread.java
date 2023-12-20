@@ -1,7 +1,8 @@
 package Threads;
 
-import Applikation.ControllerÜbersicht;
-import Applikation.DatenbankConnector;
+import Controller.ControllerOverview;
+import Logic.LogicDatabase;
+import Singleton.SingletonUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,12 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static Applikation.Login.publicusername;
 
 public class BalanceThread implements Runnable {
-    public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
+
+    SingletonUser sp = SingletonUser.getInstance();
+    private final String localUsername = sp.getName();
+    public static Logger log = LogManager.getLogger(ControllerOverview.class);
     @Override public void run() {
-        if (publicusername != null) {
+        if (localUsername != null) {
             Thread t1 = new Thread(task1);
             t1.start();
         }
@@ -25,12 +28,16 @@ public class BalanceThread implements Runnable {
     }
 
     static Runnable task1 = () -> {
+        SingletonUser sp = SingletonUser.getInstance();
+        String localUsername = sp.getName();
         log.info("Task1 is running");
 
-        try (Connection con = DatenbankConnector.getConnection()){
+        LogicDatabase dc = new LogicDatabase();
+
+        try (Connection con = dc.getConnection()){
 
             try {
-                String sql = "SELECT bankbalance FROM konto" + publicusername + " ORDER BY edate DESC, id DESC";
+                String sql = "SELECT bankbalance FROM konto" + localUsername + " ORDER BY edate DESC, id DESC";
 
                 PreparedStatement stmt = con.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery();

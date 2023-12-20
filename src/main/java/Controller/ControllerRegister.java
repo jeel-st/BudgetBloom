@@ -1,5 +1,6 @@
-package Applikation;
+package Controller;
 
+import Logic.LogicDatabase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,7 +35,7 @@ public class ControllerRegister {
     public PasswordField password2;
     public static Logger log = LogManager.getLogger(ControllerRegister.class);
     Driver d = new Driver();
-
+    LogicDatabase dc = new LogicDatabase();
 
     public void userToLogin(ActionEvent event) throws IOException {
         d.changeScene("/FXML/sample.fxml");
@@ -117,7 +118,7 @@ public class ControllerRegister {
     }
 
     public boolean newUserEntry() {
-        try (Connection con = DatenbankConnector.getConnection()) {
+        try (Connection con = dc.getConnection()) {
             String sql = "INSERT INTO users VALUES (DEFAULT, ?, ?, ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, username.getText());
@@ -133,7 +134,7 @@ public class ControllerRegister {
     }
 
     public void newTable() {
-        try (Connection con = DatenbankConnector.getConnection()) {
+        try (Connection con = dc.getConnection()) {
             String sqlTable = "CREATE TABLE konto" + username.getText() + "( \n" +
                     "id SERIAL PRIMARY KEY,\n" +
                     "edate DATE DEFAULT CURRENT_DATE NOT NULL,\n" +
@@ -156,7 +157,7 @@ public class ControllerRegister {
     }
 
     public boolean checkingUsername() throws SQLException {
-        try (Connection con = DatenbankConnector.getConnection()) {
+        try (Connection con = dc.getConnection()) {
 
             String checkUsername = username.getText();
 

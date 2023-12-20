@@ -1,4 +1,7 @@
-package Applikation;
+package Controller;
+import Interfaces.EntryInterface;
+import Logic.LogicDatabase;
+import Singleton.SingletonUser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -10,11 +13,6 @@ import mainpackage.Driver;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -26,7 +24,7 @@ import javafx.scene.control.TextField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ControllerEingabe implements Initializable {
+public class ControllerNewEntry implements Initializable, EntryInterface {
 
     @FXML
     private Label eingabeText;
@@ -64,14 +62,16 @@ public class ControllerEingabe implements Initializable {
     @FXML
     private ChoiceBox<String> wiederholungshaeufigkeitBox;
 
-    public static Logger log = LogManager.getLogger(ControllerEingabe.class);
+    public static Logger log = LogManager.getLogger(ControllerNewEntry.class);
 
     private String[] wiederholungen = {"Einmalig", "Regelmäßig"};
     //kommt in die choicebox:
     private String[] eingabe = {"Einnahme", "Ausgabe"};
     private String[] wiederholungsHäufigkeit = {"täglich", "monatlich", "jährlich"};
     Driver d = new Driver();
-
+    LogicDatabase dc = new LogicDatabase();
+    SingletonUser sp = SingletonUser.getInstance();
+    private String localUsername = sp.getName();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -114,7 +114,7 @@ public class ControllerEingabe implements Initializable {
 
 
     public void userAbbruch(ActionEvent event) throws IOException {
-        d.changeScene("/FXML/übersicht.fxml");
+        d.changeScene("/FXML/overview.fxml");
     }
 
 
@@ -129,12 +129,12 @@ public class ControllerEingabe implements Initializable {
 
 
     public void kontoVeränderung() throws SQLException, IOException {
-        try(Connection con = DatenbankConnector.getConnection()){
+        try(Connection con = dc.getConnection()){
             log.info("Connection to database succeed");
 
             int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
 
-            String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             try {
                 stmt.setDouble(3, kontoVeränderungsÜberprüfer());
@@ -180,7 +180,7 @@ public class ControllerEingabe implements Initializable {
                 stmt.setBoolean(6, checkIsRegularBoolean());
                 stmt.setString(7, checkFrequency());
                 stmt.executeUpdate();
-                d.changeScene("/FXML/übersicht.fxml");
+                d.changeScene("/FXML/overview.fxml");
 
             }catch (Exception e){
                 log.info("Eingabe konnte nicht hinzugefügt werden");
@@ -200,11 +200,11 @@ public class ControllerEingabe implements Initializable {
     }
 
     public String checkFrequency(){
-        if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("täglich")){
+        if(checkIsRegularBoolean() && wiederholungshaeufigkeitBox.getValue().equals("täglich")){
             return "täglich";
-        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
+        }else if(checkIsRegularBoolean() && wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
             return "monatlich";
-        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
+        }else if(checkIsRegularBoolean() && wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
             return "jährlich";
         }else {
             return null;
@@ -213,10 +213,10 @@ public class ControllerEingabe implements Initializable {
 
 
     public double aktuellerKontostand() throws Exception,SQLException {
-        try (Connection con = DatenbankConnector.getConnection()) {
+        try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
 
-            String sql = "SELECT bankBalance FROM konto" + Login.publicusername + " ORDER BY edate DESC, id DESC LIMIT 1";
+            String sql = "SELECT bankBalance FROM konto" + localUsername + " ORDER BY edate DESC, id DESC LIMIT 1";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             try {

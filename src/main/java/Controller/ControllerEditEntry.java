@@ -1,5 +1,8 @@
-package Applikation;
+package Controller;
 
+import Interfaces.EntryInterface;
+import Logic.LogicDatabase;
+import Singleton.SingletonUser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,7 +24,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class ControllerEditEntry implements Initializable {
+public class ControllerEditEntry implements Initializable, EntryInterface {
 
     @FXML
     private Label errorLabel;
@@ -68,16 +71,19 @@ public class ControllerEditEntry implements Initializable {
     public static int importance;
     public static String isregular;
     Driver d = new Driver();
+    LogicDatabase dc = new LogicDatabase();
+    SingletonUser sp = SingletonUser.getInstance();
+    private String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
     @FXML
-    void userAbbruch(ActionEvent event) throws IOException {
-        d.changeScene("/FXML/übersicht.fxml");
+    public void userAbbruch(ActionEvent event) throws IOException {
+        d.changeScene("/FXML/overview.fxml");
     }
 
     @FXML
     void userEingabeSpeichern(ActionEvent event) throws SQLException, IOException {
-        ControllerEingabe c = new ControllerEingabe();
+        ControllerNewEntry c = new ControllerNewEntry();
         if (repeatBox.getValue().equals("Regelmäßig") && wiederholungshaeufigkeitBox.getValue() == null) {
             log.error("Geben sie eine Frequenz an");
         } else {
@@ -146,10 +152,10 @@ public class ControllerEditEntry implements Initializable {
 
     public String showContentOfWiederholungshaeufigkeitBox() throws Exception, SQLException {
 
-        try (Connection con = DatenbankConnector.getConnection()) {
+        try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
             log.info(isregularBool(isregular));
-            String sql = "SELECT frequency FROM konto" + Login.publicusername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
+            String sql = "SELECT frequency FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
                 stmt.setDate(1, Date.valueOf(date));
@@ -202,12 +208,12 @@ public class ControllerEditEntry implements Initializable {
             }
             public void saveEdit () throws SQLException, IOException {
 
-                try (Connection con = DatenbankConnector.getConnection()) {
+                try (Connection con = dc.getConnection()) {
                     log.info("Connection to database succeed");
 
                     int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
 
-                    String sql = "UPDATE konto" + Login.publicusername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
+                    String sql = "UPDATE konto" + localUsername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
                     PreparedStatement stmt = con.prepareStatement(sql);
                     try {
                         stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
@@ -252,7 +258,7 @@ public class ControllerEditEntry implements Initializable {
                     stmt.setBoolean(11, isregularBool(isregular));
                     stmt.executeUpdate();
 
-                    d.changeScene("/FXML/übersicht.fxml");
+                    d.changeScene("/FXML/overview.fxml");
                 } catch (SQLException e) {
                     log.error("Couldn't connect to Database");
                 }
