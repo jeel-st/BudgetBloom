@@ -1,6 +1,7 @@
 package Controller;
+import Interfaces.EntryInterface;
 import Logic.LogicDatabase;
-import Singleton.SingletonPattern;
+import Singleton.SingletonUser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -23,7 +24,7 @@ import javafx.scene.control.TextField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ControllerNewEntry implements Initializable {
+public class ControllerNewEntry implements Initializable, EntryInterface {
 
     @FXML
     private Label eingabeText;
@@ -69,7 +70,7 @@ public class ControllerNewEntry implements Initializable {
     private String[] wiederholungsHäufigkeit = {"täglich", "monatlich", "jährlich"};
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
-    SingletonPattern sp = SingletonPattern.getInstance();
+    SingletonUser sp = SingletonUser.getInstance();
     private String localUsername = sp.getName();
 
     @Override
@@ -199,11 +200,11 @@ public class ControllerNewEntry implements Initializable {
     }
 
     public String checkFrequency(){
-        if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("täglich")){
+        if(checkIsRegularBoolean() && wiederholungshaeufigkeitBox.getValue().equals("täglich")){
             return "täglich";
-        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
+        }else if(checkIsRegularBoolean() && wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
             return "monatlich";
-        }else if(checkIsRegularBoolean()==true && wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
+        }else if(checkIsRegularBoolean() && wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
             return "jährlich";
         }else {
             return null;

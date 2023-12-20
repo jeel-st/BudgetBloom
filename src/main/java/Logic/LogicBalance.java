@@ -1,7 +1,7 @@
 package Logic;
 
 import Controller.ControllerOverview;
-import Singleton.SingletonPattern;
+import Singleton.SingletonUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,7 +12,7 @@ public class LogicBalance {
     public static Logger log = LogManager.getLogger(ControllerOverview.class);
 
     public static void updateBalance() {
-        SingletonPattern sp = SingletonPattern.getInstance();
+        SingletonUser sp = SingletonUser.getInstance();
         String localUsername = sp.getName();
         LogicDatabase dc = new LogicDatabase();
         try(Connection con = dc.getConnection()){

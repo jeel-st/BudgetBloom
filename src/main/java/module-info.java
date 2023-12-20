@@ -12,4 +12,6 @@ module SE2StartupProject {
     opens Threads;
     exports Logic;
     opens Logic;
+    exports Interfaces;
+    opens Interfaces;
 }

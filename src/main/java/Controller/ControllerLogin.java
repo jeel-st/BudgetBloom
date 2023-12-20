@@ -1,7 +1,7 @@
 package Controller;
 
 import Logic.LogicDatabase;
-import Singleton.SingletonPattern;
+import Singleton.SingletonUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -48,7 +48,7 @@ public class ControllerLogin {
     }
 
     public void setLocalUsername(){
-        SingletonPattern s = SingletonPattern.getInstance();
+        SingletonUser s = SingletonUser.getInstance();
         s.setName(username.getText());
         localUsername = s.getName();
     }

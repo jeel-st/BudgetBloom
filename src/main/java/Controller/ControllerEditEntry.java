@@ -1,7 +1,8 @@
 package Controller;
 
+import Interfaces.EntryInterface;
 import Logic.LogicDatabase;
-import Singleton.SingletonPattern;
+import Singleton.SingletonUser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -23,7 +24,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class ControllerEditEntry implements Initializable {
+public class ControllerEditEntry implements Initializable, EntryInterface {
 
     @FXML
     private Label errorLabel;
@@ -71,12 +72,12 @@ public class ControllerEditEntry implements Initializable {
     public static String isregular;
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
-    SingletonPattern sp = SingletonPattern.getInstance();
+    SingletonUser sp = SingletonUser.getInstance();
     private String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
     @FXML
-    void userAbbruch(ActionEvent event) throws IOException {
+    public void userAbbruch(ActionEvent event) throws IOException {
         d.changeScene("/FXML/overview.fxml");
     }
 

@@ -2,7 +2,7 @@ package Controller;
 
 
 import Logic.LogicDatabase;
-import Singleton.SingletonPattern;
+import Singleton.SingletonUser;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,7 +45,7 @@ public class ControllerFirstLogin extends Application {
     public Image image;
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
-    SingletonPattern sp = SingletonPattern.getInstance();
+    SingletonUser sp = SingletonUser.getInstance();
     private String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(ControllerLogin.class);
 

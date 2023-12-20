@@ -2,7 +2,7 @@ package Threads;
 
 import Controller.ControllerOverview;
 import Logic.LogicDatabase;
-import Singleton.SingletonPattern;
+import Singleton.SingletonUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class BalanceThread implements Runnable {
 
-    SingletonPattern sp = SingletonPattern.getInstance();
+    SingletonUser sp = SingletonUser.getInstance();
     private final String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(ControllerOverview.class);
     @Override public void run() {
@@ -28,7 +28,7 @@ public class BalanceThread implements Runnable {
     }
 
     static Runnable task1 = () -> {
-        SingletonPattern sp = SingletonPattern.getInstance();
+        SingletonUser sp = SingletonUser.getInstance();
         String localUsername = sp.getName();
         log.info("Task1 is running");
 

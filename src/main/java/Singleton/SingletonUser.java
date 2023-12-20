@@ -1,17 +1,17 @@
 package Singleton;
 
-public class SingletonPattern {
-    private static SingletonPattern instance;
+public class SingletonUser {
+    private static SingletonUser instance;
 
     private String LocalUsername;
 
-    private SingletonPattern() {
+    private SingletonUser() {
         LocalUsername = null;
     }
 
-    public static SingletonPattern getInstance() {
+    public static SingletonUser getInstance() {
         if (instance == null) {
-            instance = new SingletonPattern();
+            instance = new SingletonUser();
         }
         return instance;
     }

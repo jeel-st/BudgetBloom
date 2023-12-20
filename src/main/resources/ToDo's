@@ -4,13 +4,14 @@ TO DO`s:
 
 - Singleton Methode für Username mit Interface (evtl. noch Factory)     Joel
 - Alle Methoden auf Englisch ändern, auch in Scenebuilder               Ryan
-- (neue Klassenstruktur)
+- (neue Klassenstruktur)                                                Joel Jana
 - Unit Tests                                                            alle
 - Nachdenkzettel
 - Logging, LogFile                                                      Joel
 - eigene Exceptions werfen                                              Jana
 - Interfaces                                                            Joel
-- Factories
+- Factories bei User                                                    Joel
+- SingletonÜbergabeWerte ControllerEdit
 
 Nachdenkzettel:
 - UML, Git, Collections -> Ryan

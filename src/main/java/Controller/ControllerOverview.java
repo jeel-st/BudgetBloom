@@ -3,7 +3,7 @@ package Controller;
 import Logic.LogicDatabase;
 import Logic.LogicBalance;
 import Logic.LogicTableEntry;
-import Singleton.SingletonPattern;
+import Singleton.SingletonUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -60,7 +60,7 @@ public class ControllerOverview implements Initializable{
     @FXML
     private Label errorLabel;
     LogicDatabase dc = new LogicDatabase();
-    SingletonPattern sp = SingletonPattern.getInstance();
+    SingletonUser sp = SingletonUser.getInstance();
     private String localUsername = sp.getName();
 
     public static Logger log = LogManager.getLogger(ControllerOverview.class);
