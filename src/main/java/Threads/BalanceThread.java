@@ -27,7 +27,8 @@ public class BalanceThread implements Runnable {
     static Runnable task1 = () -> {
         log.info("Task1 is running");
 
-        try (Connection con = DatenbankConnector.getConnection()){
+        DatenbankConnector dc = new DatenbankConnector();
+        try (Connection con = dc.getConnection()) {
 
             try {
                 String sql = "SELECT bankbalance FROM konto" + publicusername + " ORDER BY edate DESC, id DESC";
