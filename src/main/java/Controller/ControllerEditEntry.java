@@ -2,6 +2,7 @@ package Controller;
 
 import Interfaces.EntryInterface;
 import Logic.LogicDatabase;
+import Singleton.SingletonEditValues;
 import Singleton.SingletonUser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -63,17 +64,18 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     private String[] wiederholungsHäufigkeit = {"täglich", "monatlich", "jährlich"};
     int mySkalaZahl;
     private String[] eingabe = {"Einnahme", "Ausgabe"};
+    SingletonEditValues sev = SingletonEditValues.getInstance();
 
-    public static String date;
-    public static String note;
-    public static double bankBalance;
-    public static double amount;
-    public static int importance;
-    public static String isregular;
+    public String date = sev.getDate();
+    public String note = sev.getNote();
+    public double bankBalance = sev.getBankbalance();
+    public double amount = sev.getAmount();
+    public int importance = sev.getImportance();
+    public String isRegular = sev.getIsregular();
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
-    private String localUsername = sp.getName();
+    private final String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
     @FXML
@@ -100,11 +102,11 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         repeatBox.getItems().addAll(wiederholungen);
         repeatBox.setOnAction(this::getRepeat);
-        if (isregular.equals("Einmalig")) {
-            repeatBox.setValue(isregular);
+        if (isRegular.equals("Einmalig")) {
+            repeatBox.setValue(isRegular);
             wiederholungshaeufigkeitBox.setVisible(false);
         } else {
-            repeatBox.setValue(isregular);
+            repeatBox.setValue(isRegular);
             wiederholungshaeufigkeitBox.setVisible(true);
             try {
                 wiederholungshaeufigkeitBox.setValue(showContentOfWiederholungshaeufigkeitBox());
@@ -154,7 +156,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
 
         try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
-            log.info(isregularBool(isregular));
+            log.info(isregularBool(isRegular));
             String sql = "SELECT frequency FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
@@ -163,7 +165,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
                 stmt.setDouble(3, amount);
                 stmt.setDouble(4, bankBalance);
                 stmt.setInt(5, importance);
-                stmt.setBoolean(6, isregularBool(isregular));
+                stmt.setBoolean(6, isregularBool(isRegular));
 
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
@@ -255,7 +257,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
                     stmt.setString(8, note);
                     stmt.setDouble(9, amount);
                     stmt.setDouble(10, bankBalance);
-                    stmt.setBoolean(11, isregularBool(isregular));
+                    stmt.setBoolean(11, isregularBool(isRegular));
                     stmt.executeUpdate();
 
                     d.changeScene("/FXML/overview.fxml");

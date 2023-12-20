@@ -3,6 +3,7 @@ package Controller;
 import Logic.LogicDatabase;
 import Logic.LogicBalance;
 import Logic.LogicTableEntry;
+import Singleton.SingletonEditValues;
 import Singleton.SingletonUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -219,18 +220,19 @@ public class ControllerOverview implements Initializable{
     public void editRow(ActionEvent event) throws IOException {
         Driver d = new Driver();
         try {
+            SingletonEditValues sev = SingletonEditValues.getInstance();
             double betrag = table.getSelectionModel().getSelectedItem().getBetrag();
             String datum = table.getSelectionModel().getSelectedItem().getDatum();
             String grund = table.getSelectionModel().getSelectedItem().getGrund();
             double kontostand = table.getSelectionModel().getSelectedItem().getKontostand();
             int wichtigkeit = table.getSelectionModel().getSelectedItem().getWichtigkeit();
             String regelmäßigkeit = table.getSelectionModel().getSelectedItem().getRegelmäßigkeit();
-            ControllerEditEntry.isregular = regelmäßigkeit;
-            ControllerEditEntry.amount = betrag;
-            ControllerEditEntry.bankBalance = kontostand;
-            ControllerEditEntry.date = datum;
-            ControllerEditEntry.note = grund;
-            ControllerEditEntry.importance = wichtigkeit;
+            sev.setAmount(betrag);
+            sev.setDate(datum);
+            sev.setNote(grund);
+            sev.setBankbalance(kontostand);
+            sev.setImportance(wichtigkeit);
+            sev.setIsregular(regelmäßigkeit);
             d.changeScene("/FXML/editEntry.fxml");
         }catch(Exception e ){
             errorLabel.setText("No row selected");
