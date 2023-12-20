@@ -26,7 +26,7 @@ public class Login {
     @FXML
     private Button register;
     Driver d = new Driver();
-
+    DatenbankConnector dc = new DatenbankConnector();
     public static Logger log = LogManager.getLogger(Login.class);
     public void userLogin(ActionEvent event) throws SQLException, ClassNotFoundException{
         log.info("Login button pushed");
@@ -50,7 +50,7 @@ public class Login {
 
     public void checkLogin() throws SQLException {
 
-        try(Connection con = DatenbankConnector.getConnection()) {
+        try(Connection con = dc.getConnection()) {
 
             log.info("Connection to database succeed");
             if (username.getText().isEmpty() || password.getText().isEmpty()) {

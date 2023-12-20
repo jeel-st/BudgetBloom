@@ -55,7 +55,7 @@ public class ControllerÜbersicht implements Initializable{
     private Button eintragBearbeiten;
     @FXML
     private Label errorLabel;
-
+    DatenbankConnector dc = new DatenbankConnector();
     private String username = Login.publicusername;
     public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
 
@@ -103,7 +103,8 @@ public class ControllerÜbersicht implements Initializable{
 
     public void datenbank() throws SQLException {
 
-        try (Connection con = DatenbankConnector.getConnection()) {
+
+        try (Connection con = dc.getConnection()) {
             if (username != null) {
                 try {
                     String sql = "SELECT edate, note, amount, bankbalance, importance, isregular FROM konto" + username + " ORDER BY edate DESC, id DESC";
@@ -168,7 +169,7 @@ public class ControllerÜbersicht implements Initializable{
                 regelmäßigkeitBool = false;
             }
             log.info(betrag + datum + grund + kontostand + wichtigkeit + regelmäßigkeit);
-            try (Connection con = DatenbankConnector.getConnection()) {
+            try (Connection con = dc.getConnection()) {
                 log.info("Connection to database succeed");
 
                 String sql = "DELETE FROM konto" + username + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";

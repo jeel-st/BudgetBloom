@@ -71,7 +71,7 @@ public class ControllerEingabe implements Initializable {
     private String[] eingabe = {"Einnahme", "Ausgabe"};
     private String[] wiederholungsHäufigkeit = {"täglich", "monatlich", "jährlich"};
     Driver d = new Driver();
-
+    DatenbankConnector dc = new DatenbankConnector();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -129,7 +129,7 @@ public class ControllerEingabe implements Initializable {
 
 
     public void kontoVeränderung() throws SQLException, IOException {
-        try(Connection con = DatenbankConnector.getConnection()){
+        try(Connection con = dc.getConnection()){
             log.info("Connection to database succeed");
 
             int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
@@ -213,7 +213,7 @@ public class ControllerEingabe implements Initializable {
 
 
     public double aktuellerKontostand() throws Exception,SQLException {
-        try (Connection con = DatenbankConnector.getConnection()) {
+        try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
 
             String sql = "SELECT bankBalance FROM konto" + Login.publicusername + " ORDER BY edate DESC, id DESC LIMIT 1";

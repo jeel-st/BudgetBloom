@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -44,7 +43,7 @@ public class FirstLogin extends Application {
     @FXML
     public Image image;
     Driver d = new Driver();
-
+    DatenbankConnector dc = new DatenbankConnector();
     public static Logger log = LogManager.getLogger(Login.class);
 
 
@@ -84,7 +83,7 @@ public class FirstLogin extends Application {
 
     private void insertInitialBalance(double balance) {
 
-        try(Connection con = DatenbankConnector.getConnection()) {
+        try(Connection con = dc.getConnection()) {
             String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setDouble(1, balance);

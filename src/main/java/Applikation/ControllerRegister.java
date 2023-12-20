@@ -34,7 +34,7 @@ public class ControllerRegister {
     public PasswordField password2;
     public static Logger log = LogManager.getLogger(ControllerRegister.class);
     Driver d = new Driver();
-
+    DatenbankConnector dc = new DatenbankConnector();
 
     public void userToLogin(ActionEvent event) throws IOException {
         d.changeScene("/FXML/sample.fxml");
@@ -117,7 +117,7 @@ public class ControllerRegister {
     }
 
     public boolean newUserEntry() {
-        try (Connection con = DatenbankConnector.getConnection()) {
+        try (Connection con = dc.getConnection()) {
             String sql = "INSERT INTO users VALUES (DEFAULT, ?, ?, ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, username.getText());
@@ -133,7 +133,7 @@ public class ControllerRegister {
     }
 
     public void newTable() {
-        try (Connection con = DatenbankConnector.getConnection()) {
+        try (Connection con = dc.getConnection()) {
             String sqlTable = "CREATE TABLE konto" + username.getText() + "( \n" +
                     "id SERIAL PRIMARY KEY,\n" +
                     "edate DATE DEFAULT CURRENT_DATE NOT NULL,\n" +
@@ -156,7 +156,7 @@ public class ControllerRegister {
     }
 
     public boolean checkingUsername() throws SQLException {
-        try (Connection con = DatenbankConnector.getConnection()) {
+        try (Connection con = dc.getConnection()) {
 
             String checkUsername = username.getText();
 

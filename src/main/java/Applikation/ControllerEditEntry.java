@@ -68,6 +68,7 @@ public class ControllerEditEntry implements Initializable {
     public static int importance;
     public static String isregular;
     Driver d = new Driver();
+    DatenbankConnector dc = new DatenbankConnector();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
     @FXML
@@ -146,7 +147,7 @@ public class ControllerEditEntry implements Initializable {
 
     public String showContentOfWiederholungshaeufigkeitBox() throws Exception, SQLException {
 
-        try (Connection con = DatenbankConnector.getConnection()) {
+        try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
             log.info(isregularBool(isregular));
             String sql = "SELECT frequency FROM konto" + Login.publicusername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
@@ -202,7 +203,7 @@ public class ControllerEditEntry implements Initializable {
             }
             public void saveEdit () throws SQLException, IOException {
 
-                try (Connection con = DatenbankConnector.getConnection()) {
+                try (Connection con = dc.getConnection()) {
                     log.info("Connection to database succeed");
 
                     int sliderWert = (int) skala.getValue(); //slider Wert wird geholt

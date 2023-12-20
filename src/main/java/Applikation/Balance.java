@@ -12,7 +12,8 @@ public class Balance {
     public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
 
     public static void updateBalance() {
-        try(Connection con = DatenbankConnector.getConnection()){
+        DatenbankConnector dc = new DatenbankConnector();
+        try(Connection con = dc.getConnection()){
             try {
                 String sql = "SELECT id, amount, bankbalance FROM konto" + publicusername + " ORDER BY edate ASC, id ASC";
 

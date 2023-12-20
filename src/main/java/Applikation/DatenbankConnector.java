@@ -7,11 +7,11 @@ public class DatenbankConnector {
 
 
 
-    private static final String URL = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
-    private static final String USER = "js486";
-    private static final String PASSWORD = "(JJS)2003ab";
+    private final String URL = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
+    private final String USER = "js486";
+    private final String PASSWORD = "(JJS)2003ab";
 
-    public static Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
