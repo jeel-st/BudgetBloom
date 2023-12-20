@@ -1,12 +1,21 @@
 TO DO`s:
 
 
-X Datum wird doch nicht gecatched
-X try catches im editEntry Controller
-- Thread hinzufügen und Datenbankklasse mit Verbindung aufbauen     Ryan
-- Stream und Thread in Bezug auf Filtern der Tabelle nach dem neusten Kontostand nach einer bestimmten Zeit     Jana
+
 - Singleton Methode für Username mit Interface (evtl. noch Factory)     Joel
-- DatenbankConnector nicht static machen
+- Alle Methoden auf Englisch ändern, auch in Scenebuilder               Ryan
+- (neue Klassenstruktur)
+- Unit Tests                                                            alle
+- Nachdenkzettel
+- Logging, LogFile                                                      Joel
+- eigene Exceptions werfen                                              Jana
+- Interfaces                                                            Joel
+- Factories
+
+Nachdenkzettel:
+- UML, Git, Collections -> Ryan
+- Vererbung, Interfaces, Logging -> Joel
+- Clean code, Exceptions, JavaFX -> Jana
 
 
 Besprechung zum Schluss:

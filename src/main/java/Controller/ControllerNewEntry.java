@@ -1,4 +1,5 @@
-package Applikation;
+package Controller;
+import Logic.LogicDatabase;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -10,11 +11,6 @@ import mainpackage.Driver;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -26,7 +22,7 @@ import javafx.scene.control.TextField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ControllerEingabe implements Initializable {
+public class ControllerNewEntry implements Initializable {
 
     @FXML
     private Label eingabeText;
@@ -64,14 +60,14 @@ public class ControllerEingabe implements Initializable {
     @FXML
     private ChoiceBox<String> wiederholungshaeufigkeitBox;
 
-    public static Logger log = LogManager.getLogger(ControllerEingabe.class);
+    public static Logger log = LogManager.getLogger(ControllerNewEntry.class);
 
     private String[] wiederholungen = {"Einmalig", "Regelmäßig"};
     //kommt in die choicebox:
     private String[] eingabe = {"Einnahme", "Ausgabe"};
     private String[] wiederholungsHäufigkeit = {"täglich", "monatlich", "jährlich"};
     Driver d = new Driver();
-    DatenbankConnector dc = new DatenbankConnector();
+    LogicDatabase dc = new LogicDatabase();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -114,7 +110,7 @@ public class ControllerEingabe implements Initializable {
 
 
     public void userAbbruch(ActionEvent event) throws IOException {
-        d.changeScene("/FXML/übersicht.fxml");
+        d.changeScene("/FXML/overview.fxml");
     }
 
 
@@ -134,7 +130,7 @@ public class ControllerEingabe implements Initializable {
 
             int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
 
-            String sql = "INSERT INTO konto" + Login.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO konto" + ControllerLogin.publicusername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             try {
                 stmt.setDouble(3, kontoVeränderungsÜberprüfer());
@@ -180,7 +176,7 @@ public class ControllerEingabe implements Initializable {
                 stmt.setBoolean(6, checkIsRegularBoolean());
                 stmt.setString(7, checkFrequency());
                 stmt.executeUpdate();
-                d.changeScene("/FXML/übersicht.fxml");
+                d.changeScene("/FXML/overview.fxml");
 
             }catch (Exception e){
                 log.info("Eingabe konnte nicht hinzugefügt werden");
@@ -216,7 +212,7 @@ public class ControllerEingabe implements Initializable {
         try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
 
-            String sql = "SELECT bankBalance FROM konto" + Login.publicusername + " ORDER BY edate DESC, id DESC LIMIT 1";
+            String sql = "SELECT bankBalance FROM konto" + ControllerLogin.publicusername + " ORDER BY edate DESC, id DESC LIMIT 1";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             try {

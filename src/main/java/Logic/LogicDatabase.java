@@ -1,9 +1,9 @@
-package Applikation;
+package Logic;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatenbankConnector {
+public class LogicDatabase {
 
 
 

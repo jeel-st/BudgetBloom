@@ -1,5 +1,6 @@
-package Applikation;
+package Controller;
 
+import Logic.LogicDatabase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.sql.*;
 
-public class Login {
+public class ControllerLogin {
 
     @FXML
     private Button button;
@@ -26,8 +27,8 @@ public class Login {
     @FXML
     private Button register;
     Driver d = new Driver();
-    DatenbankConnector dc = new DatenbankConnector();
-    public static Logger log = LogManager.getLogger(Login.class);
+    LogicDatabase dc = new LogicDatabase();
+    public static Logger log = LogManager.getLogger(ControllerLogin.class);
     public void userLogin(ActionEvent event) throws SQLException, ClassNotFoundException{
         log.info("Login button pushed");
         checkLogin();
@@ -100,8 +101,8 @@ public class Login {
                                 log.info("Scene changed to firstLogin.fxml successfully");
                                 d.changeScene("/FXML/firstLogin.fxml");
                             } else {
-                                log.info("Scene changed to übersicht.fxml successfully");
-                                d.changeScene("/FXML/übersicht.fxml");
+                                log.info("Scene changed to overview.fxml successfully");
+                                d.changeScene("/FXML/overview.fxml");
                             }
                         } catch (SQLException e) {
                             log.error("SQL Exception " + e + " while finding out if is first login");

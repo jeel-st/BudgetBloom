@@ -1,11 +1,9 @@
-package Applikation;
+package Logic;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class NewEntry {
+public class LogicTableEntry {
     private String datum;
     private String grund;
     private Double betrag;
@@ -13,10 +11,10 @@ public class NewEntry {
     private Integer wichtigkeit;
     private String regelmäßigkeit;
     public String user;
-    public static Logger log = LogManager.getLogger(NewEntry.class);
+    public static Logger log = LogManager.getLogger(LogicTableEntry.class);
 
     //constructor:
-    public NewEntry(String datum, String grund, Double betrag, Double kontostand, Integer wichtigkeit, String regelmäßigkeit) {
+    public LogicTableEntry(String datum, String grund, Double betrag, Double kontostand, Integer wichtigkeit, String regelmäßigkeit) {
         this.datum = datum;
         this.grund = grund;
         this.betrag = betrag;

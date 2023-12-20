@@ -1,7 +1,7 @@
 package Threads;
 
-import Applikation.ControllerÜbersicht;
-import Applikation.DatenbankConnector;
+import Controller.ControllerOverview;
+import Logic.LogicDatabase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static Applikation.Login.publicusername;
+import static Controller.ControllerLogin.publicusername;
 
 public class BalanceThread implements Runnable {
-    public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
+    public static Logger log = LogManager.getLogger(ControllerOverview.class);
     @Override public void run() {
         if (publicusername != null) {
             Thread t1 = new Thread(task1);
@@ -27,7 +27,9 @@ public class BalanceThread implements Runnable {
     static Runnable task1 = () -> {
         log.info("Task1 is running");
 
-        try (Connection con = DatenbankConnector.getConnection()){
+        LogicDatabase dc = new LogicDatabase();
+
+        try (Connection con = dc.getConnection()){
 
             try {
                 String sql = "SELECT bankbalance FROM konto" + publicusername + " ORDER BY edate DESC, id DESC";

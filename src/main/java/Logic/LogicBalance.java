@@ -1,18 +1,19 @@
-package Applikation;
+package Logic;
 
+import Controller.ControllerOverview;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
-import static Applikation.Login.publicusername;
+import static Controller.ControllerLogin.publicusername;
 
 
-public class Balance {
-    public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
+public class LogicBalance {
+    public static Logger log = LogManager.getLogger(ControllerOverview.class);
 
     public static void updateBalance() {
-        DatenbankConnector dc = new DatenbankConnector();
+        LogicDatabase dc = new LogicDatabase();
         try(Connection con = dc.getConnection()){
             try {
                 String sql = "SELECT id, amount, bankbalance FROM konto" + publicusername + " ORDER BY edate ASC, id ASC";

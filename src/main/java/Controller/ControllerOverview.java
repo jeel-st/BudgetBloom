@@ -1,5 +1,8 @@
-package Applikation;
+package Controller;
 
+import Logic.LogicDatabase;
+import Logic.LogicBalance;
+import Logic.LogicTableEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,27 +23,27 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-public class ControllerÜbersicht implements Initializable{
+public class ControllerOverview implements Initializable{
 
     @FXML
-    private TableView<NewEntry> table;
+    private TableView<LogicTableEntry> table;
 
     @FXML
-    private TableColumn<NewEntry, String> datum;
+    private TableColumn<LogicTableEntry, String> datum;
 
     @FXML
-    private TableColumn<NewEntry, String> grund;
+    private TableColumn<LogicTableEntry, String> grund;
 
     @FXML
-    private TableColumn<NewEntry, Double> betrag;
+    private TableColumn<LogicTableEntry, Double> betrag;
 
     @FXML
-    private TableColumn<NewEntry, Double> kontostand;
+    private TableColumn<LogicTableEntry, Double> kontostand;
 
     @FXML
-    private TableColumn<NewEntry, Integer> wichtigkeit;
+    private TableColumn<LogicTableEntry, Integer> wichtigkeit;
     @FXML
-    private TableColumn<NewEntry, String> regelmaeßigkeit;
+    private TableColumn<LogicTableEntry, String> regelmaeßigkeit;
 
 
     @FXML
@@ -55,25 +58,25 @@ public class ControllerÜbersicht implements Initializable{
     private Button eintragBearbeiten;
     @FXML
     private Label errorLabel;
-    DatenbankConnector dc = new DatenbankConnector();
-    private String username = Login.publicusername;
-    public static Logger log = LogManager.getLogger(ControllerÜbersicht.class);
+    LogicDatabase dc = new LogicDatabase();
+    private String username = ControllerLogin.publicusername;
+    public static Logger log = LogManager.getLogger(ControllerOverview.class);
 
     //Oberserver Liste weil Tabelle es als Input nutzt
-    ObservableList<NewEntry> list = FXCollections.observableArrayList(
+    ObservableList<LogicTableEntry> list = FXCollections.observableArrayList(
             //new User("17.11.2023", "Lebensmittel", -12.3, 123.45)
     );
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        datum.setCellValueFactory(new PropertyValueFactory <NewEntry, String>("datum"));
-        grund.setCellValueFactory(new PropertyValueFactory <NewEntry, String>("grund"));
-        betrag.setCellValueFactory(new PropertyValueFactory <NewEntry, Double>("betrag"));
-        kontostand.setCellValueFactory(new PropertyValueFactory <NewEntry, Double>("kontostand"));
-        wichtigkeit.setCellValueFactory(new PropertyValueFactory <NewEntry, Integer>("wichtigkeit"));
-        regelmaeßigkeit.setCellValueFactory(new PropertyValueFactory<NewEntry, String>("regelmäßigkeit"));
+        datum.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, String>("datum"));
+        grund.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, String>("grund"));
+        betrag.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Double>("betrag"));
+        kontostand.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Double>("kontostand"));
+        wichtigkeit.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Integer>("wichtigkeit"));
+        regelmaeßigkeit.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("regelmäßigkeit"));
         log.debug("Started to update balance");
-        Balance.updateBalance();
+        LogicBalance.updateBalance();
         log.debug("Finished update of balance");
         try{
             datenbank();
@@ -92,8 +95,8 @@ public class ControllerÜbersicht implements Initializable{
 
     public void userNeueEingabe(ActionEvent event)throws IOException {
         Driver d = new Driver();
-        log.info("Changed Scene to eingabe.fxml");
-        d.changeScene("/FXML/eingabe.fxml");
+        log.info("Changed Scene to newEntry.fxml");
+        d.changeScene("/FXML/newEntry.fxml");
     }
     public void removeRow(ActionEvent event) throws SQLException {
         if(safetyCheck()){
@@ -124,7 +127,7 @@ public class ControllerÜbersicht implements Initializable{
                         } else {
                             regelmäßigkeit = "Einmalig";
                         }
-                        list.add(new NewEntry(datum, grund, betrag, kontostand, wichtigkeit, regelmäßigkeit));
+                        list.add(new LogicTableEntry(datum, grund, betrag, kontostand, wichtigkeit, regelmäßigkeit));
                     }
                 } catch (Exception e) {
                     log.error("Failed to transfer data from database");
@@ -195,8 +198,8 @@ public class ControllerÜbersicht implements Initializable{
                     }
                     table.setItems(list);*/
                     Driver d = new Driver();
-                    log.info("Reload scene übersicht.fxml");
-                    d.changeScene("/FXML/übersicht.fxml");
+                    log.info("Reload scene overview.fxml");
+                    d.changeScene("/FXML/overview.fxml");
                 } else {
                     log.info("No rows deleted.");
                     }
