@@ -2,11 +2,10 @@ package Controller;
 
 import Logic.LogicDatabase;
 import Logic.LogicBalance;
+import Logic.LogicOverview;
 import Logic.LogicTableEntry;
 import Singleton.SingletonEditValues;
 import Singleton.SingletonUser;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -63,13 +62,12 @@ public class ControllerOverview implements Initializable{
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
     private String localUsername = sp.getName();
+    LogicOverview lo = new LogicOverview();
 
     public static Logger log = LogManager.getLogger(ControllerOverview.class);
 
     //Oberserver Liste weil Tabelle es als Input nutzt
-    ObservableList<LogicTableEntry> list = FXCollections.observableArrayList(
-            //new User("17.11.2023", "Lebensmittel", -12.3, 123.45)
-    );
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,12 +81,12 @@ public class ControllerOverview implements Initializable{
         LogicBalance.updateBalance();
         log.debug("Finished update of balance");
         try{
-            datenbank();
+            table.setItems(lo.datenbank());
             log.info("Searching for data succeed");
         }catch(Exception e){
             log.error("Searching for data failed");
         }
-        table.setItems(list);
+
     }
 
     public void userLogout(ActionEvent event)throws IOException {
@@ -108,42 +106,7 @@ public class ControllerOverview implements Initializable{
         }
     }
 
-    public void datenbank() throws SQLException {
 
-
-        try (Connection con = dc.getConnection()) {
-            if (localUsername != null) {
-                try {
-                    String sql = "SELECT edate, note, amount, bankbalance, importance, isregular FROM konto" + localUsername + " ORDER BY edate DESC, id DESC";
-
-                    PreparedStatement stmt = con.prepareStatement(sql);
-                    ResultSet rs = stmt.executeQuery();
-                    while (rs.next()) {
-                        String datum = (rs.getDate("edate").toString());
-                        String grund = (rs.getString("note"));
-                        double betrag = (rs.getDouble("amount"));
-                        double kontostand = (rs.getDouble("bankbalance"));
-                        Integer wichtigkeit = (rs.getInt("importance"));
-                        Boolean regelmäßigkeitBool = (rs.getBoolean("isregular"));
-                        String regelmäßigkeit;
-                        if (regelmäßigkeitBool) {
-                            regelmäßigkeit = "Regelmäßig";
-                        } else {
-                            regelmäßigkeit = "Einmalig";
-                        }
-                        list.add(new LogicTableEntry(datum, grund, betrag, kontostand, wichtigkeit, regelmäßigkeit));
-                    }
-                } catch (Exception e) {
-                    log.error("Failed to transfer data from database");
-                }
-            } else {
-                log.error("Username is null");
-            }
-        }catch (SQLException e) {
-            log.error("Couldn't connect to Database", e);
-            throw e;
-        }
-    }
 
     public boolean safetyCheck(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -176,19 +139,8 @@ public class ControllerOverview implements Initializable{
                 regelmäßigkeitBool = false;
             }
             log.info(betrag + datum + grund + kontostand + wichtigkeit + regelmäßigkeit);
-            try (Connection con = dc.getConnection()) {
-                log.info("Connection to database succeed");
 
-                String sql = "DELETE FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";
-                PreparedStatement stmt = con.prepareStatement(sql);
-                stmt.setDate(1, Date.valueOf(datum));
-                stmt.setString(2, grund);
-                stmt.setDouble(3, betrag);
-                stmt.setDouble(4, kontostand);
-                stmt.setInt(5, wichtigkeit);
-                stmt.setBoolean(6, regelmäßigkeitBool);
-                int rowsAffected = stmt.executeUpdate();
-
+            int rowsAffected = lo.deleteRowInDatabase(betrag, datum, grund, kontostand, wichtigkeit, regelmäßigkeitBool);
                 if (rowsAffected > 0) {
                     log.info("Deletion successful. Rows affected: " + rowsAffected);
                     table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
@@ -201,16 +153,13 @@ public class ControllerOverview implements Initializable{
                         log.error("Searching for data failed");
                     }
                     table.setItems(list);*/
-                    Driver d = new Driver();
+                    mainpackage.Driver d = new Driver();
                     log.info("Reload scene overview.fxml");
                     d.changeScene("/FXML/overview.fxml");
                 } else {
                     log.info("No rows deleted.");
-                    }
-                }catch (SQLException e) {
-                log.error("Couldn't connect to Database", e);
-                throw e;
-                    }
+                }
+
             } catch (Exception e) {
                 errorLabel.setText("No row selected");
                 log.error("Keine Zeile wurde ausgewählt");
@@ -220,25 +169,19 @@ public class ControllerOverview implements Initializable{
     public void editRow(ActionEvent event) throws IOException {
         Driver d = new Driver();
         try {
-            SingletonEditValues sev = SingletonEditValues.getInstance();
+
             double betrag = table.getSelectionModel().getSelectedItem().getBetrag();
             String datum = table.getSelectionModel().getSelectedItem().getDatum();
             String grund = table.getSelectionModel().getSelectedItem().getGrund();
             double kontostand = table.getSelectionModel().getSelectedItem().getKontostand();
             int wichtigkeit = table.getSelectionModel().getSelectedItem().getWichtigkeit();
             String regelmäßigkeit = table.getSelectionModel().getSelectedItem().getRegelmäßigkeit();
-            sev.setAmount(betrag);
-            sev.setDate(datum);
-            sev.setNote(grund);
-            sev.setBankbalance(kontostand);
-            sev.setImportance(wichtigkeit);
-            sev.setIsregular(regelmäßigkeit);
+            lo.saveValues(betrag, datum, grund, kontostand, wichtigkeit, regelmäßigkeit);
             d.changeScene("/FXML/editEntry.fxml");
         }catch(Exception e ){
             errorLabel.setText("No row selected");
             log.error("Keine Zeile wurde ausgewählt");
         }
     }
-
 
 }

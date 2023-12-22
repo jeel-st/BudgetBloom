@@ -52,26 +52,7 @@ public class ControllerRegister {
         }else {
             d.changeScene("/FXML/sample.fxml");
         }
-    /*    if (lg.fillingControl(username.getText(), password.getText(), password2.getText(), email.getText())) {
-            if (passwordControl()) {
-                if (checkingUsername()) {
-                    if (newUserEntry()) {
-                        newTable();
-                        d.changeScene("/FXML/sample.fxml");
-                    } else {
-                        log.error("NewUserEntry failed");
-                    }
-                } else {
-                    log.error("checkingUsername failed");
-                }
-            } else {
-                log.error("passwordControl failed");
-            }
-        } else {
-            wrongRegister.setText("Please fill out each field");
-            log.error("Some field are empty");
-        }
-        */
+
     }
 
 
