@@ -2,6 +2,7 @@ package Controller;
 
 import Interfaces.EntryInterface;
 import Logic.LogicDatabase;
+import Logic.LogicFacade;
 import Singleton.SingletonEditValues;
 import Singleton.SingletonUser;
 import javafx.beans.value.ChangeListener;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ControllerEditEntry implements Initializable, EntryInterface {
@@ -90,7 +92,11 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             log.error("Geben sie eine Frequenz an");
         } else {
             if (c.überprüfungDatentypDouble(eingabeZahl.getText())) {
-                saveEdit();
+                String errorLabelText = LogicFacade.getInstance().saveEdit(eingabeDatum.getValue(), eingabeGrund.getText(), (int) skala.getValue(), repeatBox.getValue(), eingabeZahl.getText(), myChoiceBox.getValue(), wiederholungshaeufigkeitBox.getValue());
+                errorLabel.setText(errorLabelText);
+                if (Objects.equals(errorLabelText, "Edit was saved successfully")) {
+                    d.changeScene("/FXML/overview.fxml");
+                }
             } else {
                 log.error("Geben sie eine Zahl in dem vorgegebenen Format an");
                 errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
@@ -102,6 +108,8 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         repeatBox.getItems().addAll(wiederholungen);
         repeatBox.setOnAction(this::getRepeat);
+        // bis hier stehen lassen
+
         if (isRegular.equals("Einmalig")) {
             repeatBox.setValue(isRegular);
             wiederholungshaeufigkeitBox.setVisible(false);
@@ -109,7 +117,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             repeatBox.setValue(isRegular);
             wiederholungshaeufigkeitBox.setVisible(true);
             try {
-                wiederholungshaeufigkeitBox.setValue(showContentOfWiederholungshaeufigkeitBox());
+                wiederholungshaeufigkeitBox.setValue(LogicFacade.getInstance().showContentOfWiederholungshaeufigkeitBox());
             } catch (Exception e) {
                 log.error("Content passt nicht in WiederholungshäufigkeitsBox");
             }
@@ -151,51 +159,6 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
         });
 
     }
-
-    public String showContentOfWiederholungshaeufigkeitBox() throws Exception, SQLException {
-
-        try (Connection con = dc.getConnection()) {
-            log.info("Connection to database succeed");
-            log.info(isregularBool(isRegular));
-            String sql = "SELECT frequency FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
-            try (PreparedStatement stmt = con.prepareStatement(sql)) {
-
-                stmt.setDate(1, Date.valueOf(date));
-                stmt.setString(2, note);
-                stmt.setDouble(3, amount);
-                stmt.setDouble(4, bankBalance);
-                stmt.setInt(5, importance);
-                stmt.setBoolean(6, isregularBool(isRegular));
-
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        String s = rs.getString("frequency");
-                        log.info(s);
-                        return s;
-                    } else {
-                        log.error("Es wurde kein passender Datensatz gefunden");
-                        throw new Exception();
-                    }
-                }
-            } catch (Exception e) {
-                log.error("Datenbank funktioniert nicht", e);
-                throw e;
-            }
-        } catch (SQLException e) {
-            log.error("Error closing connection", e);
-            throw e;
-        }
-    }
-            public boolean isregularBool (String s){
-                boolean isregularBool;
-                if (s.equals("Einmalig")) {
-                    isregularBool = false;
-                    return isregularBool;
-                } else {
-                    isregularBool = true;
-                    return isregularBool;
-                }
-            }
             public void getRepeat (ActionEvent event){
                 String repetition = repeatBox.getValue();
                 if ("Regelmäßig".equalsIgnoreCase(repetition)) {
@@ -208,97 +171,6 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
                 String myEingabe = myChoiceBox.getValue();
                 eingabeText.setText("Neue " + myEingabe + ":");
             }
-            public void saveEdit () throws SQLException, IOException {
-
-                try (Connection con = dc.getConnection()) {
-                    log.info("Connection to database succeed");
-
-                    int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
-
-                    String sql = "UPDATE konto" + localUsername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
-                    PreparedStatement stmt = con.prepareStatement(sql);
-                    try {
-                        stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
-                    } catch (Exception e) {
-                        log.error("Datum geht nicht");
-                        errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
-                        return;
-                    }
-
-                    try {
-                        String grund = eingabeGrund.getText();
-                        if (grund.isEmpty()) {
-                            throw new IllegalArgumentException("Grund ist ein Pflichtfeld");
-                        }
-                        stmt.setString(2, grund);
-                    } catch (IllegalArgumentException e) {
-                        log.error("Grund leer");
-                        errorLabel.setText("Bitte fügen Sie einen Grund hinzu!");
-                        return;
-                    } catch (Exception e) {
-                        log.error("Grund geht nicht");
-                        errorLabel.setText("Irgendetwas stimmt mit dem Grund nicht!");
-                        return;
-                    }
-
-                    try {
-                        stmt.setDouble(3, kontoVeränderungsÜberprüferEdit());
-                        log.info("Kontoänderungseingabe erfolgreich");
-                    } catch (Exception e) {
-                        log.error("Kontoänderung geht nicht");
-                        errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
-                    }
-
-
-                    stmt.setInt(4, sliderWert);
-                    stmt.setBoolean(5, isregularBool(repeatBox.getValue()));
-                    stmt.setString(6, checkFrequency());
-                    stmt.setDate(7, Date.valueOf(date));
-                    stmt.setString(8, note);
-                    stmt.setDouble(9, amount);
-                    stmt.setDouble(10, bankBalance);
-                    stmt.setBoolean(11, isregularBool(isRegular));
-                    stmt.executeUpdate();
-
-                    d.changeScene("/FXML/overview.fxml");
-                } catch (SQLException e) {
-                    log.error("Couldn't connect to Database");
-                }
-            }
-
-        public String checkFrequency () {
-            if (isregularBool(repeatBox.getValue()) && wiederholungshaeufigkeitBox.getValue().equals("täglich")) {
-                return "täglich";
-            } else if (isregularBool(repeatBox.getValue()) && wiederholungshaeufigkeitBox.getValue().equals("monatlich")) {
-                return "monatlich";
-            } else if (isregularBool(repeatBox.getValue()) && wiederholungshaeufigkeitBox.getValue().equals("jährlich")) {
-                return "jährlich";
-            } else {
-                return null;
-            }
-        }
-
-        public double kontoVeränderungsÜberprüferEdit () {
-
-            double d = Double.parseDouble(eingabeZahl.getText());
-            if (myChoiceBox.getValue().equals("Einnahme")) {
-
-                log.info(d);
-                return d;
-            } else {
-
-                log.info(d);
-                if (d == 0) {
-                    return d;
-                } else if (d > 0) {
-                    return -d;
-                } else {
-                    return d;
-                }
-
-            }
-
-        }
 
     }
 

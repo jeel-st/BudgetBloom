@@ -240,6 +240,8 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     }
     public double kontoVeränderungsÜberprüfer() {
 
+        //Methode steht bereits in LogicNew Entry !!!
+
             double d = Double.parseDouble(eingabeZahl.getText());
             if (myChoiceBox.getValue().equals("Einnahme")) {
 
