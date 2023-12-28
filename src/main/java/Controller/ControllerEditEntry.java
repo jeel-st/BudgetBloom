@@ -91,7 +91,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
         if (repeatBox.getValue().equals("Regelmäßig") && wiederholungshaeufigkeitBox.getValue() == null) {
             log.error("Geben sie eine Frequenz an");
         } else {
-            if (c.überprüfungDatentypDouble(eingabeZahl.getText())) {
+            if (LogicFacade.getInstance().checkIsRegularBoolean(eingabeZahl.getText())) {
                 String errorLabelText = LogicFacade.getInstance().saveEdit(eingabeDatum.getValue(), eingabeGrund.getText(), (int) skala.getValue(), repeatBox.getValue(), eingabeZahl.getText(), myChoiceBox.getValue(), wiederholungshaeufigkeitBox.getValue());
                 errorLabel.setText(errorLabelText);
                 if (Objects.equals(errorLabelText, "Edit was saved successfully")) {

@@ -1,9 +1,6 @@
 package Controller;
 
-import Logic.LogicDatabase;
-import Logic.LogicBalance;
-import Logic.LogicOverview;
-import Logic.LogicTableEntry;
+import Logic.*;
 import Singleton.SingletonEditValues;
 import Singleton.SingletonUser;
 import javafx.event.ActionEvent;
@@ -62,7 +59,7 @@ public class ControllerOverview implements Initializable{
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
     private String localUsername = sp.getName();
-    LogicOverview lo = new LogicOverview();
+    LogicFacade lf = LogicFacade.getInstance();
 
     public static Logger log = LogManager.getLogger(ControllerOverview.class);
 
@@ -81,7 +78,7 @@ public class ControllerOverview implements Initializable{
         LogicBalance.updateBalance();
         log.debug("Finished update of balance");
         try{
-            table.setItems(lo.datenbank());
+            table.setItems(lf.datenbank());
             log.info("Searching for data succeed");
         }catch(Exception e){
             log.error("Searching for data failed");
@@ -140,7 +137,7 @@ public class ControllerOverview implements Initializable{
             }
             log.info(betrag + datum + grund + kontostand + wichtigkeit + regelmäßigkeit);
 
-            int rowsAffected = lo.deleteRowInDatabase(betrag, datum, grund, kontostand, wichtigkeit, regelmäßigkeitBool);
+            int rowsAffected = lf.deleteRowInDatabase(betrag, datum, grund, kontostand, wichtigkeit, regelmäßigkeitBool);
                 if (rowsAffected > 0) {
                     log.info("Deletion successful. Rows affected: " + rowsAffected);
                     table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
@@ -176,7 +173,7 @@ public class ControllerOverview implements Initializable{
             double kontostand = table.getSelectionModel().getSelectedItem().getKontostand();
             int wichtigkeit = table.getSelectionModel().getSelectedItem().getWichtigkeit();
             String regelmäßigkeit = table.getSelectionModel().getSelectedItem().getRegelmäßigkeit();
-            lo.saveValues(betrag, datum, grund, kontostand, wichtigkeit, regelmäßigkeit);
+            lf.saveValues(betrag, datum, grund, kontostand, wichtigkeit, regelmäßigkeit);
             d.changeScene("/FXML/editEntry.fxml");
         }catch(Exception e ){
             errorLabel.setText("No row selected");

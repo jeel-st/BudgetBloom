@@ -1,6 +1,11 @@
 package Controller;
 import Interfaces.EntryInterface;
+import LocalExceptions.NewEntryExceptions.NoteIsNullException;
+import LocalExceptions.NewEntryExceptions.ParseDateException;
+import LocalExceptions.NewEntryExceptions.ParseDoubleException;
 import Logic.LogicDatabase;
+import Logic.LogicFacade;
+import Logic.LogicNewEntry;
 import Singleton.SingletonUser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -72,6 +77,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
     private String localUsername = sp.getName();
+    private Boolean repeatBool;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -118,157 +124,30 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     }
 
 
-    public void userEingabeHinzufügen(ActionEvent event) throws IOException, SQLException {
-
-            if(wiederholungshaeufigkeitBox.getValue() != null && checkIsRegularBoolean()|| wiederholungshaeufigkeitBox.getValue() == null && checkIsRegularBoolean() == false) {
-                kontoVeränderung();
-            }else{
+    public void userEingabeHinzufügen(ActionEvent event) throws SQLException, IOException {
+            repeatBool  = LogicFacade.getInstance().checkIsRegularBoolean(repeatBox.getValue());
+            int sliderValue = (int) skala.getValue();
+            Boolean rightFormat = false;
+            try{
+                if(LogicFacade.getInstance().checkingFormats(eingabeZahl.getText(), eingabeGrund.getText(), eingabeDatum.getValue())){
+                    rightFormat = true;
+                }
+            } catch (NoteIsNullException e) {
+                errorLabel.setText("Bitte fügen Sie einen Grund hinzu!");
+            } catch (ParseDoubleException e) {
+                errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
+            } catch (ParseDateException e) {
+                errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
+            }
+        if(rightFormat) {
+            if (wiederholungshaeufigkeitBox.getValue() != null && repeatBool || wiederholungshaeufigkeitBox.getValue() == null && !repeatBool) {
+                LogicFacade.getInstance().kontoVeränderung((Double.parseDouble(eingabeZahl.getText())), myChoiceBox.getValue(), sliderValue, eingabeGrund.getText(), Date.valueOf((eingabeDatum.getValue())), wiederholungshaeufigkeitBox.getValue(), repeatBool);
+                d.changeScene("/FXML/overview.fxml");
+            } else {
                 log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
             }
         }
-
-
-    public void kontoVeränderung() throws SQLException, IOException {
-        try(Connection con = dc.getConnection()){
-            log.info("Connection to database succeed");
-
-            int sliderWert = (int) skala.getValue(); //slider Wert wird geholt
-
-            String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmt = con.prepareStatement(sql);
-            try {
-                stmt.setDouble(3, kontoVeränderungsÜberprüfer());
-                log.info("Kontoänderungseingabe erfolgreich");
-            } catch (Exception e) {
-                log.error("Kontoänderungseingabe hat nicht geklappt");
-                errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
-            }
-
-            try {
-                String grund = eingabeGrund.getText();
-                if (grund.isEmpty()) {
-                    throw new IllegalArgumentException("Grund ist ein Pflichtfeld");
-                }
-                stmt.setString(2, grund);
-            } catch (Exception e) {
-                log.error("Grund geht nicht");
-                errorLabel.setText("Bitte fügen Sie einen Grund hinzu!" );
-            }
-
-            try {
-                stmt.setDate(1, Date.valueOf((eingabeDatum.getValue())));
-            }catch (Exception e){
-                log.error("Datum geht nicht");
-                errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
-                return;
-            }
-
-
-            try {
-                double neuerKontostand = aktuellerKontostand();
-                log.info("Neuer Kontostand: " + neuerKontostand);
-                stmt.setDouble(4, neuerKontostand);
-            } catch (Exception e) {
-                log.error("Aktueller Kontostand  konnte nicht aufgerufen werden");
-            }
-
-
-
-            stmt.setInt(5, sliderWert);
-
-            try {
-                stmt.setBoolean(6, checkIsRegularBoolean());
-                stmt.setString(7, checkFrequency());
-                stmt.executeUpdate();
-                d.changeScene("/FXML/overview.fxml");
-
-            }catch (Exception e){
-                log.info("Eingabe konnte nicht hinzugefügt werden");
-            }
-        }catch (SQLException e) {
-            log.error("Couldn't connect to Database", e);
-            throw e;
         }
-    }
-
-    public boolean checkIsRegularBoolean(){
-        if(repeatBox.getValue().equals("Einmalig")){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
-    public String checkFrequency(){
-        if(checkIsRegularBoolean() && wiederholungshaeufigkeitBox.getValue().equals("täglich")){
-            return "täglich";
-        }else if(checkIsRegularBoolean() && wiederholungshaeufigkeitBox.getValue().equals("monatlich")){
-            return "monatlich";
-        }else if(checkIsRegularBoolean() && wiederholungshaeufigkeitBox.getValue().equals("jährlich")){
-            return "jährlich";
-        }else {
-            return null;
-        }
-    }
-
-
-    public double aktuellerKontostand() throws Exception,SQLException {
-        try (Connection con = dc.getConnection()) {
-            log.info("Connection to database succeed");
-
-            String sql = "SELECT bankBalance FROM konto" + localUsername + " ORDER BY edate DESC, id DESC LIMIT 1";
-            PreparedStatement stmt = con.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            try {
-                while (rs.next()) {
-                    double Kontostand = rs.getDouble("bankBalance");
-
-                    log.info(Kontostand);
-                    double neuerKontostand = Kontostand + kontoVeränderungsÜberprüfer();
-                    neuerKontostand = Math.round(neuerKontostand * 100.0) / 100.0;
-                    return neuerKontostand;
-                }
-            } catch (Exception e) {
-                log.error("kein Kontostand gefunden");
-            }
-
-            throw new Exception();
-        }catch (SQLException e) {
-            log.error("Couldn't connect to Database", e);
-            throw e;
-        }
-    }
-    public double kontoVeränderungsÜberprüfer() {
-
-        //Methode steht bereits in LogicNew Entry !!!
-
-            double d = Double.parseDouble(eingabeZahl.getText());
-            if (myChoiceBox.getValue().equals("Einnahme")) {
-
-                log.info(d);
-                return d;
-            } else {
-
-                log.info(d);
-                if (d == 0) {
-                    return d;
-                } else if (d > 0) {
-                    return -d;
-                } else {
-                    return d;
-                }
-
-        }
-
-    }
-    public boolean überprüfungDatentypDouble (String s){
-        try {
-            Double.parseDouble(s);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
 
 }

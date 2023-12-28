@@ -1,6 +1,7 @@
 package Controller;
 
 import Logic.LogicDatabase;
+import Logic.LogicFacade;
 import Logic.LogicRegister;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,15 +38,15 @@ public class ControllerRegister {
     public static Logger log = LogManager.getLogger(ControllerRegister.class);
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
-    LogicRegister lg = new LogicRegister();
+
 
     public void userToLogin(ActionEvent event) throws IOException {
         d.changeScene("/FXML/sample.fxml");
     }
 
-    public void userCreate(ActionEvent event) throws IOException, SQLException {
+    public void userCreate(ActionEvent event) throws IOException{
         log.info("User creation started");
-        String LabelText = lg.proveRegisterTextFields(username.getText(), password.getText(), password2.getText(), email.getText());
+        String LabelText = LogicFacade.getInstance().proveRegisterTextFields(username.getText(),password.getText(), password2.getText(),email.getText());
         log.info(LabelText);
         if(!(LabelText.equals("completed"))){
             wrongRegister.setText(LabelText);
