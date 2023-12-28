@@ -13,6 +13,10 @@ TO DO`s:
 - Factories bei User                                                    Joel
 - SingletonÜbergabeWerte ControllerEdit
 
+Problemchen...:
+-Thread tut nicht mehr :/
+-Im Overview wird die Bankbalance in der DB doppelt geupdatet - Warum?
+
 Nachdenkzettel:
 - UML, Git, Collections -> Ryan
 - Vererbung, Interfaces, Logging -> Joel

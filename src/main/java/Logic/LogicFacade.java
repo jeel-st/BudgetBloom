@@ -4,8 +4,10 @@ import LocalExceptions.NewEntryExceptions.AmountChangeIsNullException;
 import LocalExceptions.NewEntryExceptions.NoteIsNullException;
 import LocalExceptions.NewEntryExceptions.ParseDateException;
 import LocalExceptions.NewEntryExceptions.ParseDoubleException;
+import Singleton.SingletonUser;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -58,6 +60,14 @@ public class LogicFacade {
 
     public boolean isBalanceNumber(String balance) {
         return firstLogin.isBalanceNumber(balance);
+    }
+
+    public boolean isValidUser(String username, String password) throws IOException {
+        return login.isValidUser(username, password);
+    }
+
+    public boolean isFirstLogin() {
+        return login.isFirstLogin();
     }
 
     public String proveRegisterTextFields(String username, String password, String password2, String email){
