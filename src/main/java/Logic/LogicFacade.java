@@ -13,8 +13,9 @@ public class LogicFacade {
 
     private static LogicFacade instance;
     private final LogicEditEntry editEntry;
-    private final LogicBalance balance;
-    private final LogicDatabase database;
+    private final LogicFirstLogin firstLogin;
+
+    private final LogicLogin login;
     private final LogicOverview overview;
     private final LogicRegister register;
     private final LogicNewEntry newEntry;
@@ -23,8 +24,8 @@ public class LogicFacade {
 
     private LogicFacade(){
         editEntry = new LogicEditEntry();
-        balance = new LogicBalance();
-        database = new LogicDatabase();
+        firstLogin = new LogicFirstLogin();
+        login = new LogicLogin();
         overview = new LogicOverview();
         register = new LogicRegister();
         newEntry = new LogicNewEntry();
@@ -48,6 +49,14 @@ public class LogicFacade {
 
     public String showContentOfWiederholungshaeufigkeitBox() throws Exception {
         return editEntry.showContentOfWiederholungshaeufigkeitBox();
+    }
+
+    public void insertInitialBalance(double balance) {
+        firstLogin.insertInitialBalance(balance);
+    }
+
+    public boolean isBalanceNumber(String balance) {
+        return firstLogin.isBalanceNumber(balance);
     }
 
     public String proveRegisterTextFields(String username, String password, String password2, String email){
