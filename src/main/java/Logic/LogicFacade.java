@@ -1,5 +1,6 @@
 package Logic;
 
+import LocalExceptions.NewEntryExceptions.AmountChangeIsNullException;
 import LocalExceptions.NewEntryExceptions.NoteIsNullException;
 import LocalExceptions.NewEntryExceptions.ParseDateException;
 import LocalExceptions.NewEntryExceptions.ParseDoubleException;
@@ -77,7 +78,7 @@ public class LogicFacade {
     public void kontoVeränderung(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, Boolean repeatBool) throws SQLException{
         newEntry.kontoVeränderung(amountChange, choiceBoxValue, sliderValue, note, date, repetitionFrequency, repeatBool);
     }
-    public Boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException{
+    public Boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException, AmountChangeIsNullException {
         return newEntry.checkingFormats(amountChange, note, date);
     }
 }

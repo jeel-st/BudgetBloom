@@ -1,5 +1,6 @@
 package Controller;
 import Interfaces.EntryInterface;
+import LocalExceptions.NewEntryExceptions.AmountChangeIsNullException;
 import LocalExceptions.NewEntryExceptions.NoteIsNullException;
 import LocalExceptions.NewEntryExceptions.ParseDateException;
 import LocalExceptions.NewEntryExceptions.ParseDoubleException;
@@ -138,6 +139,8 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
                 errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
             } catch (ParseDateException e) {
                 errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
+            } catch (AmountChangeIsNullException e){
+                errorLabel.setText("Das Feld für ihre Einnahmen/Ausgaben ist ein Pflichtfeld");
             }
         if(rightFormat) {
             if (wiederholungshaeufigkeitBox.getValue() != null && repeatBool || wiederholungshaeufigkeitBox.getValue() == null && !repeatBool) {
@@ -145,6 +148,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
                 d.changeScene("/FXML/overview.fxml");
             } else {
                 log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
+                errorLabel.setText("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
             }
         }
         }

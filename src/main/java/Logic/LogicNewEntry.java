@@ -1,6 +1,7 @@
 package Logic;
 
 import Controller.ControllerEditEntry;
+import LocalExceptions.NewEntryExceptions.AmountChangeIsNullException;
 import LocalExceptions.NewEntryExceptions.NoteIsNullException;
 import LocalExceptions.NewEntryExceptions.ParseDateException;
 import LocalExceptions.NewEntryExceptions.ParseDoubleException;
@@ -61,42 +62,23 @@ public class LogicNewEntry {
 
             }
 
-            try {
-                if (note.isEmpty()) {
-                    throw new IllegalArgumentException("Grund ist ein Pflichtfeld");
-                }
                 stmt.setString(2, note);
-            } catch (Exception e) {
-                log.error("Grund geht nicht");
 
-            }
-
-            try {
                 stmt.setDate(1, date);
-            } catch (Exception e) {
-                log.error("Datum geht nicht");
-
-                return;
-            }
-
-
             try {
                 double neuerKontostand = aktuellerKontostand(amountChange, choiceBoxValue);
                 log.info("Neuer Kontostand: " + neuerKontostand);
                 stmt.setDouble(4, neuerKontostand);
             } catch (Exception e) {
-                log.error("Aktueller Kontostand  konnte nicht aufgerufen werden");
+                log.error("Couldn't connect to Database");
             }
 
 
             stmt.setInt(5, sliderValue);
-
+            stmt.setBoolean(6, repeatBool);
+            stmt.setString(7, checkFrequency(repetitionFrequency, repeatBool));
             try {
-                stmt.setBoolean(6, repeatBool);
-                stmt.setString(7, checkFrequency(repetitionFrequency, repeatBool));
                 stmt.executeUpdate();
-
-
             } catch (Exception e) {
                 log.info("Eingabe konnte nicht hinzugefügt werden");
             }
@@ -120,7 +102,7 @@ public class LogicNewEntry {
     }
 
 
-    public double aktuellerKontostand(double amountChange, String choiceBoxValue) throws Exception, SQLException {
+    public double aktuellerKontostand(double amountChange, String choiceBoxValue) throws Exception {
         try (Connection con = lg.getConnection()) {
             log.info("Connection to database succeed");
 
@@ -171,18 +153,13 @@ public class LogicNewEntry {
 
     }
 
-    public boolean überprüfungDatentypDouble(String s) {
-        try {
-            Double.parseDouble(s);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
-    public Boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException {
-        if (note.equals("") || note == null) {
+    public Boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException, AmountChangeIsNullException {
+        if (note.equals("")) {
             throw new NoteIsNullException();
+        }
+        if(amountChange.equals("")){
+            throw new AmountChangeIsNullException();
         }
         try {
             Double.parseDouble(amountChange);
