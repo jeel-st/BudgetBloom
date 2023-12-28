@@ -50,7 +50,7 @@ class LogicEditEntry {
             }
 
             try {
-                stmt.setDouble(3, LogicFacade.getInstance().kontoVeränderungsÜberprüfer(eingabeZahl, myChoiceBox));
+                stmt.setDouble(3, LogicFacade.getInstance().kontoVeränderungsÜberprüfer(Double.parseDouble(eingabeZahl), myChoiceBox));
                 log.info("Kontoänderungseingabe erfolgreich");
             } catch (Exception e) {
                 log.error("Kontoänderung geht nicht");

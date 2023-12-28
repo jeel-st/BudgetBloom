@@ -17,6 +17,9 @@ Problemchen...:
 -Thread tut nicht mehr :/
 -Im Overview wird die Bankbalance in der DB doppelt geupdatet - Warum?
 
+Sonstiges:
+-auskommentierte Teil in ControllerOverview
+
 Nachdenkzettel:
 - UML, Git, Collections -> Ryan
 - Vererbung, Interfaces, Logging -> Joel

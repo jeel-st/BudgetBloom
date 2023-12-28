@@ -129,7 +129,7 @@ public class ControllerOverview implements Initializable{
             double kontostand = table.getSelectionModel().getSelectedItem().getKontostand();
             Integer wichtigkeit = table.getSelectionModel().getSelectedItem().getWichtigkeit();
             String regelmäßigkeit = table.getSelectionModel().getSelectedItem().getRegelmäßigkeit();
-            Boolean regelmäßigkeitBool;
+            boolean regelmäßigkeitBool;
             if (regelmäßigkeit.equals("Regelmäßig")) {
                 regelmäßigkeitBool = true;
             } else {

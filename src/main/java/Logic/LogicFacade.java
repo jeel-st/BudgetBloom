@@ -4,9 +4,7 @@ import LocalExceptions.NewEntryExceptions.AmountChangeIsNullException;
 import LocalExceptions.NewEntryExceptions.NoteIsNullException;
 import LocalExceptions.NewEntryExceptions.ParseDateException;
 import LocalExceptions.NewEntryExceptions.ParseDoubleException;
-import Singleton.SingletonUser;
 import javafx.collections.ObservableList;
-
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -46,8 +44,8 @@ public class LogicFacade {
            return editEntry.saveEdit(eingabeDatum, eingabeGrund, skala, repeatBox, eingabeZahl, myChoiceBox, wiederholungshaeufigkeitBox);
     }
 
-    public double kontoVeränderungsÜberprüfer(String eingabeZahl, String myChoiceBox) {
-        return newEntry.kontoVeränderungsÜberprüferEdit(eingabeZahl, myChoiceBox);
+    public double kontoVeränderungsÜberprüfer(double eingabeZahl, String myChoiceBox) {
+        return newEntry.kontoVeränderungsÜberprüfer(eingabeZahl, myChoiceBox);
     }
 
     public String showContentOfWiederholungshaeufigkeitBox() throws Exception {

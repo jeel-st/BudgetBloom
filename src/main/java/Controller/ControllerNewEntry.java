@@ -107,11 +107,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     }
     public void getRepeat(ActionEvent event){
         String repetition = repeatBox.getValue();
-        if ("Regelmäßig".equalsIgnoreCase(repetition)) {
-            wiederholungshaeufigkeitBox.setVisible(true);
-        } else {
-            wiederholungshaeufigkeitBox.setVisible(false);
-        }
+        wiederholungshaeufigkeitBox.setVisible("Regelmäßig".equalsIgnoreCase(repetition));
     }
     //Label verknüpfen:
     public void getEingabe(ActionEvent event) {
@@ -126,9 +122,9 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
 
 
     public void userEingabeHinzufügen(ActionEvent event) throws SQLException, IOException {
-            repeatBool  = LogicFacade.getInstance().checkIsRegularBoolean(repeatBox.getValue());
+            repeatBool = LogicFacade.getInstance().checkIsRegularBoolean(repeatBox.getValue());
             int sliderValue = (int) skala.getValue();
-            Boolean rightFormat = false;
+            boolean rightFormat = false;
             try{
                 if(LogicFacade.getInstance().checkingFormats(eingabeZahl.getText(), eingabeGrund.getText(), eingabeDatum.getValue())){
                     rightFormat = true;
@@ -142,7 +138,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
             } catch (AmountChangeIsNullException e){
                 errorLabel.setText("Das Feld für ihre Einnahmen/Ausgaben ist ein Pflichtfeld");
             }
-        if(rightFormat) {
+        if (rightFormat) {
             if (wiederholungshaeufigkeitBox.getValue() != null && repeatBool || wiederholungshaeufigkeitBox.getValue() == null && !repeatBool) {
                 LogicFacade.getInstance().kontoVeränderung((Double.parseDouble(eingabeZahl.getText())), myChoiceBox.getValue(), sliderValue, eingabeGrund.getText(), Date.valueOf((eingabeDatum.getValue())), wiederholungshaeufigkeitBox.getValue(), repeatBool);
                 d.changeScene("/FXML/overview.fxml");
