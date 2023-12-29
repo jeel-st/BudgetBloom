@@ -17,7 +17,7 @@ class LogicEditEntry {
     SingletonEditValues sev = SingletonEditValues.getInstance();
     public String date = sev.getDate();
     public String note = sev.getNote();
-    public double bankBalance = sev.getBankbalance();
+    public double bankBalance = sev.getAccountBalance();
     public double amount = sev.getAmount();
     public int importance = sev.getImportance();
     public String isRegular = sev.getIsregular();
@@ -25,7 +25,7 @@ class LogicEditEntry {
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
 
-    String saveEdit (LocalDate eingabeDatum, String eingabeGrund, int skala, String repeatBox, String eingabeZahl, String myChoiceBox, String wiederholungshaeufigkeitBox) {
+    String saveEdit (LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox) {
         String errorLabel;
 
         try (Connection con = dc.getConnection()) {
@@ -34,15 +34,15 @@ class LogicEditEntry {
             String sql = "UPDATE konto" + localUsername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
             PreparedStatement stmt = con.prepareStatement(sql);
             try {
-                stmt.setDate(1, Date.valueOf(eingabeDatum));
+                stmt.setDate(1, Date.valueOf(inputDate));
             } catch (Exception e) {
                 log.error("Datum geht nicht");
                 errorLabel = "Bitte fügen Sie ein Datum hinzu!";
                 return errorLabel;
             }
 
-            if (!eingabeGrund.isEmpty()) {
-                stmt.setString(2, eingabeGrund);
+            if (!inputReason.isEmpty()) {
+                stmt.setString(2, inputReason);
             } else {
                 log.error("Grund leer");
                 errorLabel = "Bitte fügen Sie einen Grund hinzu!";
@@ -50,7 +50,7 @@ class LogicEditEntry {
             }
 
             try {
-                stmt.setDouble(3, LogicFacade.getInstance().kontoVeränderungsÜberprüfer(Double.parseDouble(eingabeZahl), myChoiceBox));
+                stmt.setDouble(3, LogicFacade.getInstance().accountChangeChecker(Double.parseDouble(inputNumber), myChoiceBox));
                 log.info("Kontoänderungseingabe erfolgreich");
             } catch (Exception e) {
                 log.error("Kontoänderung geht nicht");
@@ -59,14 +59,14 @@ class LogicEditEntry {
             }
 
 
-            stmt.setInt(4, skala);
-            stmt.setBoolean(5, isregularBool(repeatBox));
-            stmt.setString(6, checkFrequency(repeatBox, wiederholungshaeufigkeitBox));
+            stmt.setInt(4, scale);
+            stmt.setBoolean(5, isRegularBool(repeatBox));
+            stmt.setString(6, checkFrequency(repeatBox, repeatabilityBox));
             stmt.setDate(7, Date.valueOf(date));
             stmt.setString(8, note);
             stmt.setDouble(9, amount);
             stmt.setDouble(10, bankBalance);
-            stmt.setBoolean(11, isregularBool(isRegular));
+            stmt.setBoolean(11, isRegularBool(isRegular));
             stmt.executeUpdate();
 
             errorLabel = "Edit was saved successfully";
@@ -80,27 +80,27 @@ class LogicEditEntry {
 
     }
 
-     String checkFrequency (String repeatBox, String wiederholungshaeufigkeitBox) {
-        if (isregularBool(repeatBox) && wiederholungshaeufigkeitBox.equals("täglich")) {
+     String checkFrequency (String repeatBox, String repeatabilityBox) {
+        if (isRegularBool(repeatBox) && repeatabilityBox.equals("täglich")) {
             return "täglich";
-        } else if (isregularBool(repeatBox) && wiederholungshaeufigkeitBox.equals("monatlich")) {
+        } else if (isRegularBool(repeatBox) && repeatabilityBox.equals("monatlich")) {
             return "monatlich";
-        } else if (isregularBool(repeatBox) && wiederholungshaeufigkeitBox.equals("jährlich")) {
+        } else if (isRegularBool(repeatBox) && repeatabilityBox.equals("jährlich")) {
             return "jährlich";
         } else {
             return null;
         }
     }
 
-    boolean isregularBool (String s){
+    boolean isRegularBool(String s){
         return !s.equals("Einmalig");
     }
 
-    String showContentOfWiederholungshaeufigkeitBox() throws Exception, SQLException {
+    String showContentOfRepeatabilityBox() throws Exception, SQLException {
 
         try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
-            log.info(isregularBool(isRegular));
+            log.info(isRegularBool(isRegular));
             String sql = "SELECT frequency FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
@@ -109,7 +109,7 @@ class LogicEditEntry {
                 stmt.setDouble(3, amount);
                 stmt.setDouble(4, bankBalance);
                 stmt.setInt(5, importance);
-                stmt.setBoolean(6, isregularBool(isRegular));
+                stmt.setBoolean(6, isRegularBool(isRegular));
 
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {

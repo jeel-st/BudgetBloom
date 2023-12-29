@@ -6,7 +6,6 @@ import LocalExceptions.NewEntryExceptions.ParseDateException;
 import LocalExceptions.NewEntryExceptions.ParseDoubleException;
 import Logic.LogicDatabase;
 import Logic.LogicFacade;
-import Logic.LogicNewEntry;
 import Singleton.SingletonUser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,47 +32,47 @@ import org.apache.logging.log4j.Logger;
 public class ControllerNewEntry implements Initializable, EntryInterface {
 
     @FXML
-    private Label eingabeText;
+    private Label inputText;
 
     @FXML
     private Label errorLabel;
 
     @FXML
-    private DatePicker eingabeDatum;
+    private DatePicker inputDate;
 
     @FXML
-    private TextField eingabeGrund;
+    private TextField inputReason;
 
     @FXML
     private ChoiceBox<String> myChoiceBox;
 
     @FXML
-    private TextField eingabeZahl;
+    private TextField inputNumber;
 
     @FXML
-    private Label skalaLabel;
+    private Label scaleLabel;
 
-    int mySkalaZahl;
-
-    @FXML
-    private Slider skala;
+    int myScaleNumber;
 
     @FXML
-    private Button eingabeHinzufügen;
+    private Slider scale;
 
     @FXML
-    private Button abbrechen;
+    private Button inputAdd;
+
+    @FXML
+    private Button cancel;
     @FXML
     private ChoiceBox<String> repeatBox;
     @FXML
-    private ChoiceBox<String> wiederholungshaeufigkeitBox;
+    private ChoiceBox<String> repeatabilityBox;
 
     public static Logger log = LogManager.getLogger(ControllerNewEntry.class);
 
-    private String[] wiederholungen = {"Einmalig", "Regelmäßig"};
+    private String[] repetitions = {"Einmalig", "Regelmäßig"};
     //kommt in die choicebox:
-    private String[] eingabe = {"Einnahme", "Ausgabe"};
-    private String[] wiederholungsHäufigkeit = {"täglich", "monatlich", "jährlich"};
+    private String[] input = {"Einnahme", "Ausgabe"};
+    private String[] repeatability = {"täglich", "monatlich", "jährlich"};
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
@@ -84,49 +83,49 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //ChoiceBox:
-        myChoiceBox.getItems().addAll(eingabe);
-        myChoiceBox.setOnAction(this::getEingabe);  //this:: ist ein reverence operator (zum Label)
+        myChoiceBox.getItems().addAll(input);
+        myChoiceBox.setOnAction(this::getInput);  //this:: ist ein reverence operator (zum Label)
         myChoiceBox.setValue("Einnahme");
-        repeatBox.getItems().addAll(wiederholungen);
+        repeatBox.getItems().addAll(repetitions);
         repeatBox.setOnAction(this::getRepeat);
         repeatBox.setValue("Einmalig");
-        wiederholungshaeufigkeitBox.getItems().addAll(wiederholungsHäufigkeit);
-        wiederholungshaeufigkeitBox.setVisible(false);
+        repeatabilityBox.getItems().addAll(repeatability);
+        repeatabilityBox.setVisible(false);
         //WichtigkeitsSkala (Slider + Label):
-        mySkalaZahl = (int) skala.getValue();
-        skalaLabel.setText(Integer.toString(mySkalaZahl));
-        skala.valueProperty().addListener(new ChangeListener<Number>() {
+        myScaleNumber = (int) scale.getValue();
+        scaleLabel.setText(Integer.toString(myScaleNumber));
+        scale.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
 
-                mySkalaZahl = (int) skala.getValue();
-                skalaLabel.setText(Integer.toString(mySkalaZahl));
+                myScaleNumber = (int) scale.getValue();
+                scaleLabel.setText(Integer.toString(myScaleNumber));
 
             }
         });
     }
     public void getRepeat(ActionEvent event){
         String repetition = repeatBox.getValue();
-        wiederholungshaeufigkeitBox.setVisible("Regelmäßig".equalsIgnoreCase(repetition));
+        repeatabilityBox.setVisible("Regelmäßig".equalsIgnoreCase(repetition));
     }
     //Label verknüpfen:
-    public void getEingabe(ActionEvent event) {
-        String myEingabe = myChoiceBox.getValue();
-        eingabeText.setText("Neue " + myEingabe + ":");
+    public void getInput(ActionEvent event) {
+        String myInput = myChoiceBox.getValue();
+        inputText.setText("Neue " + myInput + ":");
     }
 
 
-    public void userAbbruch(ActionEvent event) throws IOException {
+    public void userCancel(ActionEvent event) throws IOException {
         d.changeScene("/FXML/overview.fxml");
     }
 
 
-    public void userEingabeHinzufügen(ActionEvent event) throws SQLException, IOException {
+    public void userInputAdd(ActionEvent event) throws SQLException, IOException {
             repeatBool = LogicFacade.getInstance().checkIsRegularBoolean(repeatBox.getValue());
-            int sliderValue = (int) skala.getValue();
+            int sliderValue = (int) scale.getValue();
             boolean rightFormat = false;
             try{
-                if(LogicFacade.getInstance().checkingFormats(eingabeZahl.getText(), eingabeGrund.getText(), eingabeDatum.getValue())){
+                if(LogicFacade.getInstance().checkingFormats(inputNumber.getText(), inputReason.getText(), inputDate.getValue())){
                     rightFormat = true;
                 }
             } catch (NoteIsNullException e) {
@@ -139,8 +138,8 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
                 errorLabel.setText("Das Feld für ihre Einnahmen/Ausgaben ist ein Pflichtfeld");
             }
         if (rightFormat) {
-            if (wiederholungshaeufigkeitBox.getValue() != null && repeatBool || wiederholungshaeufigkeitBox.getValue() == null && !repeatBool) {
-                LogicFacade.getInstance().kontoVeränderung((Double.parseDouble(eingabeZahl.getText())), myChoiceBox.getValue(), sliderValue, eingabeGrund.getText(), Date.valueOf((eingabeDatum.getValue())), wiederholungshaeufigkeitBox.getValue(), repeatBool);
+            if (repeatabilityBox.getValue() != null && repeatBool || repeatabilityBox.getValue() == null && !repeatBool) {
+                LogicFacade.getInstance().changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBool);
                 d.changeScene("/FXML/overview.fxml");
             } else {
                 log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");

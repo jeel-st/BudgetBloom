@@ -24,10 +24,10 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="back_to_login" layoutX="56.0" layoutY="353.0" mnemonicParsing="false" onAction="#userToLogin" prefWidth="100.0" style="-fx-background-color: #4682B4;" text="Back to Login" />
+            <Button fx:id="backToLogin" layoutX="56.0" layoutY="353.0" mnemonicParsing="false" onAction="#userToLogin" prefWidth="100.0" style="-fx-background-color: #4682B4;" text="Back to Login" />
             <TextField fx:id="username" layoutX="107.0" layoutY="129.0" prefHeight="35.0" prefWidth="160.0" promptText="Username" style="-fx-background-color: #BFEFFF;" />
             <TextField fx:id="email" layoutX="107.0" layoutY="72.0" prefHeight="35.0" prefWidth="160.0" promptText="Email" style="-fx-background-color: #BFEFFF;" />
-            <Button fx:id="create_account" layoutX="216.0" layoutY="353.0" mnemonicParsing="false" onAction="#userCreate" prefWidth="100.0" style="-fx-background-color: #4682B4;" text="Create Account" />
+            <Button fx:id="createAccount" layoutX="216.0" layoutY="353.0" mnemonicParsing="false" onAction="#userCreate" prefWidth="100.0" style="-fx-background-color: #4682B4;" text="Create Account" />
             <Label fx:id="wrongRegister" layoutX="92.0" layoutY="316.0" prefHeight="17.0" prefWidth="253.0" textFill="RED" />
             <PasswordField fx:id="password" layoutX="107.0" layoutY="184.0" prefHeight="35.0" prefWidth="160.0" promptText="Password" style="-fx-background-color: #BFEFFF;" />
             <PasswordField fx:id="password2" layoutX="107.0" layoutY="241.0" prefHeight="35.0" prefWidth="160.0" promptText="Repeat password" style="-fx-background-color: #BFEFFF;" />

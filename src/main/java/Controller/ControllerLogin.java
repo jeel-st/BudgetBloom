@@ -14,12 +14,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.sql.*;
 
 public class ControllerLogin {
 
     @FXML
-    private Button button;
+    private Button login;
     @FXML
     private Label wrongLogin;
     @FXML

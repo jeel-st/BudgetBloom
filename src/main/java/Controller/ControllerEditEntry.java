@@ -33,44 +33,45 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     private Label errorLabel;
 
     @FXML
-    private Button abbrechen;
+    private Button cancel;
 
     @FXML
-    private DatePicker eingabeDatum;
+    private DatePicker inputDate;
 
     @FXML
-    private TextField eingabeGrund;
+    private TextField inputReason;
 
     @FXML
-    private Button eingabeSpeichern;
+    private Button inputSave;
 
     @FXML
-    private Label eingabeText;
+    private Label inputText;
 
     @FXML
-    private TextField eingabeZahl;
+    private TextField inputNumber;
 
     @FXML
     private ChoiceBox<String> myChoiceBox;
 
     @FXML
-    private Slider skala;
+    private Slider scale;
 
     @FXML
-    private Label skalaLabel;
+    private Label scaleLabel;
+
     @FXML
     private ChoiceBox<String> repeatBox;
     @FXML
-    private ChoiceBox<String> wiederholungshaeufigkeitBox;
-    private String[] wiederholungen = {"Einmalig", "Regelmäßig"};
-    private String[] wiederholungsHäufigkeit = {"täglich", "monatlich", "jährlich"};
-    int mySkalaZahl;
-    private String[] eingabe = {"Einnahme", "Ausgabe"};
+    private ChoiceBox<String> repeatabilityBox;
+    private String[] repetitions = {"Einmalig", "Regelmäßig"};
+    private String[] repeatability = {"täglich", "monatlich", "jährlich"};
+    int myScaleNumber;
+    private String[] input = {"Einnahme", "Ausgabe"};
     SingletonEditValues sev = SingletonEditValues.getInstance();
 
     public String date = sev.getDate();
     public String note = sev.getNote();
-    public double bankBalance = sev.getBankbalance();
+    public double bankBalance = sev.getAccountBalance();
     public double amount = sev.getAmount();
     public int importance = sev.getImportance();
     public String isRegular = sev.getIsregular();
@@ -81,18 +82,18 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
     @FXML
-    public void userAbbruch(ActionEvent event) throws IOException {
+    public void userCancel(ActionEvent event) throws IOException {
         d.changeScene("/FXML/overview.fxml");
     }
 
     @FXML
-    void userEingabeSpeichern(ActionEvent event) throws SQLException, IOException {
+    void userInputSave(ActionEvent event) throws SQLException, IOException {
         ControllerNewEntry c = new ControllerNewEntry();
-        if (repeatBox.getValue().equals("Regelmäßig") && wiederholungshaeufigkeitBox.getValue() == null) {
+        if (repeatBox.getValue().equals("Regelmäßig") && repeatabilityBox.getValue() == null) {
             log.error("Geben sie eine Frequenz an");
         } else {
-            if (LogicFacade.getInstance().checkIsRegularBoolean(eingabeZahl.getText())) {
-                String errorLabelText = LogicFacade.getInstance().saveEdit(eingabeDatum.getValue(), eingabeGrund.getText(), (int) skala.getValue(), repeatBox.getValue(), eingabeZahl.getText(), myChoiceBox.getValue(), wiederholungshaeufigkeitBox.getValue());
+            if (LogicFacade.getInstance().checkIsRegularBoolean(inputNumber.getText())) {
+                String errorLabelText = LogicFacade.getInstance().saveEdit(inputDate.getValue(), inputReason.getText(), (int) scale.getValue(), repeatBox.getValue(), inputNumber.getText(), myChoiceBox.getValue(), repeatabilityBox.getValue());
                 errorLabel.setText(errorLabelText);
                 if (Objects.equals(errorLabelText, "Edit was saved successfully")) {
                     d.changeScene("/FXML/overview.fxml");
@@ -106,23 +107,23 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        repeatBox.getItems().addAll(wiederholungen);
+        repeatBox.getItems().addAll(repetitions);
         repeatBox.setOnAction(this::getRepeat);
         // bis hier stehen lassen
 
         if (isRegular.equals("Einmalig")) {
             repeatBox.setValue(isRegular);
-            wiederholungshaeufigkeitBox.setVisible(false);
+            repeatabilityBox.setVisible(false);
         } else {
             repeatBox.setValue(isRegular);
-            wiederholungshaeufigkeitBox.setVisible(true);
+            repeatabilityBox.setVisible(true);
             try {
-                wiederholungshaeufigkeitBox.setValue(LogicFacade.getInstance().showContentOfWiederholungshaeufigkeitBox());
+                repeatabilityBox.setValue(LogicFacade.getInstance().showContentOfRepeatabilityBox());
             } catch (Exception e) {
                 log.error("Content passt nicht in WiederholungshäufigkeitsBox");
             }
         }
-        wiederholungshaeufigkeitBox.getItems().addAll(wiederholungsHäufigkeit);
+        repeatabilityBox.getItems().addAll(repeatability);
 
         try {
             if (amount >= 0) {
@@ -134,26 +135,26 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
         } catch (Exception e) {
             log.error("Date wasn't set");
         }
-        eingabeDatum.setValue(LocalDate.parse(date));
-        eingabeGrund.setText(note);
-        eingabeZahl.setText(String.valueOf(amount));
-        skala.setValue(importance);
+        inputDate.setValue(LocalDate.parse(date));
+        inputReason.setText(note);
+        inputNumber.setText(String.valueOf(amount));
+        scale.setValue(importance);
 
 
         //ChoiceBox:
-        myChoiceBox.getItems().addAll(eingabe);
-        myChoiceBox.setOnAction(this::getEingabe);  //this:: ist ein reverence operator (zum Label)
+        myChoiceBox.getItems().addAll(input);
+        myChoiceBox.setOnAction(this::getInput);  //this:: ist ein reverence operator (zum Label)
 
 
         //WichtigkeitsSkala (Slider + Label):
-        mySkalaZahl = (int) skala.getValue();
-        skalaLabel.setText(Integer.toString(mySkalaZahl));
-        skala.valueProperty().addListener(new ChangeListener<Number>() {
+        myScaleNumber = (int) scale.getValue();
+        scaleLabel.setText(Integer.toString(myScaleNumber));
+        scale.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
 
-                mySkalaZahl = (int) skala.getValue();
-                skalaLabel.setText(Integer.toString(mySkalaZahl));
+                myScaleNumber = (int) scale.getValue();
+                scaleLabel.setText(Integer.toString(myScaleNumber));
 
             }
         });
@@ -162,14 +163,14 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             public void getRepeat (ActionEvent event){
                 String repetition = repeatBox.getValue();
                 if ("Regelmäßig".equalsIgnoreCase(repetition)) {
-                    wiederholungshaeufigkeitBox.setVisible(true);
+                    repeatabilityBox.setVisible(true);
                 } else {
-                    wiederholungshaeufigkeitBox.setVisible(false);
+                    repeatabilityBox.setVisible(false);
                 }
             }
-            public void getEingabe (ActionEvent event){
-                String myEingabe = myChoiceBox.getValue();
-                eingabeText.setText("Neue " + myEingabe + ":");
+            public void getInput(ActionEvent event){
+                String myInput = myChoiceBox.getValue();
+                inputText.setText("Neue " + myInput + ":");
             }
 
     }

@@ -2,7 +2,6 @@ package Controller;
 
 import Logic.LogicDatabase;
 import Logic.LogicFacade;
-import Logic.LogicRegister;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,17 +13,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.sql.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ControllerRegister {
 
 
     @FXML
-    private Button back_to_login;
+    private Button backToLogin;
     @FXML
-    private Button create_account;
+    private Button createAccount;
     @FXML
     public TextField email;
     @FXML

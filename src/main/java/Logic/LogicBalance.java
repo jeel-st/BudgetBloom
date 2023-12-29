@@ -23,22 +23,22 @@ public class LogicBalance {
                 ResultSet rs = stmt.executeQuery();
 
                 int id2;
-                double betrag2, kontostand1 = 0;
+                double amount2, accountBalance1 = 0;
                 int i = 1;
 
                 while (rs.next()) {
                     if (i == 1) {
-                        kontostand1 = (rs.getDouble("bankbalance"));
+                        accountBalance1 = (rs.getDouble("bankbalance"));
                     } else {
                         id2 = (rs.getInt("id"));
-                        betrag2 = (rs.getDouble("amount"));
+                        amount2 = (rs.getDouble("amount"));
 
-                        double neuerKontostand2 = kontostand1 + betrag2;
+                        double newAccountBalance2 = accountBalance1 + amount2;
 
                         try {
                             String sql2 = "UPDATE konto" + localUsername + " SET bankbalance = ? WHERE id = ?";
                             PreparedStatement stmt2 = con.prepareStatement(sql2);
-                            stmt2.setDouble(1, neuerKontostand2);
+                            stmt2.setDouble(1, newAccountBalance2);
                             stmt2.setInt(2, id2);
                             stmt2.executeQuery();
                         } catch (SQLException e) {
@@ -46,7 +46,7 @@ public class LogicBalance {
                             log.trace("bankbalance updated successfully");
                         }
 
-                        kontostand1 = neuerKontostand2;
+                        accountBalance1 = newAccountBalance2;
                     }
 
                     i++;

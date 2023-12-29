@@ -14,30 +14,30 @@
     <center>
         <AnchorPane>
             <children>
-                <TextField fx:id="eingabeGrund" layoutX="212.0" layoutY="187.0" prefHeight="25.0" prefWidth="160.0" promptText="Grund" />
-                <DatePicker fx:id="eingabeDatum" editable="false" layoutX="212.0" layoutY="143.0" prefWidth="160.0" promptText="Datum" />
+                <TextField fx:id="inputReason" layoutX="212.0" layoutY="187.0" prefHeight="25.0" prefWidth="160.0" promptText="Grund" />
+                <DatePicker fx:id="inputDate" editable="false" layoutX="212.0" layoutY="143.0" prefWidth="160.0" promptText="Datum" />
                 <ChoiceBox fx:id="myChoiceBox" layoutX="32.0" layoutY="231.0" prefWidth="160.0" />
-                <TextField fx:id="eingabeZahl" layoutX="212.0" layoutY="231.0" prefWidth="160.0" promptText="Einnahme/Ausgabe" />
-                <Button fx:id="eingabeSpeichern" layoutX="258.0" layoutY="336.0" mnemonicParsing="false" onAction="#userEingabeSpeichern" text="Speichern" />
-                <Button fx:id="abbrechen" layoutX="32.0" layoutY="361.0" mnemonicParsing="false" onAction="#userAbbruch" text="Abbrechen" />
-                <Label fx:id="eingabeText" alignment="CENTER" layoutX="-1.0" layoutY="48.0" prefHeight="58.0" prefWidth="600.0" text="Neue Eingabe:" textAlignment="CENTER" underline="true">
+                <TextField fx:id="inputNumber" layoutX="212.0" layoutY="231.0" prefWidth="160.0" promptText="Einnahme/Ausgabe" />
+                <Button fx:id="inputSave" layoutX="258.0" layoutY="336.0" mnemonicParsing="false" onAction="#userInputSave" text="Speichern" />
+                <Button fx:id="cancel" layoutX="32.0" layoutY="361.0" mnemonicParsing="false" onAction="#userCancel" text="Abbrechen" />
+                <Label fx:id="inputText" alignment="CENTER" layoutX="-1.0" layoutY="48.0" prefHeight="58.0" prefWidth="600.0" text="Neue Eingabe:" textAlignment="CENTER" underline="true">
                     <font>
                         <Font size="40.0" />
                     </font>
                 </Label>
-                <Label fx:id="skalaLabel" layoutX="372.0" layoutY="268.0" prefHeight="33.0" prefWidth="63.0" text="Label">
+                <Label fx:id="scaleLabel" layoutX="372.0" layoutY="268.0" prefHeight="33.0" prefWidth="63.0" text="Label">
                     <font>
                         <Font size="24.0" />
                     </font>
                 </Label>
-                <Slider fx:id="skala" layoutX="222.0" layoutY="278.0" majorTickUnit="5.0" max="10.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
+                <Slider fx:id="scale" layoutX="222.0" layoutY="278.0" majorTickUnit="5.0" max="10.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" />
                 <Label layoutX="12.0" layoutY="256.0" prefHeight="59.0" prefWidth="200.0" text="Wichtigkeits-Skala:">
                     <font>
                         <Font size="24.0" />
                     </font>
                 </Label>
             <ChoiceBox fx:id="repeatBox" layoutX="435.0" layoutY="143.0" prefWidth="150.0" />
-            <ChoiceBox fx:id="wiederholungshaeufigkeitBox" layoutX="435.0" layoutY="187.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="repeatabilityBox" layoutX="435.0" layoutY="187.0" prefWidth="150.0" />
             <Label fx:id="errorLabel" alignment="TOP_CENTER" layoutY="112.0" prefHeight="17.0" prefWidth="600.0" textAlignment="CENTER" textFill="RED" />
             </children>
         </AnchorPane>

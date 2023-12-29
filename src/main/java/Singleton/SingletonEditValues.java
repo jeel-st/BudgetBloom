@@ -5,7 +5,7 @@ public class SingletonEditValues {
 
     private String date;
     private String note;
-    private double bankbalance;
+    private double accountBalance;
     private double amount;
     private int importance;
     private String isRegular;
@@ -28,7 +28,7 @@ public class SingletonEditValues {
     }
     public String getNote() { return note; }
     public String getIsregular() { return isRegular; }
-    public double getBankbalance() { return bankbalance; }
+    public double getAccountBalance() { return accountBalance; }
     public double getAmount() { return amount; }
     public int getImportance() { return importance; }
 
@@ -39,11 +39,11 @@ public class SingletonEditValues {
     public void setNote(String note) {
         this.note = note;
     }
-    public void setIsregular(String isregualar) {
-        this.isRegular = isregualar;
+    public void setIsRegular(String isRegular) {
+        this.isRegular = isRegular;
     }
-    public void setBankbalance(double bankbalance) {
-        this.bankbalance = bankbalance;
+    public void setAccountBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
     }
     public void setAmount(double amount) {
         this.amount = amount;

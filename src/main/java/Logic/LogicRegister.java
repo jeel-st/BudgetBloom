@@ -38,7 +38,7 @@ public class LogicRegister {
             return "Please confirm your password";
         }catch (UsernameTakenException ute){
             return "The username is already taken";
-        }catch (PasswordsDonTMatchException pdme){
+        }catch (PasswordsDontMatchException pdme){
             return "Passwords do not match";
         }catch (PasswordLengthException ple){
             return "Password has to be between 6 and 30 characters";
@@ -83,9 +83,9 @@ public class LogicRegister {
             }
 
     }
-    public boolean passwordControl(String password, String password2) throws PasswordsDonTMatchException, PasswordLengthException, PasswordSpecialCharException {
+    public boolean passwordControl(String password, String password2) throws PasswordsDontMatchException, PasswordLengthException, PasswordSpecialCharException {
         if (!(password.equals(password2))) {
-            throw new PasswordsDonTMatchException();
+            throw new PasswordsDontMatchException();
         } else if (password.length() >= 6 && password.length() <= 30) {
             throw new PasswordLengthException();
         } else {

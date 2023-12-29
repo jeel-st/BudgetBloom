@@ -1,12 +1,10 @@
 package Logic;
 
-import Controller.ControllerEditEntry;
 import LocalExceptions.NewEntryExceptions.AmountChangeIsNullException;
 import LocalExceptions.NewEntryExceptions.NoteIsNullException;
 import LocalExceptions.NewEntryExceptions.ParseDateException;
 import LocalExceptions.NewEntryExceptions.ParseDoubleException;
 import Singleton.SingletonUser;
-import javafx.css.StyleableStringProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,14 +21,14 @@ public class LogicNewEntry {
         return !s.equals("Einmalig");
     }
 
-    public void kontoVeränderung(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, Boolean repeatBool) throws SQLException {
+    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, Boolean repeatBool) throws SQLException {
         try (Connection con = lg.getConnection()) {
             log.info("Connection to database succeed");
 
             String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             try {
-                stmt.setDouble(3, kontoVeränderungsÜberprüfer(amountChange, choiceBoxValue));
+                stmt.setDouble(3, accountChangeChecker(amountChange, choiceBoxValue));
                 log.info("Kontoänderungseingabe erfolgreich");
             } catch (Exception e) {
                 log.error("Kontoänderungseingabe hat nicht geklappt");
@@ -39,9 +37,9 @@ public class LogicNewEntry {
             stmt.setString(2, note);
             stmt.setDate(1, date);
             try {
-                double neuerKontostand = aktuellerKontostand(amountChange, choiceBoxValue);
-                log.info("Neuer Kontostand: " + neuerKontostand);
-                stmt.setDouble(4, neuerKontostand);
+                double newAccountBalance = currentAccountBalance(amountChange, choiceBoxValue);
+                log.info("Neuer Kontostand: " + newAccountBalance);
+                stmt.setDouble(4, newAccountBalance);
             } catch (Exception e) {
                 log.error("Couldn't connect to Database");
             }
@@ -73,7 +71,7 @@ public class LogicNewEntry {
     }
 
 
-    public double aktuellerKontostand(double amountChange, String choiceBoxValue) throws Exception {
+    public double currentAccountBalance(double amountChange, String choiceBoxValue) throws Exception {
         try (Connection con = lg.getConnection()) {
             log.info("Connection to database succeed");
 
@@ -82,12 +80,12 @@ public class LogicNewEntry {
             ResultSet rs = stmt.executeQuery();
             try {
                 while (rs.next()) {
-                    double Kontostand = rs.getDouble("bankBalance");
+                    double accountBalance = rs.getDouble("bankBalance");
 
-                    log.info(Kontostand);
-                    double neuerKontostand = Kontostand + kontoVeränderungsÜberprüfer(amountChange, choiceBoxValue);
-                    neuerKontostand = Math.round(neuerKontostand * 100.0) / 100.0;
-                    return neuerKontostand;
+                    log.info(accountBalance);
+                    double newAccountBalance = accountBalance + accountChangeChecker(amountChange, choiceBoxValue);
+                    newAccountBalance = Math.round(newAccountBalance * 100.0) / 100.0;
+                    return newAccountBalance;
                 }
             } catch (Exception e) {
                 log.error("kein Kontostand gefunden");
@@ -100,7 +98,7 @@ public class LogicNewEntry {
         }
     }
 
-    public double kontoVeränderungsÜberprüfer(double amountChange, String choiceBoxValue) {
+    public double accountChangeChecker(double amountChange, String choiceBoxValue) {
         if (choiceBoxValue.equals("Einnahme")) {
             log.info(amountChange);
             return amountChange;

@@ -14,17 +14,17 @@
             <Button fx:id="logout" layoutX="14.0" layoutY="354.0" mnemonicParsing="false" onAction="#userLogout" text="Logout" />
             <TableView fx:id="table" layoutX="65.0" layoutY="49.0" prefHeight="293.0" prefWidth="472.0" style="-fx-background-color: #18D1E3;">
               <columns>
-                  <TableColumn fx:id="datum" text="Datum" />
-                <TableColumn fx:id="grund" text="Grund" />
-                <TableColumn fx:id="betrag" text="Betrag" />
-                  <TableColumn fx:id="kontostand" text="Kontostand" />
-                  <TableColumn fx:id="wichtigkeit" prefWidth="75.0" text="Wichtigkeit" />
-                  <TableColumn fx:id="regelmaeßigkeit" prefWidth="75.0" text="Regelmäßigkeit" />
+                  <TableColumn fx:id="date" text="Datum" />
+                <TableColumn fx:id="reason" text="Grund" />
+                <TableColumn fx:id="amount" text="Betrag" />
+                  <TableColumn fx:id="accountBalance" text="Kontostand" />
+                  <TableColumn fx:id="importance" prefWidth="75.0" text="Wichtigkeit" />
+                  <TableColumn fx:id="regularity" prefWidth="75.0" text="Regelmäßigkeit" />
               </columns>
             </TableView>
-            <Button fx:id="neueEingabe" layoutX="466.0" layoutY="354.0" mnemonicParsing="false" onAction="#userNeueEingabe" text="Eingabe hinzufügen" />
-            <Button fx:id="eintragLöschen" layoutX="336.0" layoutY="354.0" mnemonicParsing="false" onAction="#removeRow" prefHeight="25.0" prefWidth="120.0" text="Löschen" />
-            <Button fx:id="eintragBearbeiten" layoutX="206.0" layoutY="354.0" mnemonicParsing="false" onAction="#editRow" prefHeight="25.0" prefWidth="119.0" text="Bearbeiten" />
+            <Button fx:id="newInput" layoutX="466.0" layoutY="354.0" mnemonicParsing="false" onAction="#userNewInput" text="Eingabe hinzufügen" />
+            <Button fx:id="inputDelete" layoutX="336.0" layoutY="354.0" mnemonicParsing="false" onAction="#removeRow" prefHeight="25.0" prefWidth="120.0" text="Löschen" />
+            <Button fx:id="inputEdit" layoutX="206.0" layoutY="354.0" mnemonicParsing="false" onAction="#editRow" prefHeight="25.0" prefWidth="119.0" text="Bearbeiten" />
             <Label fx:id="errorLabel" layoutX="75.0" layoutY="358.0" prefHeight="17.0" prefWidth="131.0" textFill="RED" />
          </children>
       </AnchorPane>

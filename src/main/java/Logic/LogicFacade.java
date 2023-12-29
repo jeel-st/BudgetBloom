@@ -40,16 +40,16 @@ public class LogicFacade {
         return instance;
     }
 
-    public String saveEdit(LocalDate eingabeDatum, String eingabeGrund, int skala, String repeatBox, String eingabeZahl, String myChoiceBox, String wiederholungshaeufigkeitBox) {
-           return editEntry.saveEdit(eingabeDatum, eingabeGrund, skala, repeatBox, eingabeZahl, myChoiceBox, wiederholungshaeufigkeitBox);
+    public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox) {
+           return editEntry.saveEdit(inputDate, inputReason, scale, repeatBox, inputNumber, myChoiceBox, repeatabilityBox);
     }
 
-    public double kontoVeränderungsÜberprüfer(double eingabeZahl, String myChoiceBox) {
-        return newEntry.kontoVeränderungsÜberprüfer(eingabeZahl, myChoiceBox);
+    public double accountChangeChecker(double inputNumber, String myChoiceBox) {
+        return newEntry.accountChangeChecker(inputNumber, myChoiceBox);
     }
 
-    public String showContentOfWiederholungshaeufigkeitBox() throws Exception {
-        return editEntry.showContentOfWiederholungshaeufigkeitBox();
+    public String showContentOfRepeatabilityBox() throws Exception {
+        return editEntry.showContentOfRepeatabilityBox();
     }
 
     public void insertInitialBalance(double balance) {
@@ -71,20 +71,20 @@ public class LogicFacade {
     public String proveRegisterTextFields(String username, String password, String password2, String email){
         return register.proveRegisterTextFields(username, password, password2, email);
     }
-    public ObservableList<LogicTableEntry> datenbank() throws Exception{
-        return overview.datenbank();
+    public ObservableList<LogicTableEntry> database() throws Exception{
+        return overview.database();
     }
-    public int deleteRowInDatabase(double betrag, String datum, String grund, double kontostand, int wichtigkeit, Boolean regelmäßigkeitBool) throws SQLException{
-        return overview.deleteRowInDatabase(betrag, datum, grund, kontostand, wichtigkeit, regelmäßigkeitBool);
+    public int deleteRowInDatabase(double amount, String date, String reason, double accountBalance, int importance, Boolean regularityBool) throws SQLException{
+        return overview.deleteRowInDatabase(amount, date, reason, accountBalance, importance, regularityBool);
     }
-    public void saveValues(double betrag, String datum, String grund, double kontostand, int wichtigkeit, String regelmäßigkeit){
-        overview.saveValues(betrag, datum, grund, kontostand, wichtigkeit, regelmäßigkeit);
+    public void saveValues(double amount, String date, String reason, double accountBalance, int importance, String regularity){
+        overview.saveValues(amount, date, reason, accountBalance, importance, regularity);
     }
     public boolean checkIsRegularBoolean(String s){
         return newEntry.checkIsRegularBoolean(s);
     }
-    public void kontoVeränderung(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, Boolean repeatBool) throws SQLException{
-        newEntry.kontoVeränderung(amountChange, choiceBoxValue, sliderValue, note, date, repetitionFrequency, repeatBool);
+    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, Boolean repeatBool) throws SQLException{
+        newEntry.changedAccount(amountChange, choiceBoxValue, sliderValue, note, date, repetitionFrequency, repeatBool);
     }
     public Boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException, AmountChangeIsNullException {
         return newEntry.checkingFormats(amountChange, note, date);

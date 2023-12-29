@@ -4,45 +4,45 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class LogicTableEntry {
-    private String datum;
-    private String grund;
-    private Double betrag;
-    private Double kontostand;
-    private Integer wichtigkeit;
-    private String regelmäßigkeit;
+    private String date;
+    private String reason;
+    private Double amount;
+    private Double accountBalance;
+    private Integer importance;
+    private String regularity;
     public String user;
     public static Logger log = LogManager.getLogger(LogicTableEntry.class);
 
     //constructor:
-    public LogicTableEntry(String datum, String grund, Double betrag, Double kontostand, Integer wichtigkeit, String regelmäßigkeit) {
-        this.datum = datum;
-        this.grund = grund;
-        this.betrag = betrag;
-        this.kontostand = kontostand;
-        this.wichtigkeit = wichtigkeit;
-        this.regelmäßigkeit = regelmäßigkeit;
+    public LogicTableEntry(String date, String reason, Double amount, Double accountBalance, Integer importance, String regularity) {
+        this.date = date;
+        this.reason = reason;
+        this.amount = amount;
+        this.accountBalance = accountBalance;
+        this.importance = importance;
+        this.regularity = regularity;
     }
 
     //Getters:
 
 
-    public String getDatum() {
-        return datum;
+    public String getDate() {
+        return date;
     }
 
-    public String getGrund() {
-        return grund;
+    public String getReason() {
+        return reason;
     }
 
-    public Double getBetrag() {
-        return betrag;
+    public Double getAmount() {
+        return amount;
     }
 
-    public Double getKontostand() {
-        return kontostand;
+    public Double getAccountBalance() {
+        return accountBalance;
     }
 
-    public Integer getWichtigkeit() {return wichtigkeit;}
+    public Integer getImportance() {return importance;}
 
-    public String getRegelmäßigkeit(){return regelmäßigkeit;}
+    public String getRegularity(){return regularity;}
 }

@@ -17,7 +17,7 @@ public class LogicOverview {
     ObservableList<LogicTableEntry> list = FXCollections.observableArrayList(
             //new User("17.11.2023", "Lebensmittel", -12.3, 123.45)
     );
-    public ObservableList<LogicTableEntry> datenbank() throws Exception {
+    public ObservableList<LogicTableEntry> database() throws Exception {
 
         try (Connection con = lg.getConnection()) {
             if (localUsername != null) {
@@ -27,19 +27,19 @@ public class LogicOverview {
                     PreparedStatement stmt = con.prepareStatement(sql);
                     ResultSet rs = stmt.executeQuery();
                     while (rs.next()) {
-                        String datum = (rs.getDate("edate").toString());
-                        String grund = (rs.getString("note"));
-                        double betrag = (rs.getDouble("amount"));
-                        double kontostand = (rs.getDouble("bankbalance"));
-                        Integer wichtigkeit = (rs.getInt("importance"));
-                        Boolean regelmäßigkeitBool = (rs.getBoolean("isregular"));
-                        String regelmäßigkeit;
-                        if (regelmäßigkeitBool) {
-                            regelmäßigkeit = "Regelmäßig";
+                        String date = (rs.getDate("edate").toString());
+                        String reason = (rs.getString("note"));
+                        double amount = (rs.getDouble("amount"));
+                        double accountBalance = (rs.getDouble("bankbalance"));
+                        Integer importance = (rs.getInt("importance"));
+                        Boolean regularityBool = (rs.getBoolean("isregular"));
+                        String regularity;
+                        if (regularityBool) {
+                            regularity = "Regelmäßig";
                         } else {
-                            regelmäßigkeit = "Einmalig";
+                            regularity = "Einmalig";
                         }
-                        list.add(new LogicTableEntry(datum, grund, betrag, kontostand, wichtigkeit, regelmäßigkeit));
+                        list.add(new LogicTableEntry(date, reason, amount, accountBalance, importance, regularity));
                     }
                     return list;
                 } catch (Exception e) {
@@ -54,18 +54,18 @@ public class LogicOverview {
         }
         throw new Exception("Searching for data failed");
     }
-    public int deleteRowInDatabase(double betrag, String datum, String grund, double kontostand, int wichtigkeit, Boolean regelmäßigkeitBool) throws SQLException {
+    public int deleteRowInDatabase(double amount, String date, String reason, double accountBalance, int importance, Boolean regularityBool) throws SQLException {
         try (Connection con = lg.getConnection()) {
             log.info("Connection to database succeed");
 
             String sql = "DELETE FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setDate(1, Date.valueOf(datum));
-            stmt.setString(2, grund);
-            stmt.setDouble(3, betrag);
-            stmt.setDouble(4, kontostand);
-            stmt.setInt(5, wichtigkeit);
-            stmt.setBoolean(6, regelmäßigkeitBool);
+            stmt.setDate(1, Date.valueOf(date));
+            stmt.setString(2, reason);
+            stmt.setDouble(3, amount);
+            stmt.setDouble(4, accountBalance);
+            stmt.setInt(5, importance);
+            stmt.setBoolean(6, regularityBool);
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected;
         }catch (SQLException e) {
@@ -73,13 +73,13 @@ public class LogicOverview {
             throw e;
         }
     }
-    public void saveValues(double betrag, String datum, String grund, double kontostand, int wichtigkeit, String regelmäßigkeit){
+    public void saveValues(double amount, String date, String reason, double accountBalance, int importance, String regularity){
         SingletonEditValues sev = SingletonEditValues.getInstance();
-        sev.setAmount(betrag);
-        sev.setDate(datum);
-        sev.setNote(grund);
-        sev.setBankbalance(kontostand);
-        sev.setImportance(wichtigkeit);
-        sev.setIsregular(regelmäßigkeit);
+        sev.setAmount(amount);
+        sev.setDate(date);
+        sev.setNote(reason);
+        sev.setAccountBalance(accountBalance);
+        sev.setImportance(importance);
+        sev.setIsRegular(regularity);
     }
 }

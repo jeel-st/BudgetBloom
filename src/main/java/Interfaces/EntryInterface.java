@@ -6,11 +6,11 @@ import java.io.IOException;
 
 public interface EntryInterface {
 
-    void userAbbruch(ActionEvent event)throws IOException;
+    void userCancel(ActionEvent event)throws IOException;
 
     void getRepeat(ActionEvent event);
 
-    void getEingabe(ActionEvent event);
+    void getInput(ActionEvent event);
 
 
 }

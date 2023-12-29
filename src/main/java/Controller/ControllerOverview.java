@@ -1,7 +1,6 @@
 package Controller;
 
 import Logic.*;
-import Singleton.SingletonEditValues;
 import Singleton.SingletonUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,33 +26,33 @@ public class ControllerOverview implements Initializable{
     private TableView<LogicTableEntry> table;
 
     @FXML
-    private TableColumn<LogicTableEntry, String> datum;
+    private TableColumn<LogicTableEntry, String> date;
 
     @FXML
-    private TableColumn<LogicTableEntry, String> grund;
+    private TableColumn<LogicTableEntry, String> reason;
 
     @FXML
-    private TableColumn<LogicTableEntry, Double> betrag;
+    private TableColumn<LogicTableEntry, Double> amount;
 
     @FXML
-    private TableColumn<LogicTableEntry, Double> kontostand;
+    private TableColumn<LogicTableEntry, Double> accountBalance;
 
     @FXML
-    private TableColumn<LogicTableEntry, Integer> wichtigkeit;
+    private TableColumn<LogicTableEntry, Integer> importance;
     @FXML
-    private TableColumn<LogicTableEntry, String> regelmaeßigkeit;
+    private TableColumn<LogicTableEntry, String> regularity;
 
 
     @FXML
     private Button logout;
 
     @FXML
-    private Button neueEingabe;
+    private Button newInput;
 
     @FXML
-    private Button eintragLöschen;
+    private Button inputDelete;
     @FXML
-    private Button eintragBearbeiten;
+    private Button inputEdit;
     @FXML
     private Label errorLabel;
     LogicDatabase dc = new LogicDatabase();
@@ -68,17 +67,17 @@ public class ControllerOverview implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        datum.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, String>("datum"));
-        grund.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, String>("grund"));
-        betrag.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Double>("betrag"));
-        kontostand.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Double>("kontostand"));
-        wichtigkeit.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Integer>("wichtigkeit"));
-        regelmaeßigkeit.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("regelmäßigkeit"));
+        date.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, String>("date"));
+        reason.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, String>("reason"));
+        amount.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Double>("amount"));
+        accountBalance.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Double>("accountBalance"));
+        importance.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Integer>("importance"));
+        regularity.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("regularity"));
         log.debug("Started to update balance");
         LogicBalance.updateBalance();
         log.debug("Finished update of balance");
         try{
-            table.setItems(lf.datenbank());
+            table.setItems(lf.database());
             log.info("Searching for data succeed");
         }catch(Exception e){
             log.error("Searching for data failed");
@@ -92,7 +91,7 @@ public class ControllerOverview implements Initializable{
         d.changeScene("/FXML/sample.fxml");
     }
 
-    public void userNeueEingabe(ActionEvent event)throws IOException {
+    public void userNewInput(ActionEvent event)throws IOException {
         Driver d = new Driver();
         log.info("Changed Scene to newEntry.fxml");
         d.changeScene("/FXML/newEntry.fxml");
@@ -123,21 +122,21 @@ public class ControllerOverview implements Initializable{
     }
     public void deleteRow(){
         try {
-            double betrag = table.getSelectionModel().getSelectedItem().getBetrag();
-            String datum = table.getSelectionModel().getSelectedItem().getDatum();
-            String grund = table.getSelectionModel().getSelectedItem().getGrund();
-            double kontostand = table.getSelectionModel().getSelectedItem().getKontostand();
-            Integer wichtigkeit = table.getSelectionModel().getSelectedItem().getWichtigkeit();
-            String regelmäßigkeit = table.getSelectionModel().getSelectedItem().getRegelmäßigkeit();
-            boolean regelmäßigkeitBool;
-            if (regelmäßigkeit.equals("Regelmäßig")) {
-                regelmäßigkeitBool = true;
+            double amount = table.getSelectionModel().getSelectedItem().getAmount();
+            String date = table.getSelectionModel().getSelectedItem().getDate();
+            String reason = table.getSelectionModel().getSelectedItem().getReason();
+            double accountBalance = table.getSelectionModel().getSelectedItem().getAccountBalance();
+            Integer importance = table.getSelectionModel().getSelectedItem().getImportance();
+            String regularity = table.getSelectionModel().getSelectedItem().getRegularity();
+            boolean regularityBool;
+            if (regularity.equals("Regelmäßig")) {
+                regularityBool = true;
             } else {
-                regelmäßigkeitBool = false;
+                regularityBool = false;
             }
-            log.info(betrag + datum + grund + kontostand + wichtigkeit + regelmäßigkeit);
+            log.info(amount + date + reason + accountBalance + importance + regularity);
 
-            int rowsAffected = lf.deleteRowInDatabase(betrag, datum, grund, kontostand, wichtigkeit, regelmäßigkeitBool);
+            int rowsAffected = lf.deleteRowInDatabase(amount, date, reason, accountBalance, importance, regularityBool);
                 if (rowsAffected > 0) {
                     log.info("Deletion successful. Rows affected: " + rowsAffected);
                     table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
@@ -167,13 +166,13 @@ public class ControllerOverview implements Initializable{
         Driver d = new Driver();
         try {
 
-            double betrag = table.getSelectionModel().getSelectedItem().getBetrag();
-            String datum = table.getSelectionModel().getSelectedItem().getDatum();
-            String grund = table.getSelectionModel().getSelectedItem().getGrund();
-            double kontostand = table.getSelectionModel().getSelectedItem().getKontostand();
-            int wichtigkeit = table.getSelectionModel().getSelectedItem().getWichtigkeit();
-            String regelmäßigkeit = table.getSelectionModel().getSelectedItem().getRegelmäßigkeit();
-            lf.saveValues(betrag, datum, grund, kontostand, wichtigkeit, regelmäßigkeit);
+            double amount = table.getSelectionModel().getSelectedItem().getAmount();
+            String date = table.getSelectionModel().getSelectedItem().getDate();
+            String reason = table.getSelectionModel().getSelectedItem().getReason();
+            double accountBalance = table.getSelectionModel().getSelectedItem().getAccountBalance();
+            int importance = table.getSelectionModel().getSelectedItem().getImportance();
+            String regularity = table.getSelectionModel().getSelectedItem().getRegularity();
+            lf.saveValues(amount, date, reason, accountBalance, importance, regularity);
             d.changeScene("/FXML/editEntry.fxml");
         }catch(Exception e ){
             errorLabel.setText("No row selected");
