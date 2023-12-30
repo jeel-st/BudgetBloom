@@ -2,19 +2,17 @@ TO DO`s:
 
 
 
-
-- Alle Methoden auf Englisch ändern, auch in Scenebuilder               Ryan
-- (neue Klassenstruktur)                                                Joel Jana
 - Unit Tests                                                            alle
 - Nachdenkzettel
-- Logging, LogFile                                                      Joel
-- eigene Exceptions werfen                                              Jana
-- Interfaces                                                            Joel
 - Factories bei User                                                    Joel
-- SingletonÜbergabeWerte ControllerEdit
+- (evtl Sceneswitcher in externe Klasse)
+- isRegularBool ist doppelt (LogicEditEntry + LogicNewEntry)            Joel
+- checkFrequency ist doppelt (LogicEditEntry + LogicNewEntry)           Joel
+- (evtl. ein größeres Fenster)
+
 
 Problemchen...:
--Thread tut nicht mehr :/
+-Thread tut nicht mehr :/                                               Jana
 -Im Overview wird die Bankbalance in der DB doppelt geupdatet - Warum?
 
 Sonstiges:

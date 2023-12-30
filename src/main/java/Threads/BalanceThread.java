@@ -18,7 +18,7 @@ public class BalanceThread implements Runnable {
 
     SingletonUser sp = SingletonUser.getInstance();
     private final String localUsername = sp.getName();
-    public static Logger log = LogManager.getLogger(ControllerOverview.class);
+    public static Logger log = LogManager.getLogger(BalanceThread.class);
     @Override public void run() {
         if (localUsername != null) {
             Thread t1 = new Thread(task1);

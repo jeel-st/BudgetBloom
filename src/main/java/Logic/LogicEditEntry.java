@@ -96,7 +96,7 @@ class LogicEditEntry {
         return !s.equals("Einmalig");
     }
 
-    String showContentOfRepeatabilityBox() throws Exception, SQLException {
+    String showContentOfRepeatabilityBox() throws Exception {
 
         try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");

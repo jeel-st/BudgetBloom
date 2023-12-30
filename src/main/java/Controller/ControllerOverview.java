@@ -140,15 +140,6 @@ public class ControllerOverview implements Initializable{
                 if (rowsAffected > 0) {
                     log.info("Deletion successful. Rows affected: " + rowsAffected);
                     table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
-                    //Updated die Kontostände und lädt die Tabelle neu
-                    /*Balance.updateBalance();
-                    try{
-                        datenbank();
-                        log.info("Searching for data succeed");
-                    }catch(Exception e){
-                        log.error("Searching for data failed");
-                    }
-                    table.setItems(list);*/
                     mainpackage.Driver d = new Driver();
                     log.info("Reload scene overview.fxml");
                     d.changeScene("/FXML/overview.fxml");
