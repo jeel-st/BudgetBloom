@@ -1,34 +1,28 @@
 TO DO`s:
-
-
-
-- Unit Tests                                                            alle
-- Nachdenkzettel
+- Unit Tests: LogicEditEntry und LogicFirstLogin                        Ryan
+- Unit Tests: LogicLogin und LogicNewEntry                              Jana
+- Unit Tests: LogicRegister                                             Joel
+- Nachdenkzettel                                                        alle
 - Factories bei User                                                    Joel
-- (evtl Sceneswitcher in externe Klasse)
 - isRegularBool ist doppelt (LogicEditEntry + LogicNewEntry)            Joel
 - checkFrequency ist doppelt (LogicEditEntry + LogicNewEntry)           Joel
 - (evtl. ein größeres Fenster)
-
+- (evtl Sceneswitcher in externe Klasse)
 
 Problemchen...:
 -Thread tut nicht mehr :/                                               Jana
--Im Overview wird die Bankbalance in der DB doppelt geupdatet - Warum?
-
-Sonstiges:
--auskommentierte Teil in ControllerOverview
+-Im Overview wird die Bankbalance in der DB doppelt geupdatet - Warum?  Jana
 
 Nachdenkzettel:
 - UML, Git, Collections -> Ryan
 - Vererbung, Interfaces, Logging -> Joel
 - Clean code, Exceptions, JavaFX -> Jana
 
-
-Besprechung zum Schluss:
-- Streams und Threads müssen nicht unbedingt visuell dargestellt werden, können auch geloggt werden zum Beispiel
-- doppelter Code -> andere Klasse oder abstrakte Klasse erstellen
-- User kann Interface + Factory bekommen
+Fragen:
+- Unit Tests für DB-Methoden
+- Fenster Größe
+- JavaDoc Dokumentation ?
 
 Ganz am Ende:
 Usertabelle leeren und neu befüllen,
-entsprechende Kontotabellen löschen (Versionen veraltet!)
+entsprechende Kontotabellen löschen

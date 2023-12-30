@@ -36,11 +36,7 @@ class LogicFirstLogin {
 
         Matcher matcher = pattern.matcher(balance);
 
-        if (matcher.find()) {
-            return true;
-        } else {
-            return false;
-        }
+        return matcher.find();
     }
 
 }
