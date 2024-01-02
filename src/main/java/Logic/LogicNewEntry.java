@@ -17,11 +17,11 @@ public class LogicNewEntry {
     SingletonUser sp = SingletonUser.getInstance();
     private final String localUsername = sp.getName();
 
-    public boolean checkIsRegularBoolean(String s) {
+    boolean checkIsRegularBoolean(String s) {
         return !s.equals("Einmalig");
     }
 
-    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, Boolean repeatBool) throws SQLException {
+    void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, Boolean repeatBool) throws SQLException {
         try (Connection con = lg.getConnection()) {
             log.info("Connection to database succeed");
 
@@ -58,7 +58,7 @@ public class LogicNewEntry {
     }
 
 
-    public String checkFrequency(String repetitionFrequency, Boolean repeatBool) {
+    private String checkFrequency(String repetitionFrequency, Boolean repeatBool) {
         if (repeatBool && repetitionFrequency.equals("täglich")) {
             return "täglich";
         } else if (repeatBool && repetitionFrequency.equals("monatlich")) {
@@ -71,7 +71,7 @@ public class LogicNewEntry {
     }
 
 
-    public double currentAccountBalance(double amountChange, String choiceBoxValue) throws Exception {
+    private double currentAccountBalance(double amountChange, String choiceBoxValue) throws Exception {
         try (Connection con = lg.getConnection()) {
             log.info("Connection to database succeed");
 
@@ -98,7 +98,7 @@ public class LogicNewEntry {
         }
     }
 
-    public double accountChangeChecker(double amountChange, String choiceBoxValue) {
+    double accountChangeChecker(double amountChange, String choiceBoxValue) {
         if (choiceBoxValue.equals("Einnahme")) {
             log.info(amountChange);
             return amountChange;
@@ -119,7 +119,7 @@ public class LogicNewEntry {
     }
 
 
-    public Boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException, AmountChangeIsNullException {
+    boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException, AmountChangeIsNullException {
         if (note.isEmpty()) {
             throw new NoteIsNullException();
         }

@@ -55,18 +55,14 @@ public class ControllerOverview implements Initializable{
     private Button inputEdit;
     @FXML
     private Label errorLabel;
-    LogicDatabase dc = new LogicDatabase();
-    SingletonUser sp = SingletonUser.getInstance();
-    private String localUsername = sp.getName();
     LogicFacade lf = LogicFacade.getInstance();
 
     public static Logger log = LogManager.getLogger(ControllerOverview.class);
 
-    //Oberserver Liste weil Tabelle es als Input nutzt
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        log.info("started to initialize");
         date.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, String>("date"));
         reason.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, String>("reason"));
         amount.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Double>("amount"));
@@ -74,7 +70,7 @@ public class ControllerOverview implements Initializable{
         importance.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Integer>("importance"));
         regularity.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("regularity"));
         log.debug("Started to update balance");
-        LogicBalance.updateBalance();
+        LogicFacade.updateBalance();
         log.debug("Finished update of balance");
         try{
             table.setItems(lf.database());

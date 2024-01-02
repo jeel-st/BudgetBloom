@@ -7,11 +7,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
-public class LogicBalance {
+class LogicBalance {
 
     public static Logger log = LogManager.getLogger(ControllerOverview.class);
 
-    public static void updateBalance() {
+    static void updateBalance() {
         SingletonUser sp = SingletonUser.getInstance();
         String localUsername = sp.getName();
         LogicDatabase dc = new LogicDatabase();

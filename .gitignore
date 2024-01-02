@@ -5,4 +5,4 @@
 .idea
 out
 *.iml
-logFile.txt
+logFile

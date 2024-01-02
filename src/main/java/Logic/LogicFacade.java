@@ -1,14 +1,11 @@
 package Logic;
-
-import LocalExceptions.NewEntryExceptions.AmountChangeIsNullException;
-import LocalExceptions.NewEntryExceptions.NoteIsNullException;
-import LocalExceptions.NewEntryExceptions.ParseDateException;
-import LocalExceptions.NewEntryExceptions.ParseDoubleException;
+import LocalExceptions.NewEntryExceptions.*;
 import javafx.collections.ObservableList;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+
 
 public class LogicFacade {
 
@@ -30,7 +27,6 @@ public class LogicFacade {
         overview = new LogicOverview();
         register = new LogicRegister();
         newEntry = new LogicNewEntry();
-        // ??? tableEntry = new LogicTableEntry();
     }
 
     public static LogicFacade getInstance() {
@@ -38,6 +34,10 @@ public class LogicFacade {
             instance = new LogicFacade();
         }
         return instance;
+    }
+
+    public static void updateBalance() {
+        LogicBalance.updateBalance();
     }
 
     public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox) {
@@ -86,7 +86,7 @@ public class LogicFacade {
     public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, Boolean repeatBool) throws SQLException{
         newEntry.changedAccount(amountChange, choiceBoxValue, sliderValue, note, date, repetitionFrequency, repeatBool);
     }
-    public Boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException, AmountChangeIsNullException {
+    public boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException, AmountChangeIsNullException {
         return newEntry.checkingFormats(amountChange, note, date);
     }
 }

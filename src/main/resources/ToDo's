@@ -10,8 +10,7 @@ TO DO`s:
 - (evtl Sceneswitcher in externe Klasse)
 
 Problemchen...:
--Thread tut nicht mehr :/                                               Jana
--Im Overview wird die Bankbalance in der DB doppelt geupdatet - Warum?  Jana
+-Thread tut nicht mehr :/ -> tut wieder :D                              Jana
 
 Nachdenkzettel:
 - UML, Git, Collections -> Ryan
@@ -22,6 +21,7 @@ Fragen:
 - Unit Tests für DB-Methoden
 - Fenster Größe
 - JavaDoc Dokumentation ?
+- Im Overview wird die Scene doppelt initialisiert - Warum und wie verhindern?
 
 Ganz am Ende:
 Usertabelle leeren und neu befüllen,

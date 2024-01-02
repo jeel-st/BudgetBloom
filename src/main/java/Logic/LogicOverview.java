@@ -17,6 +17,8 @@ public class LogicOverview {
     ObservableList<LogicTableEntry> list = FXCollections.observableArrayList(
             //new User("17.11.2023", "Lebensmittel", -12.3, 123.45)
     );
+
+    //Oberserver Liste weil Tabelle es als Input nutzt
     public ObservableList<LogicTableEntry> database() throws Exception {
 
         try (Connection con = lg.getConnection()) {
