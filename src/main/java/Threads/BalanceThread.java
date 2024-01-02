@@ -16,13 +16,16 @@ import java.util.Optional;
 
 public class BalanceThread implements Runnable {
 
-    SingletonUser sp = SingletonUser.getInstance();
-    private final String localUsername = sp.getName();
+
     public static Logger log = LogManager.getLogger(BalanceThread.class);
     @Override public void run() {
+        SingletonUser sp = SingletonUser.getInstance();
+        String localUsername = sp.getName();
         if (localUsername != null) {
             Thread t1 = new Thread(task1);
             t1.start();
+        } else {
+            log.info("Won't start thread yet because username is still null");
         }
 
     }
