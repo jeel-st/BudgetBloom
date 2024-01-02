@@ -18,7 +18,7 @@ public class LogicNewEntry {
     private final String localUsername = sp.getName();
 
     boolean checkIsRegularBoolean(String s) {
-        return !s.equals("Einmalig");
+        return s != null && !s.equals("Einmalig");
     }
 
     void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, Boolean repeatBool) throws SQLException {
@@ -99,22 +99,10 @@ public class LogicNewEntry {
     }
 
     double accountChangeChecker(double amountChange, String choiceBoxValue) {
-        if (choiceBoxValue.equals("Einnahme")) {
-            log.info(amountChange);
-            return amountChange;
-
+        if (!choiceBoxValue.equals("Einnahme") && amountChange > 0) {
+            return -amountChange;
         } else {
-            log.info(amountChange);
-
-            if (amountChange == 0) {
-                return amountChange;
-
-            } else if (amountChange > 0) {
-                return -amountChange;
-
-            } else {
-                return amountChange;
-            }
+            return amountChange;
         }
     }
 
@@ -132,7 +120,7 @@ public class LogicNewEntry {
             throw new ParseDoubleException();
         }
         try {
-            Date.valueOf(date);
+            Date.valueOf(date.toString());
         } catch (Exception e){
             throw new ParseDateException();
         }
