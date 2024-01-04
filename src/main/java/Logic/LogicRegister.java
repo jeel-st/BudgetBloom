@@ -48,7 +48,7 @@ public class LogicRegister {
             return "Couldn't get a database connection. Please check your internet connection";
         }
     }
-    boolean fillingControl(String username, String password, String password2, String email) throws AllNullException, EmailNullException, PasswordNullException, SecondPasswordNullException, UsernameNullException {
+    public boolean fillingControl(String username, String password, String password2, String email) throws AllNullException, EmailNullException, PasswordNullException, SecondPasswordNullException, UsernameNullException {
         String emptyString = "";
         if (email.equals(emptyString) && password.equals(emptyString) && password2.equals(emptyString) && username.equals(emptyString)) {
             throw new AllNullException();
