@@ -45,10 +45,6 @@ public class LogicFacade {
         return newEntry.accountChangeChecker(inputNumber, myChoiceBox);
     }
 
-    public String showContentOfRepeatabilityBox() throws Exception {
-        return editEntry.showContentOfRepeatabilityBox();
-    }
-
     public void insertInitialBalance(double balance) {
         firstLogin.insertInitialBalance(balance);
     }
@@ -68,15 +64,11 @@ public class LogicFacade {
     public String proveRegisterTextFields(String username, String password, String password2, String email){
         return register.proveRegisterTextFields(username, password, password2, email);
     }
-    public ObservableList<LogicTableEntry> database() throws Exception{
-        return overview.database();
-    }
+
     public int deleteRowInDatabase(double amount, String date, String reason, double accountBalance, int importance, Boolean regularityBool) throws SQLException{
         return overview.deleteRowInDatabase(amount, date, reason, accountBalance, importance, regularityBool);
     }
-    public void saveValues(double amount, String date, String reason, double accountBalance, int importance, String regularity){
-        overview.saveValues(amount, date, reason, accountBalance, importance, regularity);
-    }
+
     public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue) throws SQLException{
         newEntry.changedAccount(amountChange, choiceBoxValue, sliderValue, note, date, repetitionFrequency, repeatBoxValue);
     }
