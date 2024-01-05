@@ -86,7 +86,7 @@ public class LogicRegister {
     public boolean passwordControl(String password, String password2) throws PasswordsDontMatchException, PasswordLengthException, PasswordSpecialCharException {
         if (!(password.equals(password2))) {
             throw new PasswordsDontMatchException();
-        } else if (password.length() >= 6 && password.length() <= 30) {
+        } else if (password.length() <= 6 || password.length() >= 30) {
             throw new PasswordLengthException();
         } else {
 
