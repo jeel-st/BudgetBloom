@@ -17,11 +17,8 @@ public class LogicNewEntry {
     SingletonUser sp = SingletonUser.getInstance();
     private final String localUsername = sp.getName();
 
-    boolean checkIsRegularBoolean(String s) {
-        return s != null && !s.equals("Einmalig");
-    }
 
-    void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, Boolean repeatBool) throws SQLException {
+    void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue) throws SQLException {
         try (Connection con = lg.getConnection()) {
             log.info("Connection to database succeed");
 
@@ -44,8 +41,10 @@ public class LogicNewEntry {
                 log.error("Couldn't connect to Database");
             }
             stmt.setInt(5, sliderValue);
-            stmt.setBoolean(6, repeatBool);
-            stmt.setString(7, checkFrequency(repetitionFrequency, repeatBool));
+            stmt.setBoolean(6, LogicFacade.getInstance().isRegularBool(repeatBoxValue));
+            log.info(repeatBoxValue);
+            log.info(repetitionFrequency);
+            stmt.setString(7, LogicFacade.getInstance().checkFrequency(repeatBoxValue, repetitionFrequency));
             try {
                 stmt.executeUpdate();
             } catch (Exception e) {
@@ -56,20 +55,6 @@ public class LogicNewEntry {
             throw e;
         }
     }
-
-
-    private String checkFrequency(String repetitionFrequency, Boolean repeatBool) {
-        if (repeatBool && repetitionFrequency.equals("täglich")) {
-            return "täglich";
-        } else if (repeatBool && repetitionFrequency.equals("monatlich")) {
-            return "monatlich";
-        } else if (repeatBool && repetitionFrequency.equals("jährlich")) {
-            return "jährlich";
-        } else {
-            return null;
-        }
-    }
-
 
     private double currentAccountBalance(double amountChange, String choiceBoxValue) throws Exception {
         try (Connection con = lg.getConnection()) {

@@ -40,9 +40,6 @@ public class LogicFacade {
         LogicBalance.updateBalance();
     }
 
-    public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox) {
-           return editEntry.saveEdit(inputDate, inputReason, scale, repeatBox, inputNumber, myChoiceBox, repeatabilityBox);
-    }
 
     public double accountChangeChecker(double inputNumber, String myChoiceBox) {
         return newEntry.accountChangeChecker(inputNumber, myChoiceBox);
@@ -80,13 +77,16 @@ public class LogicFacade {
     public void saveValues(double amount, String date, String reason, double accountBalance, int importance, String regularity){
         overview.saveValues(amount, date, reason, accountBalance, importance, regularity);
     }
-    public boolean checkIsRegularBoolean(String s){
-        return newEntry.checkIsRegularBoolean(s);
-    }
-    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, Boolean repeatBool) throws SQLException{
-        newEntry.changedAccount(amountChange, choiceBoxValue, sliderValue, note, date, repetitionFrequency, repeatBool);
+    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue) throws SQLException{
+        newEntry.changedAccount(amountChange, choiceBoxValue, sliderValue, note, date, repetitionFrequency, repeatBoxValue);
     }
     public boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException, AmountChangeIsNullException {
         return newEntry.checkingFormats(amountChange, note, date);
+    }
+    public String checkFrequency (String repeatBox, String repeatabilityBox){
+        return editEntry.checkFrequency(repeatBox, repeatabilityBox);
+    }
+    public boolean isRegularBool(String s){
+        return editEntry.isRegularBool(s);
     }
 }

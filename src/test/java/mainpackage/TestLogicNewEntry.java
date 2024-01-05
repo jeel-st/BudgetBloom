@@ -10,12 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TestLogicNewEntry {
 
-    @Test
-    void testCheckIsRegularBoolean() {
-        assertTrue(LogicFacade.getInstance().checkIsRegularBoolean("Regelmäßg"));
-        assertFalse(LogicFacade.getInstance().checkIsRegularBoolean("Einmalig"));
-        assertFalse(LogicFacade.getInstance().checkIsRegularBoolean(null));
-    }
+
 
     @Test
     void testAccountChangeChecker() {

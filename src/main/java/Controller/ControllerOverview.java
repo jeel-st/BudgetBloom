@@ -55,8 +55,8 @@ public class ControllerOverview implements Initializable{
     private Button inputEdit;
     @FXML
     private Label errorLabel;
+    LogicOverview lo = new LogicOverview();
     LogicFacade lf = LogicFacade.getInstance();
-
     public static Logger log = LogManager.getLogger(ControllerOverview.class);
 
 
@@ -73,7 +73,7 @@ public class ControllerOverview implements Initializable{
         LogicFacade.updateBalance();
         log.debug("Finished update of balance");
         try{
-            table.setItems(lf.database());
+            table.setItems(lo.database());
             log.info("Searching for data succeed");
         }catch(Exception e){
             log.error("Searching for data failed");
@@ -151,6 +151,7 @@ public class ControllerOverview implements Initializable{
     }
     public void editRow(ActionEvent event) throws IOException {
         Driver d = new Driver();
+        LogicOverview lo = new LogicOverview();
         try {
 
             double amount = table.getSelectionModel().getSelectedItem().getAmount();
@@ -159,7 +160,8 @@ public class ControllerOverview implements Initializable{
             double accountBalance = table.getSelectionModel().getSelectedItem().getAccountBalance();
             int importance = table.getSelectionModel().getSelectedItem().getImportance();
             String regularity = table.getSelectionModel().getSelectedItem().getRegularity();
-            lf.saveValues(amount, date, reason, accountBalance, importance, regularity);
+            log.info(amount);
+            lo.saveValues(amount, date, reason, accountBalance, importance, regularity);
             d.changeScene("/FXML/editEntry.fxml");
         }catch(Exception e ){
             errorLabel.setText("No row selected");

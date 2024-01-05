@@ -121,7 +121,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
 
 
     public void userInputAdd(ActionEvent event) throws SQLException, IOException {
-            repeatBool = LogicFacade.getInstance().checkIsRegularBoolean(repeatBox.getValue());
+            repeatBool = LogicFacade.getInstance().isRegularBool(repeatBox.getValue());
             int sliderValue = (int) scale.getValue();
             boolean rightFormat = false;
             try{
@@ -139,7 +139,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
             }
         if (rightFormat) {
             if (repeatabilityBox.getValue() != null && repeatBool || repeatabilityBox.getValue() == null && !repeatBool) {
-                LogicFacade.getInstance().changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBool);
+                LogicFacade.getInstance().changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBox.getValue());
                 d.changeScene("/FXML/overview.fxml");
             } else {
                 log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");

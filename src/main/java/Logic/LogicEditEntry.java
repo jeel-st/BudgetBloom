@@ -10,22 +10,22 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.time.LocalDate;
 
-class LogicEditEntry {
+public class LogicEditEntry {
 
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
     SingletonEditValues sev = SingletonEditValues.getInstance();
-    public String date = sev.getDate();
-    public String note = sev.getNote();
-    public double bankBalance = sev.getAccountBalance();
-    public double amount = sev.getAmount();
-    public int importance = sev.getImportance();
-    public String isRegular = sev.getIsregular();
+    String date = sev.getDate();
+    String note = sev.getNote();
+    double bankBalance = sev.getAccountBalance();
+    double amount = sev.getAmount();
+    int importance = sev.getImportance();
+    String isRegular = sev.getIsregular();
     private final String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
 
-    String saveEdit (LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox) {
+    public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox) {
         String errorLabel;
 
         try (Connection con = dc.getConnection()) {
@@ -96,10 +96,12 @@ class LogicEditEntry {
         return !s.equals("Einmalig");
     }
 
-    String showContentOfRepeatabilityBox() throws Exception {
+    public String showContentOfRepeatabilityBox() throws Exception {
 
         try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
+            log.info("Der gespeicherte Wert lautet: "+isRegular);
+            log.info("Die gespeicherte Ausgabe lautet: "+ amount);
             log.info(isRegularBool(isRegular));
             String sql = "SELECT frequency FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -114,7 +116,7 @@ class LogicEditEntry {
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         String s = rs.getString("frequency");
-                        log.info(s);
+                        log.info("Die gefundene Frequenz lautet: "+s);
                         return s;
                     } else {
                         log.error("Es wurde kein passender Datensatz gefunden");

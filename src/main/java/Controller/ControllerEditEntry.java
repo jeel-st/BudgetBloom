@@ -2,6 +2,7 @@ package Controller;
 
 import Interfaces.EntryInterface;
 import Logic.LogicDatabase;
+import Logic.LogicEditEntry;
 import Logic.LogicFacade;
 import Singleton.SingletonEditValues;
 import Singleton.SingletonUser;
@@ -68,16 +69,17 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     int myScaleNumber;
     private String[] input = {"Einnahme", "Ausgabe"};
     SingletonEditValues sev = SingletonEditValues.getInstance();
-
-    public String date = sev.getDate();
-    public String note = sev.getNote();
-    public double bankBalance = sev.getAccountBalance();
-    public double amount = sev.getAmount();
-    public int importance = sev.getImportance();
-    public String isRegular = sev.getIsregular();
+    LogicEditEntry lee = new LogicEditEntry();
+     String date = sev.getDate();
+     String note = sev.getNote();
+     double bankBalance = sev.getAccountBalance();
+     double amount = sev.getAmount();
+     int importance = sev.getImportance();
+     String isRegular = sev.getIsregular();
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
+
     private final String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
@@ -92,8 +94,8 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
         if (repeatBox.getValue().equals("Regelmäßig") && repeatabilityBox.getValue() == null) {
             log.error("Geben sie eine Frequenz an");
         } else {
-            if (LogicFacade.getInstance().checkIsRegularBoolean(inputNumber.getText())) {
-                String errorLabelText = LogicFacade.getInstance().saveEdit(inputDate.getValue(), inputReason.getText(), (int) scale.getValue(), repeatBox.getValue(), inputNumber.getText(), myChoiceBox.getValue(), repeatabilityBox.getValue());
+            if (LogicFacade.getInstance().isRegularBool(inputNumber.getText())) {
+                String errorLabelText = lee.saveEdit(inputDate.getValue(), inputReason.getText(), (int) scale.getValue(), repeatBox.getValue(), inputNumber.getText(), myChoiceBox.getValue(), repeatabilityBox.getValue());
                 errorLabel.setText(errorLabelText);
                 if (Objects.equals(errorLabelText, "Edit was saved successfully")) {
                     d.changeScene("/FXML/overview.fxml");
@@ -107,6 +109,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         repeatBox.getItems().addAll(repetitions);
         repeatBox.setOnAction(this::getRepeat);
         // bis hier stehen lassen
@@ -118,7 +121,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             repeatBox.setValue(isRegular);
             repeatabilityBox.setVisible(true);
             try {
-                repeatabilityBox.setValue(LogicFacade.getInstance().showContentOfRepeatabilityBox());
+                repeatabilityBox.setValue(lee.showContentOfRepeatabilityBox());
             } catch (Exception e) {
                 log.error("Content passt nicht in WiederholungshäufigkeitsBox");
             }
