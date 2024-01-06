@@ -1,5 +1,7 @@
 package LocalExceptions.NewEntryExceptions;
 
 public class AmountChangeIsNullException extends Exception{
-    public AmountChangeIsNullException(){super("Eingabe/ Ausgabe Feld ist leer");}
+    public AmountChangeIsNullException(){
+        super("Eingabe/ Ausgabe Feld ist leer");
+    }
 }
