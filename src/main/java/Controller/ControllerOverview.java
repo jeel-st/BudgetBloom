@@ -41,7 +41,8 @@ public class ControllerOverview implements Initializable{
     private TableColumn<LogicTableEntry, Integer> importance;
     @FXML
     private TableColumn<LogicTableEntry, String> regularity;
-
+    @FXML
+    private TableColumn<LogicTableEntry, String> payment;
 
     @FXML
     private Button logout;
@@ -69,6 +70,7 @@ public class ControllerOverview implements Initializable{
         accountBalance.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Double>("accountBalance"));
         importance.setCellValueFactory(new PropertyValueFactory <LogicTableEntry, Integer>("importance"));
         regularity.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("regularity"));
+        payment.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("payment"));
         log.debug("Started to update balance");
         LogicFacade.updateBalance();
         log.debug("Finished update of balance");
@@ -160,8 +162,12 @@ public class ControllerOverview implements Initializable{
             double accountBalance = table.getSelectionModel().getSelectedItem().getAccountBalance();
             int importance = table.getSelectionModel().getSelectedItem().getImportance();
             String regularity = table.getSelectionModel().getSelectedItem().getRegularity();
-            log.info(amount);
-            lo.saveValues(amount, date, reason, accountBalance, importance, regularity);
+            String payment = table.getSelectionModel().getSelectedItem().getPayment();
+            log.info(payment);
+            if(payment.equals("-")){
+                payment = null;
+            }
+            lo.saveValues(amount, date, reason, accountBalance, importance, regularity, payment);
             d.changeScene("/FXML/editEntry.fxml");
         }catch(Exception e ){
             errorLabel.setText("No row selected");

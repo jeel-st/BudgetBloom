@@ -69,8 +69,8 @@ public class LogicFacade {
         return overview.deleteRowInDatabase(amount, date, reason, accountBalance, importance, regularityBool);
     }
 
-    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue) throws SQLException{
-        newEntry.changedAccount(amountChange, choiceBoxValue, sliderValue, note, date, repetitionFrequency, repeatBoxValue);
+    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue, String payment) throws SQLException{
+        newEntry.changedAccount(amountChange, choiceBoxValue, sliderValue, note, date, repetitionFrequency, repeatBoxValue, payment);
     }
     public boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException, AmountChangeIsNullException {
         return newEntry.checkingFormats(amountChange, note, date);
@@ -80,5 +80,8 @@ public class LogicFacade {
     }
     public boolean isRegularBool(String s){
         return editEntry.isRegularBool(s);
+    }
+    public String checkPayment(String payment){
+        return editEntry.checkPayment(payment);
     }
 }

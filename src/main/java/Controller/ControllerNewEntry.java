@@ -66,6 +66,8 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     private ChoiceBox<String> repeatBox;
     @FXML
     private ChoiceBox<String> repeatabilityBox;
+    @FXML
+    private ChoiceBox<String> paymentMethodBox;
 
     public static Logger log = LogManager.getLogger(ControllerNewEntry.class);
 
@@ -73,6 +75,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     //kommt in die choicebox:
     private String[] input = {"Einnahme", "Ausgabe"};
     private String[] repeatability = {"täglich", "monatlich", "jährlich"};
+    private String[] payment = {"Bar", "Paypal", "Kreditkarte", "Girokarte", "weitere Zahlungsmethode..."};
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
@@ -91,6 +94,9 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
         repeatBox.setValue("Einmalig");
         repeatabilityBox.getItems().addAll(repeatability);
         repeatabilityBox.setVisible(false);
+        paymentMethodBox.getItems().addAll(payment);
+        paymentMethodBox.setVisible(false);
+
         //WichtigkeitsSkala (Slider + Label):
         myScaleNumber = (int) scale.getValue();
         scaleLabel.setText(Integer.toString(myScaleNumber));
@@ -112,6 +118,10 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     public void getInput(ActionEvent event) {
         String myInput = myChoiceBox.getValue();
         inputText.setText("Neue " + myInput + ":");
+        paymentMethodBox.setVisible("Ausgabe".equalsIgnoreCase(myInput));
+        if(paymentMethodBox.isVisible()){
+            paymentMethodBox.setValue("Bar");
+        }
     }
 
 
@@ -139,7 +149,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
             }
         if (rightFormat) {
             if (repeatabilityBox.getValue() != null && repeatBool || repeatabilityBox.getValue() == null && !repeatBool) {
-                LogicFacade.getInstance().changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBox.getValue());
+                LogicFacade.getInstance().changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBox.getValue(), paymentMethodBox.getValue());
                 d.changeScene("/FXML/overview.fxml");
             } else {
                 log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");

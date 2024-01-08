@@ -24,7 +24,7 @@ public class LogicOverview {
         try (Connection con = lg.getConnection()) {
             if (localUsername != null) {
                 try {
-                    String sql = "SELECT edate, note, amount, bankbalance, importance, isregular FROM konto" + localUsername + " ORDER BY edate DESC, id DESC";
+                    String sql = "SELECT edate, note, amount, bankbalance, importance, isregular, payment FROM konto" + localUsername + " ORDER BY edate DESC, id DESC";
 
                     PreparedStatement stmt = con.prepareStatement(sql);
                     ResultSet rs = stmt.executeQuery();
@@ -35,14 +35,20 @@ public class LogicOverview {
                         double accountBalance = (rs.getDouble("bankbalance"));
                         Integer importance = (rs.getInt("importance"));
                         Boolean regularityBool = (rs.getBoolean("isregular"));
+                        String payment = (rs.getString("payment"));
+                        if(payment == null){
+                            payment = "-";
+                        }
                         String regularity;
                         if (regularityBool) {
                             regularity = "Regelmäßig";
                         } else {
                             regularity = "Einmalig";
                         }
-                        list.add(new LogicTableEntry(date, reason, amount, accountBalance, importance, regularity));
+
+                        list.add(new LogicTableEntry(date, reason, amount, accountBalance, importance, regularity, payment));
                     }
+
                     return list;
                 } catch (Exception e) {
                     log.error("Failed to transfer data from database");
@@ -75,7 +81,7 @@ public class LogicOverview {
             throw e;
         }
     }
-    public void saveValues(double amount, String date, String reason, double accountBalance, int importance, String regularity){
+    public void saveValues(double amount, String date, String reason, double accountBalance, int importance, String regularity, String payment){
         SingletonEditValues sev = SingletonEditValues.getInstance();
         sev.setAmount(amount);
         sev.setDate(date);
@@ -83,5 +89,6 @@ public class LogicOverview {
         sev.setAccountBalance(accountBalance);
         sev.setImportance(importance);
         sev.setIsRegular(regularity);
+        sev.setPayment(payment);
     }
 }

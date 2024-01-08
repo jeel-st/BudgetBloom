@@ -1,4 +1,4 @@
-package MiniProject;
+package PaymentMethod;
 
 public class Creditcard implements Payment{
     @Override

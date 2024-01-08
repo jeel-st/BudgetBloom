@@ -17,7 +17,8 @@ CREATE TABLE konto+username(
     bankBalance NUMERIC NOT NULL,
     importance INTEGER CHECK(importance >= 0 AND importance <=10) NOT NULL,
     isregular BOOLEAN DEFAULT false NOT NULL,
-    frequency VARCHAR(10) CHECK(frequency IN ('täglich', 'monatlich', 'jährlich'))
+    frequency VARCHAR(10) CHECK(frequency IN ('täglich', 'monatlich', 'jährlich')),
+    payment VARCHAR(20) DEFAULT NULL
 );
 
 

@@ -1,4 +1,4 @@
-package MiniProject;
+package PaymentMethod;
 
 public class PaymentFactory {
     public Payment createCreditcard(){
@@ -10,4 +10,7 @@ public class PaymentFactory {
     public Payment createPaypal(){
         return new PayPal();
     }
+    public Payment createGirocard(){return new Girocard(); }
+    public Payment createOtherPayment(){return new OtherPayment();}
+
 }

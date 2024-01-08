@@ -1,48 +1,395 @@
-16:52:55.795 [main] INFO  mainpackage.Driver - Programm started
-16:52:55.799 [pool-3-thread-1] INFO  Threads.BalanceThread - Won't start thread yet because username is still null
-16:53:06.640 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Login button pushed
-16:53:06.977 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Connection to database succeed
-16:53:06.999 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Username tester found in database
-16:53:07.138 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Connection to database succeed
-16:53:07.162 [JavaFX Application Thread] INFO  Controller.ControllerLogin - last login date updated successfully
-16:53:07.311 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Connection to database succeed
-16:53:07.329 [JavaFX Application Thread] INFO  Controller.ControllerLogin - number of logins updated successfully
-16:53:07.499 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Connection to database succeed
-16:53:07.531 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Scene changed to overview.fxml successfully
-16:53:07.553 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
-16:53:07.554 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
-16:53:07.721 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.739 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.763 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.781 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.794 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.813 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.825 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.841 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.863 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.880 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.894 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.912 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.927 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:07.942 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
-16:53:08.117 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
-16:53:08.121 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
-16:53:08.122 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
-16:53:08.297 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.308 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.321 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.337 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.357 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.375 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.398 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.414 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.428 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.444 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.465 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.483 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.503 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
-16:53:08.519 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
-16:53:08.677 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
-16:53:55.800 [Thread-3] INFO  Threads.BalanceThread - Task1 is running
-16:53:55.966 [Thread-3] INFO  Threads.BalanceThread - The average account balance is 20751
-16:53:55.966 [Thread-3] INFO  Threads.BalanceThread - The overall highest balance was 20895.64
+00:22:38.582 [main] INFO  mainpackage.Driver - Programm started
+00:22:38.588 [pool-3-thread-1] INFO  Threads.BalanceThread - Won't start thread yet because username is still null
+00:22:48.214 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Login button pushed
+00:22:48.692 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Connection to database succeed
+00:22:48.730 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Username tester found in database
+00:22:48.877 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Connection to database succeed
+00:22:48.913 [JavaFX Application Thread] INFO  Controller.ControllerLogin - last login date updated successfully
+00:22:49.082 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Connection to database succeed
+00:22:49.102 [JavaFX Application Thread] INFO  Controller.ControllerLogin - number of logins updated successfully
+00:22:49.276 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Connection to database succeed
+00:22:49.314 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Scene changed to overview.fxml successfully
+00:22:49.380 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:22:49.380 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:22:49.556 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.574 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.592 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.610 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.630 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.648 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.667 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.687 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.705 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.723 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.742 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.761 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.779 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.798 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.815 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.833 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:49.850 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:22:50.024 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:22:50.031 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:22:50.031 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:22:50.208 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.227 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.246 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.264 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.282 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.300 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.319 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.337 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.355 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.375 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.393 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.412 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.430 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.449 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.470 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.490 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:22:50.506 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:22:50.687 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:22:52.125 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Changed Scene to newEntry.fxml
+00:23:12.020 [JavaFX Application Thread] INFO  Logic.LogicNewEntry - Connection to database succeed
+00:23:12.021 [JavaFX Application Thread] INFO  Logic.LogicNewEntry - Kontoänderungseingabe erfolgreich
+00:23:12.175 [JavaFX Application Thread] INFO  Logic.LogicNewEntry - Connection to database succeed
+00:23:12.195 [JavaFX Application Thread] INFO  Logic.LogicNewEntry - 20720.64
+00:23:12.212 [JavaFX Application Thread] INFO  Logic.LogicNewEntry - Neuer Kontostand: 19720.64
+00:23:12.212 [JavaFX Application Thread] INFO  Logic.LogicNewEntry - Einmalig
+00:23:12.213 [JavaFX Application Thread] INFO  Logic.LogicNewEntry - null
+00:23:12.263 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:12.263 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:12.439 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.457 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.477 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.495 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.512 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.531 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.550 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.571 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.589 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.609 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.625 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.644 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.662 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.680 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.697 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.721 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.740 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:12.756 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:12.933 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:12.942 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:12.942 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:13.121 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.141 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.159 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.179 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.196 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.214 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.231 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.248 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.266 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.285 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.304 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.321 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.341 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.359 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.377 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.394 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.410 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:13.427 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:13.614 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:17.821 [JavaFX Application Thread] INFO  Controller.ControllerOverview - -1000.02024-01-10Geht es?19720.640Einmalig
+00:23:17.959 [JavaFX Application Thread] INFO  Logic.LogicOverview - Connection to database succeed
+00:23:17.998 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Deletion successful. Rows affected: 1
+00:23:18.004 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Reload scene overview.fxml
+00:23:18.009 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:18.009 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:18.180 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.197 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.214 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.231 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.248 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.265 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.284 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.302 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.322 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.340 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.359 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.378 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.396 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.415 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.432 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.449 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.466 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:18.646 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:18.658 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:18.658 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:18.865 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.883 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.901 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.919 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.938 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.958 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.975 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:18.993 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:19.011 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:19.030 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:19.047 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:19.065 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:19.084 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:19.102 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:19.120 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:19.138 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:19.154 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:19.322 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:27.068 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Changed Scene to newEntry.fxml
+00:23:28.591 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:28.591 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:28.765 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.784 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.802 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.822 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.847 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.865 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.883 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.901 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.920 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.938 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.957 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.978 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:28.998 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.017 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.034 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.054 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.069 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:29.252 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:29.258 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:29.258 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:29.441 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.458 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.476 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.494 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.517 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.534 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.552 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.571 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.590 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.609 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.627 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.645 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.663 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.682 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.700 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.717 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:29.734 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:29.911 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:31.166 [JavaFX Application Thread] ERROR Controller.ControllerOverview - Keine Zeile wurde ausgewählt
+00:23:33.335 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Changed Scene to newEntry.fxml
+00:23:34.249 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:34.249 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:34.423 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.442 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.461 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.480 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.498 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.516 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.535 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.553 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.572 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.589 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.608 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.627 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.652 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.670 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.688 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.705 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:34.722 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:34.893 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:34.898 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:34.898 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:35.069 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.087 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.103 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.120 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.137 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.154 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.171 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.188 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.206 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.223 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.241 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.259 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.280 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.298 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.315 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.334 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:35.350 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:35.522 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:36.534 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Changed Scene to newEntry.fxml
+00:23:37.385 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:37.385 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:37.553 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.572 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.590 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.607 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.625 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.642 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.659 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.677 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.694 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.711 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.729 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.746 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.764 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.781 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.799 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.817 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:37.840 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:38.010 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:38.014 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:38.014 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:38.185 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.203 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.220 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.237 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.253 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.271 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.287 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.304 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.321 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.339 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.356 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.375 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.394 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.411 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.429 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.447 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:38.463 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:38.588 [Thread-3] INFO  Threads.BalanceThread - Task1 is running
+00:23:38.640 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:38.760 [Thread-3] INFO  Threads.BalanceThread - The average account balance is 20748,58
+00:23:38.760 [Thread-3] INFO  Threads.BalanceThread - The overall highest balance was 20895.64
+00:23:39.783 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Changed Scene to newEntry.fxml
+00:23:40.759 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:40.759 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:40.930 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:40.948 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:40.965 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:40.982 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:40.999 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.016 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.034 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.058 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.077 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.094 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.112 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.129 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.146 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.163 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.180 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.198 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.214 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:41.383 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:41.387 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:41.388 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:41.559 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.576 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.594 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.611 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.627 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.644 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.663 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.680 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.698 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.716 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.733 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.752 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.771 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.788 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.807 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.824 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:41.840 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:42.011 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:49.342 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Changed Scene to newEntry.fxml
+00:23:50.589 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:50.589 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:50.761 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.780 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.797 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.815 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.833 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.850 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.868 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.885 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.901 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.919 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.935 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.954 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.972 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:50.990 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.007 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.024 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.039 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:51.211 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:51.218 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:51.218 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:51.398 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.415 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.432 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.451 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.468 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.485 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.503 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.521 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.539 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.556 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.574 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.591 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.611 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.628 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.646 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.663 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:51.679 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:51.848 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:53.826 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Changed Scene to newEntry.fxml
+00:23:54.736 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:54.736 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:54.906 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:54.923 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:54.942 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:54.959 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:54.977 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:54.994 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.012 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.028 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.045 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.062 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.079 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.096 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.122 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.141 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.157 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.174 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.191 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:55.365 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+00:23:55.367 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+00:23:55.367 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+00:23:55.537 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.553 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.571 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.588 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.604 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.633 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.676 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.729 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.776 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.827 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.847 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.869 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.894 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.913 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.932 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.950 [JavaFX Application Thread] TRACE Controller.ControllerOverview - bankbalance updated successfully
+00:23:55.966 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+00:23:56.139 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed

@@ -1,4 +1,4 @@
-package MiniProject;
+package PaymentMethod;
 
 public class Cash implements Payment {
 

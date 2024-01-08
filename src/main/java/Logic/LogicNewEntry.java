@@ -18,11 +18,11 @@ public class LogicNewEntry {
     private final String localUsername = sp.getName();
 
 
-    void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue) throws SQLException {
+    void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue, String payment) throws SQLException {
         try (Connection con = lg.getConnection()) {
             log.info("Connection to database succeed");
 
-            String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             try {
                 stmt.setDouble(3, accountChangeChecker(amountChange, choiceBoxValue));
@@ -45,6 +45,7 @@ public class LogicNewEntry {
             log.info(repeatBoxValue);
             log.info(repetitionFrequency);
             stmt.setString(7, LogicFacade.getInstance().checkFrequency(repeatBoxValue, repetitionFrequency));
+            stmt.setString(8,LogicFacade.getInstance().checkPayment(payment));
             try {
                 stmt.executeUpdate();
             } catch (Exception e) {

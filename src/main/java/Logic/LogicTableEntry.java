@@ -4,23 +4,25 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class LogicTableEntry {
-    private String date;
-    private String reason;
-    private Double amount;
-    private Double accountBalance;
-    private Integer importance;
-    private String regularity;
+    private final String date;
+    private final String reason;
+    private final Double amount;
+    private final Double accountBalance;
+    private final Integer importance;
+    private final String regularity;
+    private final String payment;
     public String user;
     public static Logger log = LogManager.getLogger(LogicTableEntry.class);
 
     //constructor:
-    public LogicTableEntry(String date, String reason, Double amount, Double accountBalance, Integer importance, String regularity) {
+    public LogicTableEntry(String date, String reason, Double amount, Double accountBalance, Integer importance, String regularity, String payment) {
         this.date = date;
         this.reason = reason;
         this.amount = amount;
         this.accountBalance = accountBalance;
         this.importance = importance;
         this.regularity = regularity;
+        this.payment = payment;
     }
 
     //Getters:
@@ -45,4 +47,5 @@ public class LogicTableEntry {
     public Integer getImportance() {return importance;}
 
     public String getRegularity(){return regularity;}
+    public String getPayment(){return payment;}
 }

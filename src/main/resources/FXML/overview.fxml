@@ -12,7 +12,7 @@
       <AnchorPane prefHeight="400.0" prefWidth="601.0" style="-fx-background-color: #FFA54F;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="logout" layoutX="14.0" layoutY="354.0" mnemonicParsing="false" onAction="#userLogout" text="Logout" />
-            <TableView fx:id="table" layoutX="65.0" layoutY="49.0" prefHeight="293.0" prefWidth="472.0" style="-fx-background-color: #18D1E3;">
+            <TableView fx:id="table" layoutX="25.0" layoutY="53.0" prefHeight="294.0" prefWidth="550.0" style="-fx-background-color: #18D1E3;">
               <columns>
                   <TableColumn fx:id="date" text="Datum" />
                 <TableColumn fx:id="reason" text="Grund" />
@@ -20,6 +20,7 @@
                   <TableColumn fx:id="accountBalance" text="Kontostand" />
                   <TableColumn fx:id="importance" prefWidth="75.0" text="Wichtigkeit" />
                   <TableColumn fx:id="regularity" prefWidth="75.0" text="Regelmäßigkeit" />
+                  <TableColumn fx:id="payment" prefWidth="75.0" text="Zahlungsmethode" />
               </columns>
             </TableView>
             <Button fx:id="newInput" layoutX="466.0" layoutY="354.0" mnemonicParsing="false" onAction="#userNewInput" text="Eingabe hinzufügen" />

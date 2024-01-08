@@ -20,18 +20,18 @@ public class LogicEditEntry {
     double bankBalance = sev.getAccountBalance();
     double amount = sev.getAmount();
     int importance = sev.getImportance();
-    String isRegular = sev.getIsregular();
+    String isRegular = sev.getIsRegular();
     private final String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
 
-    public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox) {
+    public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox, String payment) {
         String errorLabel;
 
         try (Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
 
-            String sql = "UPDATE konto" + localUsername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
+            String sql = "UPDATE konto" + localUsername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ?, payment = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
             PreparedStatement stmt = con.prepareStatement(sql);
             try {
                 stmt.setDate(1, Date.valueOf(inputDate));
@@ -62,11 +62,12 @@ public class LogicEditEntry {
             stmt.setInt(4, scale);
             stmt.setBoolean(5, isRegularBool(repeatBox));
             stmt.setString(6, checkFrequency(repeatBox, repeatabilityBox));
-            stmt.setDate(7, Date.valueOf(date));
-            stmt.setString(8, note);
-            stmt.setDouble(9, amount);
-            stmt.setDouble(10, bankBalance);
-            stmt.setBoolean(11, isRegularBool(isRegular));
+            stmt.setString(7, payment);
+            stmt.setDate(8, Date.valueOf(date));
+            stmt.setString(9, note);
+            stmt.setDouble(10, amount);
+            stmt.setDouble(11, bankBalance);
+            stmt.setBoolean(12, isRegularBool(isRegular));
             stmt.executeUpdate();
 
             errorLabel = "Edit was saved successfully";
@@ -89,6 +90,14 @@ public class LogicEditEntry {
             return "jährlich";
         } else {
             return null;
+        }
+    }
+
+    String checkPayment(String payment){
+        if(payment == null || payment.equals("")){
+            return null;
+        }else{
+            return payment;
         }
     }
 

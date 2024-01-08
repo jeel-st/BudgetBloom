@@ -64,6 +64,9 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     private ChoiceBox<String> repeatBox;
     @FXML
     private ChoiceBox<String> repeatabilityBox;
+    @FXML
+    private ChoiceBox<String> paymentMethodBox;
+    private String[] paymentArr = {"Bar", "Paypal", "Kreditkarte", "Girokarte", "weitere Zahlungsmethode..."};
     private String[] repetitions = {"Einmalig", "Regelmäßig"};
     private String[] repeatability = {"täglich", "monatlich", "jährlich"};
     int myScaleNumber;
@@ -75,12 +78,12 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
      double bankBalance = sev.getAccountBalance();
      double amount = sev.getAmount();
      int importance = sev.getImportance();
-     String isRegular = sev.getIsregular();
+     String isRegular = sev.getIsRegular();
+     String payment = sev.getPayment();
     Driver d = new Driver();
-    LogicDatabase dc = new LogicDatabase();
+
     SingletonUser sp = SingletonUser.getInstance();
 
-    private final String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
     @FXML
@@ -90,12 +93,12 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
 
     @FXML
     void userInputSave(ActionEvent event) throws SQLException, IOException {
-        ControllerNewEntry c = new ControllerNewEntry();
+
         if (repeatBox.getValue().equals("Regelmäßig") && repeatabilityBox.getValue() == null) {
             log.error("Geben sie eine Frequenz an");
         } else {
             if (LogicFacade.getInstance().isRegularBool(inputNumber.getText())) {
-                String errorLabelText = lee.saveEdit(inputDate.getValue(), inputReason.getText(), (int) scale.getValue(), repeatBox.getValue(), inputNumber.getText(), myChoiceBox.getValue(), repeatabilityBox.getValue());
+                String errorLabelText = lee.saveEdit(inputDate.getValue(), inputReason.getText(), (int) scale.getValue(), repeatBox.getValue(), inputNumber.getText(), myChoiceBox.getValue(), repeatabilityBox.getValue(), paymentMethodBox.getValue());
                 errorLabel.setText(errorLabelText);
                 if (Objects.equals(errorLabelText, "Edit was saved successfully")) {
                     d.changeScene("/FXML/overview.fxml");
@@ -112,6 +115,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
 
         repeatBox.getItems().addAll(repetitions);
         repeatBox.setOnAction(this::getRepeat);
+
         // bis hier stehen lassen
 
         if (isRegular.equals("Einmalig")) {
@@ -127,6 +131,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             }
         }
         repeatabilityBox.getItems().addAll(repeatability);
+
 
         try {
             if (amount >= 0) {
@@ -147,8 +152,17 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
         //ChoiceBox:
         myChoiceBox.getItems().addAll(input);
         myChoiceBox.setOnAction(this::getInput);  //this:: ist ein reverence operator (zum Label)
-
-
+        paymentMethodBox.getItems().addAll(paymentArr);
+        if(amount < 0){
+            paymentMethodBox.setVisible(true);
+            if(payment != null) {
+                paymentMethodBox.setValue(payment);
+            }else{
+                paymentMethodBox.setValue("Bar");
+            }
+        }else {
+            paymentMethodBox.setVisible(false);
+        }
         //WichtigkeitsSkala (Slider + Label):
         myScaleNumber = (int) scale.getValue();
         scaleLabel.setText(Integer.toString(myScaleNumber));
@@ -174,6 +188,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             public void getInput(ActionEvent event){
                 String myInput = myChoiceBox.getValue();
                 inputText.setText("Neue " + myInput + ":");
+                paymentMethodBox.setVisible("Ausgabe".equalsIgnoreCase(myInput));
             }
 
     }

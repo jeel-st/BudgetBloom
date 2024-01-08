@@ -14,10 +14,10 @@
    <center>
       <AnchorPane>
          <children>
-            <TextField fx:id="inputReason" layoutX="221.0" layoutY="187.0" prefHeight="25.0" prefWidth="160.0" promptText="Grund" />
-            <DatePicker fx:id="inputDate" editable="false" layoutX="221.0" layoutY="144.0" prefWidth="160.0" promptText="Datum" />
-            <ChoiceBox fx:id="myChoiceBox" layoutX="52.0" layoutY="231.0" prefWidth="160.0" />
-            <TextField fx:id="inputNumber" layoutX="221.0" layoutY="231.0" prefWidth="160.0" promptText="Einnahme/Ausgabe" />
+            <TextField fx:id="inputReason" layoutX="221.0" layoutY="144.0" prefHeight="25.0" prefWidth="160.0" promptText="Grund" />
+            <DatePicker fx:id="inputDate" editable="false" layoutX="221.0" layoutY="101.0" prefWidth="160.0" promptText="Datum" />
+            <ChoiceBox fx:id="myChoiceBox" layoutX="52.0" layoutY="187.0" prefWidth="160.0" />
+            <TextField fx:id="inputNumber" layoutX="221.0" layoutY="187.0" prefWidth="160.0" promptText="Einnahme/Ausgabe" />
             <Button fx:id="inputAdd" layoutX="238.0" layoutY="335.0" mnemonicParsing="false" onAction="#userInputAdd" text="Eingabe hinzufügen" />
             <Button fx:id="cancel" layoutX="15.0" layoutY="360.0" mnemonicParsing="false" onAction="#userCancel" text="Abbrechen" />
             <Label fx:id="inputText" alignment="CENTER" layoutX="-1.0" layoutY="31.0" prefHeight="58.0" prefWidth="600.0" text="Neue Eingabe:" textAlignment="CENTER" underline="true">
@@ -37,8 +37,9 @@
                </font>
             </Label>
             <Label fx:id="errorLabel" alignment="TOP_CENTER" layoutX="1.0" layoutY="114.0" prefHeight="17.0" prefWidth="600.0" textAlignment="CENTER" textFill="RED" />
-            <ChoiceBox fx:id="repeatBox" layoutX="413.0" layoutY="144.0" prefHeight="25.0" prefWidth="158.0" />
-            <ChoiceBox fx:id="repeatabilityBox" layoutX="413.0" layoutY="187.0" prefHeight="25.0" prefWidth="157.0" />
+            <ChoiceBox fx:id="repeatBox" layoutX="412.0" layoutY="101.0" prefHeight="25.0" prefWidth="158.0" />
+            <ChoiceBox fx:id="repeatabilityBox" layoutX="412.0" layoutY="144.0" prefHeight="25.0" prefWidth="157.0" />
+            <ChoiceBox fx:id="paymentMethodBox" layoutX="52.0" layoutY="230.0" prefHeight="25.0" prefWidth="158.0" />
          </children>
       </AnchorPane>
    </center>
