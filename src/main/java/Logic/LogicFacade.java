@@ -81,7 +81,7 @@ public class LogicFacade {
     public boolean isRegularBool(String s){
         return editEntry.isRegularBool(s);
     }
-    public String checkPayment(String payment){
-        return editEntry.checkPayment(payment);
+    public String checkPayment(String payment, double amountchange){
+        return editEntry.checkPayment(payment, amountchange);
     }
 }

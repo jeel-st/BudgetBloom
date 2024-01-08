@@ -1,14 +1,14 @@
 package PaymentMethod;
 
 public class Cash implements Payment {
-
+    private double amount;
     @Override
     public void pay(double amount) {
-
+        this.amount = amount;
     }
 
     @Override
     public String transactionDetails() {
-        return null;
+        return "Du hast "+ amount+ "€ Bar gezahlt";
     }
 }

@@ -45,7 +45,7 @@ public class LogicNewEntry {
             log.info(repeatBoxValue);
             log.info(repetitionFrequency);
             stmt.setString(7, LogicFacade.getInstance().checkFrequency(repeatBoxValue, repetitionFrequency));
-            stmt.setString(8,LogicFacade.getInstance().checkPayment(payment));
+            stmt.setString(8,LogicFacade.getInstance().checkPayment(payment, amountChange));
             try {
                 stmt.executeUpdate();
             } catch (Exception e) {

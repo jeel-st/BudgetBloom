@@ -1,6 +1,8 @@
 package Logic;
 
 import Controller.ControllerEditEntry;
+import PaymentMethod.Payment;
+import PaymentMethod.PaymentFactory;
 import Singleton.SingletonEditValues;
 import Singleton.SingletonUser;
 
@@ -62,7 +64,7 @@ public class LogicEditEntry {
             stmt.setInt(4, scale);
             stmt.setBoolean(5, isRegularBool(repeatBox));
             stmt.setString(6, checkFrequency(repeatBox, repeatabilityBox));
-            stmt.setString(7, payment);
+            stmt.setString(7, checkPayment(payment, Double.parseDouble(inputNumber)));
             stmt.setDate(8, Date.valueOf(date));
             stmt.setString(9, note);
             stmt.setDouble(10, amount);
@@ -93,11 +95,42 @@ public class LogicEditEntry {
         }
     }
 
-    String checkPayment(String payment){
-        if(payment == null || payment.equals("")){
-            return null;
-        }else{
-            return payment;
+    String checkPayment(String payment, double amountChange){
+        PaymentFactory pf = new PaymentFactory();
+        switch(payment) {
+            case "Bar" -> {
+                Payment p = pf.createCash();
+                p.pay(amountChange);
+                log.info(p.transactionDetails());
+                return payment;
+            }
+            case "Paypal" -> {
+                Payment p = pf.createPaypal();
+                p.pay(amountChange);
+                log.info(p.transactionDetails());
+                return payment;
+            }
+            case "Kreditkarte" -> {
+                Payment p = pf.createCreditcard();
+                p.pay(amountChange);
+                log.info(p.transactionDetails());
+                return payment;
+            }
+            case "Girokarte" -> {
+                Payment p = pf.createGirocard();
+                p.pay(amountChange);
+                log.info(p.transactionDetails());
+                return payment;
+            }
+            case "weitere Zahlungsmethode..." -> {
+                Payment p = pf.createOtherPayment();
+                p.pay(amountChange);
+                log.info(p.transactionDetails());
+                return payment;
+            }
+            default -> {
+                return null;
+            }
         }
     }
 
