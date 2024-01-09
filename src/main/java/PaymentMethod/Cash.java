@@ -1,5 +1,7 @@
 package PaymentMethod;
 
+import Interfaces.Payment;
+
 public class Cash implements Payment {
     private double amount;
     @Override

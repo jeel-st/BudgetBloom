@@ -1,6 +1,6 @@
 package Logic;
 
-import LocalExceptions.RegisterExceptions.*;
+import Exceptions.RegisterExceptions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

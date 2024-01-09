@@ -1,4 +1,4 @@
-package LocalExceptions.RegisterExceptions;
+package Exceptions.RegisterExceptions;
 
 public class PasswordsDontMatchException extends Exception{
     public PasswordsDontMatchException(){

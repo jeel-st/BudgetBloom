@@ -1,4 +1,4 @@
-package LocalExceptions.RegisterExceptions;
+package Exceptions.RegisterExceptions;
 
 public class PasswordLengthException extends Exception{
     public PasswordLengthException(){

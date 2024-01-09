@@ -1,6 +1,8 @@
 package PaymentMethod;
 
-public class OtherPayment implements Payment{
+import Interfaces.Payment;
+
+public class OtherPayment implements Payment {
     private double amount;
     @Override
     public void pay(double amount) {

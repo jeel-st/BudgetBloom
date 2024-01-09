@@ -1,6 +1,6 @@
 package Logic;
-import LocalExceptions.NewEntryExceptions.*;
-import javafx.collections.ObservableList;
+import Exceptions.NewEntryExceptions.*;
+
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;

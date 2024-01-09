@@ -1,6 +1,6 @@
 package mainpackage;
 
-import LocalExceptions.NewEntryExceptions.*;
+import Exceptions.NewEntryExceptions.*;
 import Logic.LogicFacade;
 import org.junit.jupiter.api.Test;
 

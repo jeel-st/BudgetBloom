@@ -1,6 +1,8 @@
 package PaymentMethod;
 
-public class PayPal implements Payment{
+import Interfaces.Payment;
+
+public class PayPal implements Payment {
     private double amount;
     @Override
     public void pay(double amount) {

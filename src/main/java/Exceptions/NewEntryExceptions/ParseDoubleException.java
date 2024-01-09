@@ -1,4 +1,4 @@
-package LocalExceptions.NewEntryExceptions;
+package Exceptions.NewEntryExceptions;
 
 public class ParseDoubleException extends Exception {
     public ParseDoubleException(){

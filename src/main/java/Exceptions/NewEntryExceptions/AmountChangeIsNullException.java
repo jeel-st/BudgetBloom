@@ -1,4 +1,4 @@
-package LocalExceptions.NewEntryExceptions;
+package Exceptions.NewEntryExceptions;
 
 public class AmountChangeIsNullException extends Exception{
     public AmountChangeIsNullException(){

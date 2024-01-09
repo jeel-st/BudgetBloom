@@ -1,9 +1,9 @@
 package Controller;
 import Interfaces.EntryInterface;
-import LocalExceptions.NewEntryExceptions.AmountChangeIsNullException;
-import LocalExceptions.NewEntryExceptions.NoteIsNullException;
-import LocalExceptions.NewEntryExceptions.ParseDateException;
-import LocalExceptions.NewEntryExceptions.ParseDoubleException;
+import Exceptions.NewEntryExceptions.AmountChangeIsNullException;
+import Exceptions.NewEntryExceptions.NoteIsNullException;
+import Exceptions.NewEntryExceptions.ParseDateException;
+import Exceptions.NewEntryExceptions.ParseDoubleException;
 import Logic.LogicDatabase;
 import Logic.LogicFacade;
 import Singleton.SingletonUser;

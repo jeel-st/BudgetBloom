@@ -1,7 +1,7 @@
 package Logic;
 
 import Controller.ControllerEditEntry;
-import PaymentMethod.Payment;
+import Interfaces.Payment;
 import PaymentMethod.PaymentFactory;
 import Singleton.SingletonEditValues;
 import Singleton.SingletonUser;

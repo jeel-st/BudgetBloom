@@ -1,6 +1,8 @@
 package PaymentMethod;
 
-public class PaymentFactory {
+import Interfaces.Payment;
+
+public class  PaymentFactory {
     public Payment createCreditcard(){
         return new Creditcard();
     }
@@ -10,7 +12,11 @@ public class PaymentFactory {
     public Payment createPaypal(){
         return new PayPal();
     }
-    public Payment createGirocard(){return new Girocard(); }
-    public Payment createOtherPayment(){return new OtherPayment();}
+    public Payment createGirocard(){
+        return new Girocard();
+    }
+    public Payment createOtherPayment(){
+        return new OtherPayment();
+    }
 
 }
