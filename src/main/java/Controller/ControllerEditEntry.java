@@ -136,8 +136,15 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
         try {
             if (amount >= 0) {
                 myChoiceBox.setValue("Einnahme");
+                paymentMethodBox.setVisible(false);
             } else {
                 myChoiceBox.setValue("Ausgabe");
+                paymentMethodBox.setVisible(true);
+                if(payment != null) {
+                    paymentMethodBox.setValue(payment);
+                }else{
+                    paymentMethodBox.setValue("Bar");
+                }
             }
             log.info("Date was set successfully");
         } catch (Exception e) {
@@ -153,16 +160,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
         myChoiceBox.getItems().addAll(input);
         myChoiceBox.setOnAction(this::getInput);  //this:: ist ein reverence operator (zum Label)
         paymentMethodBox.getItems().addAll(paymentArr);
-        if(amount < 0){
-            paymentMethodBox.setVisible(true);
-            if(payment != null) {
-                paymentMethodBox.setValue(payment);
-            }else{
-                paymentMethodBox.setValue("Bar");
-            }
-        }else {
-            paymentMethodBox.setVisible(false);
-        }
+
         //WichtigkeitsSkala (Slider + Label):
         myScaleNumber = (int) scale.getValue();
         scaleLabel.setText(Integer.toString(myScaleNumber));
@@ -189,6 +187,13 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
                 String myInput = myChoiceBox.getValue();
                 inputText.setText("Neue " + myInput + ":");
                 paymentMethodBox.setVisible("Ausgabe".equalsIgnoreCase(myInput));
+                if(paymentMethodBox.isVisible()){
+                    if(payment != null) {
+                        paymentMethodBox.setValue(payment);
+                    }else{
+                        paymentMethodBox.setValue("Bar");
+                    }
+                }
             }
 
     }

@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.time.LocalDate;
 
-public class LogicEditEntry {
+public class LogicEditEntry extends LogicSuperClass{
 
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
@@ -24,7 +24,7 @@ public class LogicEditEntry {
     int importance = sev.getImportance();
     String isRegular = sev.getIsRegular();
     private final String localUsername = sp.getName();
-    public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
+    public static Logger log = LogManager.getLogger(LogicEditEntry.class);
 
 
     public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox, String payment) {
@@ -64,7 +64,7 @@ public class LogicEditEntry {
             stmt.setInt(4, scale);
             stmt.setBoolean(5, isRegularBool(repeatBox));
             stmt.setString(6, checkFrequency(repeatBox, repeatabilityBox));
-            stmt.setString(7, checkPayment(payment, Double.parseDouble(inputNumber)));
+            stmt.setString(7, super.checkPayment(payment, Double.parseDouble(inputNumber)));
             stmt.setDate(8, Date.valueOf(date));
             stmt.setString(9, note);
             stmt.setDouble(10, amount);
@@ -83,60 +83,6 @@ public class LogicEditEntry {
 
     }
 
-     String checkFrequency (String repeatBox, String repeatabilityBox) {
-        if (isRegularBool(repeatBox) && repeatabilityBox.equals("täglich")) {
-            return "täglich";
-        } else if (isRegularBool(repeatBox) && repeatabilityBox.equals("monatlich")) {
-            return "monatlich";
-        } else if (isRegularBool(repeatBox) && repeatabilityBox.equals("jährlich")) {
-            return "jährlich";
-        } else {
-            return null;
-        }
-    }
-
-    String checkPayment(String payment, double amountChange){
-        PaymentFactory pf = new PaymentFactory();
-        switch(payment) {
-            case "Bar" -> {
-                Payment p = pf.createCash();
-                p.pay(amountChange);
-                log.info(p.transactionDetails());
-                return payment;
-            }
-            case "Paypal" -> {
-                Payment p = pf.createPaypal();
-                p.pay(amountChange);
-                log.info(p.transactionDetails());
-                return payment;
-            }
-            case "Kreditkarte" -> {
-                Payment p = pf.createCreditcard();
-                p.pay(amountChange);
-                log.info(p.transactionDetails());
-                return payment;
-            }
-            case "Girokarte" -> {
-                Payment p = pf.createGirocard();
-                p.pay(amountChange);
-                log.info(p.transactionDetails());
-                return payment;
-            }
-            case "weitere Zahlungsmethode..." -> {
-                Payment p = pf.createOtherPayment();
-                p.pay(amountChange);
-                log.info(p.transactionDetails());
-                return payment;
-            }
-            default -> {
-                return null;
-            }
-        }
-    }
-
-    boolean isRegularBool(String s){
-        return !s.equals("Einmalig");
-    }
 
     public String showContentOfRepeatabilityBox() throws Exception {
 

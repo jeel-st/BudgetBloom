@@ -9,7 +9,7 @@ import java.sql.*;
 
 class LogicBalance {
 
-    public static Logger log = LogManager.getLogger(ControllerOverview.class);
+    public static Logger log = LogManager.getLogger(LogicBalance.class);
 
     static void updateBalance() {
         SingletonUser sp = SingletonUser.getInstance();

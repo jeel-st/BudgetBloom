@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.time.LocalDate;
 
-public class LogicNewEntry {
+public class LogicNewEntry extends LogicSuperClass{
     public static Logger log = LogManager.getLogger(LogicNewEntry.class);
     LogicDatabase lg = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
@@ -41,11 +41,11 @@ public class LogicNewEntry {
                 log.error("Couldn't connect to Database");
             }
             stmt.setInt(5, sliderValue);
-            stmt.setBoolean(6, LogicFacade.getInstance().isRegularBool(repeatBoxValue));
+            stmt.setBoolean(6, super.isRegularBool(repeatBoxValue));
             log.info(repeatBoxValue);
             log.info(repetitionFrequency);
-            stmt.setString(7, LogicFacade.getInstance().checkFrequency(repeatBoxValue, repetitionFrequency));
-            stmt.setString(8,LogicFacade.getInstance().checkPayment(payment, amountChange));
+            stmt.setString(7, super.checkFrequency(repeatBoxValue, repetitionFrequency));
+            stmt.setString(8, super.checkPayment(payment, amountChange));
             try {
                 stmt.executeUpdate();
             } catch (Exception e) {

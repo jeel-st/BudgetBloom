@@ -18,7 +18,7 @@ public class LogicFacade {
     private final LogicRegister register;
     private final LogicNewEntry newEntry;
     //private LogicTableEntry tableEntry;
-
+    private final LogicSuperClass superClass;
 
     private LogicFacade(){
         editEntry = new LogicEditEntry();
@@ -27,6 +27,7 @@ public class LogicFacade {
         overview = new LogicOverview();
         register = new LogicRegister();
         newEntry = new LogicNewEntry();
+        superClass = new LogicSuperClass();
     }
 
     public static LogicFacade getInstance() {
@@ -75,13 +76,9 @@ public class LogicFacade {
     public boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException, AmountChangeIsNullException {
         return newEntry.checkingFormats(amountChange, note, date);
     }
-    public String checkFrequency (String repeatBox, String repeatabilityBox){
-        return editEntry.checkFrequency(repeatBox, repeatabilityBox);
-    }
+
     public boolean isRegularBool(String s){
-        return editEntry.isRegularBool(s);
+        return superClass.isRegularBool(s);
     }
-    public String checkPayment(String payment, double amountchange){
-        return editEntry.checkPayment(payment, amountchange);
-    }
+
 }

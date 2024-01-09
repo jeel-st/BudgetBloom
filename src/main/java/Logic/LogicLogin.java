@@ -14,7 +14,7 @@ import java.sql.SQLException;
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
     private final String localUsername = sp.getName();
-    private static Logger log = LogManager.getLogger(ControllerLogin.class);
+    private static Logger log = LogManager.getLogger(LogicLogin.class);
 
     boolean isValidUser(String username, String password) {
         try(Connection con = dc.getConnection()) {

@@ -13,7 +13,7 @@ class LogicFirstLogin {
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
     private String localUsername = sp.getName();
-    public static Logger log = LogManager.getLogger(ControllerLogin.class);
+    public static Logger log = LogManager.getLogger(LogicFirstLogin.class);
 
      void insertInitialBalance(double balance) {
 
