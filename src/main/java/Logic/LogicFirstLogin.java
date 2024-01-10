@@ -9,13 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-class LogicFirstLogin {
+public class LogicFirstLogin {
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
     private String localUsername = sp.getName();
     public static Logger log = LogManager.getLogger(LogicFirstLogin.class);
 
-     void insertInitialBalance(double balance) {
+     public void insertInitialBalance(double balance) {
 
         try(Connection con = dc.getConnection()) {
             String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10)";
@@ -29,7 +29,7 @@ class LogicFirstLogin {
         }
     }
 
-     boolean isBalanceNumber(String balance) {
+     public boolean isBalanceNumber(String balance) {
         String regex = "^[-]?[0-9]+([.][0-9][0-9]?)?$";
 
         Pattern pattern = Pattern.compile(regex);

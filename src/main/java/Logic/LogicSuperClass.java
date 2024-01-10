@@ -7,11 +7,11 @@ import org.apache.logging.log4j.Logger;
 
 public class LogicSuperClass {
     public static Logger log = LogManager.getLogger(LogicSuperClass.class);
-    boolean isRegularBool(String s){
+    public boolean isRegularBool(String s){
         return !s.equals("Einmalig");
     }
 
-    String checkFrequency (String repeatBox, String repeatabilityBox) {
+    public String checkFrequency(String repeatBox, String repeatabilityBox) {
         if (isRegularBool(repeatBox) && repeatabilityBox.equals("täglich")) {
             return "täglich";
         } else if (isRegularBool(repeatBox) && repeatabilityBox.equals("monatlich")) {
