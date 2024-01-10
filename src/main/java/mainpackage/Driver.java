@@ -1,6 +1,5 @@
 package mainpackage;
 
-import Controller.ControllerEditEntry;
 import Threads.BalanceThread;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +45,7 @@ public class Driver extends Application {
         launch(args);
 
         executor.shutdown();
+
 
     }
     

@@ -1,26 +1,21 @@
 TO DO`s:
-- Unit Tests: LogicEditEntry und LogicFirstLogin                        Ryan
-- Unit Tests: LogicLogin und LogicNewEntry                              Jana
-- Unit Tests: LogicRegister                                             Joel
-- Nachdenkzettel                                                        alle
-- Factories bei User                                                    Joel
-- isRegularBool ist doppelt (LogicEditEntry + LogicNewEntry)            Joel
-- checkFrequency ist doppelt (LogicEditEntry + LogicNewEntry)           Joel
-- (evtl. ein größeres Fenster)
+- UML
+- Initialize Methode in Overview debuggen       Jana
+- Logging und LogFile neu machen                Joel
+- Dokumentation:
+    - Kurzbeschreibung: Ryan
+    - Startklasse: Ryan (mainpackage, Driver)
+    - Besonderheiten: Joel (evtl. Singleton)
+    - Stellungnahme: Joel
+    - UML- Anfang: Jana
+    - Bewertungsbogen: zusammen Ausfüllen
+
 - (evtl Sceneswitcher in externe Klasse)
 
 Problemchen...:
--Thread tut nicht mehr :/ -> tut wieder :D                              Jana
-
-Nachdenkzettel:
-- UML, Git, Collections -> Ryan
-- Vererbung, Interfaces, Logging -> Joel
-- Clean code, Exceptions, JavaFX -> Jana
 
 Fragen:
-- Unit Tests für DB-Methoden
-- Fenster Größe
-- JavaDoc Dokumentation ?
+
 - Im Overview wird die Scene doppelt initialisiert - Warum und wie verhindern?
 
 Ganz am Ende:
