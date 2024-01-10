@@ -1,59 +1,53 @@
-16:30:19.349 [main] INFO  mainpackage.Driver - Programm started
-16:30:19.355 [pool-3-thread-1] INFO  Threads.BalanceThread - Won't start thread yet because username is still null
-16:30:32.826 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Login button pushed
-16:30:33.197 [JavaFX Application Thread] INFO  Logic.LogicLogin - Connection to database succeed
-16:30:33.214 [JavaFX Application Thread] INFO  Logic.LogicLogin - Username tester found in database
-16:30:33.266 [JavaFX Application Thread] INFO  Logic.LogicLogin - Connection to database succeed
-16:30:33.278 [JavaFX Application Thread] INFO  Logic.LogicLogin - last login date updated successfully
-16:30:33.321 [JavaFX Application Thread] INFO  Logic.LogicLogin - Connection to database succeed
-16:30:33.326 [JavaFX Application Thread] INFO  Logic.LogicLogin - number of logins updated successfully
-16:30:33.373 [JavaFX Application Thread] INFO  Logic.LogicLogin - Connection to database succeed
-16:30:33.380 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Scene changed to overview.fxml successfully
-16:30:33.428 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
-16:30:33.431 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
-16:30:33.483 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.487 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.493 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.496 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.500 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.505 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.509 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.513 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.517 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.521 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.524 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.528 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.532 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.536 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.540 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.544 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.547 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.550 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
-16:30:33.603 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
-16:30:33.613 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
-16:30:33.613 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
-16:30:33.667 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.670 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.674 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.677 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.680 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.683 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.686 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.690 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.694 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.698 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.701 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.705 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.709 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.713 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.716 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.720 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.724 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
-16:30:33.726 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
-16:30:33.778 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
-16:31:19.356 [Thread-3] INFO  Threads.BalanceThread - Task1 is running
-16:31:19.451 [Thread-3] INFO  Threads.BalanceThread - The average account balance is 20745,58
-16:31:19.451 [Thread-3] INFO  Threads.BalanceThread - The overall highest balance was 20895.64
-16:32:19.355 [Thread-4] INFO  Threads.BalanceThread - Task1 is running
-16:32:19.424 [Thread-4] INFO  Threads.BalanceThread - The average account balance is 20745,58
-16:32:19.424 [Thread-4] INFO  Threads.BalanceThread - The overall highest balance was 20895.64
+19:19:16.115 [main] INFO  mainpackage.Driver - Programm started
+19:19:16.118 [pool-3-thread-1] INFO  Threads.BalanceThread - Won't start thread yet because username is still null
+19:19:28.526 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Login button pushed
+19:19:28.865 [JavaFX Application Thread] INFO  Logic.LogicLogin - Connection to database succeed
+19:19:28.890 [JavaFX Application Thread] INFO  Logic.LogicLogin - Username tester found in database
+19:19:29.027 [JavaFX Application Thread] INFO  Logic.LogicLogin - Connection to database succeed
+19:19:29.046 [JavaFX Application Thread] INFO  Logic.LogicLogin - last login date updated successfully
+19:19:29.210 [JavaFX Application Thread] INFO  Logic.LogicLogin - Connection to database succeed
+19:19:29.229 [JavaFX Application Thread] INFO  Logic.LogicLogin - number of logins updated successfully
+19:19:29.402 [JavaFX Application Thread] INFO  Logic.LogicLogin - Connection to database succeed
+19:19:29.430 [JavaFX Application Thread] INFO  Controller.ControllerLogin - Scene changed to overview.fxml successfully
+19:19:29.465 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+19:19:29.466 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+19:19:29.661 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.676 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.695 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.708 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.724 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.743 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.760 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.776 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.791 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.803 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.820 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.836 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.852 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.870 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.888 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.906 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.924 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:29.939 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+19:19:30.111 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
+19:19:30.116 [JavaFX Application Thread] INFO  Controller.ControllerOverview - started to initialize
+19:19:30.116 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Started to update balance
+19:19:30.279 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.303 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.321 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.336 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.356 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.370 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.383 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.409 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.430 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.450 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.465 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.482 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.498 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.511 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.530 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.550 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.563 [JavaFX Application Thread] TRACE Logic.LogicBalance - bankbalance updated successfully
+19:19:30.577 [JavaFX Application Thread] DEBUG Controller.ControllerOverview - Finished update of balance
+19:19:30.750 [JavaFX Application Thread] INFO  Controller.ControllerOverview - Searching for data succeed
