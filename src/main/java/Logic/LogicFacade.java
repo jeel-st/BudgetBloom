@@ -58,8 +58,8 @@ public class LogicFacade {
         return login.isValidUser(username, password);
     }
 
-    public boolean isFirstLogin() {
-        return login.isFirstLogin();
+    public boolean isFirstLogin(String username) {
+        return login.isFirstLogin(username);
     }
 
     public String proveRegisterTextFields(String username, String password, String password2, String email){

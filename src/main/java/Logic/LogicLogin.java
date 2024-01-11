@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
- class LogicLogin {
+ public class LogicLogin {
 
     LogicDatabase dc = new LogicDatabase();
     SingletonUser sp = SingletonUser.getInstance();
@@ -29,7 +29,7 @@ import java.sql.SQLException;
                 if (rs.next()) {
                     log.info("Username " + localUsername + " found in database");
                     updateLDate();
-                    updateNumLogin();
+                    updateNumLogin(username);
                     return true;
 
                 } else {
@@ -69,13 +69,13 @@ import java.sql.SQLException;
         }
     }
 
-    private void updateNumLogin() {
+    private void updateNumLogin(String username) {
         try(Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
             try {
                 String sql3 = "UPDATE users SET numlogin = numlogin + 1 WHERE username = ?";
                 PreparedStatement stmt3 = con.prepareStatement(sql3);
-                stmt3.setString(1, localUsername);
+                stmt3.setString(1, username);
                 stmt3.executeQuery();
             } catch (SQLException e) {
                 //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
@@ -86,13 +86,13 @@ import java.sql.SQLException;
         }
     }
 
-    boolean isFirstLogin() {
+    public boolean isFirstLogin(String username) {
         try(Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
             try {
                 String sql4 = "SELECT * FROM users WHERE username = ? AND numlogin = 1";
                 PreparedStatement stmt4 = con.prepareStatement(sql4);
-                stmt4.setString(1, localUsername);
+                stmt4.setString(1, username);
                 ResultSet rs2 = stmt4.executeQuery();
                 return rs2.next();
             } catch (SQLException e) {

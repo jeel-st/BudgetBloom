@@ -18,9 +18,13 @@ public class LogicRegister {
         try {
             if(fillingControl(username, password, password2, email)){
                 if(checkingUsername(username)){
-                    if(passwordControl(password, password2)){
-                        if(newUserEntry(username, password, email)){
-                            newTable(username);
+                    if(usernameLength(username)) {
+                        if(emailLength(email)) {
+                            if (passwordControl(password, password2)) {
+                                if (newUserEntry(username, password, email)) {
+                                    newTable(username);
+                                }
+                            }
                         }
                     }
                 }
@@ -44,8 +48,12 @@ public class LogicRegister {
             return "Password has to be between 6 and 30 characters";
         }catch (PasswordSpecialCharException psce){
             return "Password doesn't contain a special character";
+        }catch (UsernameLengthException ule){
+            return "Username has to be between 6 and 19 characters";
         } catch (SQLException e) {
             return "Couldn't get a database connection. Please check your internet connection";
+        } catch (EmailLengthException e) {
+            return "Email has to be between 6 and 69 characters";
         }
     }
     public boolean fillingControl(String username, String password, String password2, String email) throws AllNullException, EmailNullException, PasswordNullException, SecondPasswordNullException, UsernameNullException {
@@ -82,6 +90,20 @@ public class LogicRegister {
                 }
             }
 
+    }
+    public boolean usernameLength(String username) throws UsernameLengthException{
+        if(username.length() < 5 || username.length() > 20){
+            throw new UsernameLengthException();
+        }else{
+            return true;
+        }
+    }
+    public boolean emailLength(String email) throws EmailLengthException{
+        if(email.length() < 5 || email.length() > 70){
+            throw new EmailLengthException();
+        }else{
+            return true;
+        }
     }
     public boolean passwordControl(String password, String password2) throws PasswordsDontMatchException, PasswordLengthException, PasswordSpecialCharException {
         if (!(password.equals(password2))) {

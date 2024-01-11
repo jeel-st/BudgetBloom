@@ -2,6 +2,8 @@ package Controller;
 
 import Logic.LogicDatabase;
 import Logic.LogicFacade;
+import Logic.LogicFirstLogin;
+import Logic.LogicLogin;
 import Singleton.SingletonUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,7 +47,7 @@ public class ControllerLogin {
             if (LogicFacade.getInstance().isValidUser(username.getText(), password.getText())) {
                 wrongLogin.setText("Success!");
 
-                if (LogicFacade.getInstance().isFirstLogin()) {
+                if (LogicFacade.getInstance().isFirstLogin(username.getText())) {
                     log.info("Scene changed to firstLogin.fxml successfully");
                     d.changeScene("/FXML/firstLogin.fxml");
 
