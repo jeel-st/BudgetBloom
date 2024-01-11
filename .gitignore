@@ -6,4 +6,4 @@
 out
 *.iml
 
-logFile
+*/logFile
