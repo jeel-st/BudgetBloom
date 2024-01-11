@@ -11,7 +11,7 @@ public class LogicTableEntry {
     private final Integer importance;
     private final String regularity;
     private final String payment;
-    public String user;
+
     public static Logger log = LogManager.getLogger(LogicTableEntry.class);
 
     //constructor:

@@ -85,8 +85,7 @@ import java.sql.SQLException;
             log.error("Couldn't connect to Database");
         }
     }
-
-    public boolean isFirstLogin(String username) {
+    boolean isFirstLogin(String username) {
         try(Connection con = dc.getConnection()) {
             log.info("Connection to database succeed");
             try {

@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class LogicRegister {
     LogicDatabase ld = new LogicDatabase();
     public static Logger log = LogManager.getLogger(LogicRegister.class);
-    public String proveRegisterTextFields(String username, String password, String password2, String email){
+    String proveRegisterTextFields(String username, String password, String password2, String email){
         try {
             if(fillingControl(username, password, password2, email)){
                 if(checkingUsername(username)){
