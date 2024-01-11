@@ -18,7 +18,7 @@ public class LogicFirstLogin {
      public void insertInitialBalance(double balance) {
 
         try(Connection con = dc.getConnection()) {
-            String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10)";
+            String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10, DEFAULT, NULL, NULL)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setDouble(1, balance);
             stmt.setDouble(2, balance);
