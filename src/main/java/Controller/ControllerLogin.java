@@ -36,7 +36,6 @@ public class ControllerLogin {
 
     @FXML public void userLogin(ActionEvent event) throws IOException {
         log.info("Login button pushed");
-        setLocalUsername();
 
         if (username.getText().isEmpty() || password.getText().isEmpty()) {
             log.warn("Password or username is empty");
@@ -46,6 +45,7 @@ public class ControllerLogin {
 
             if (LogicFacade.getInstance().isValidUser(username.getText(), password.getText())) {
                 wrongLogin.setText("Success!");
+                setLocalUsername();
 
                 if (LogicFacade.getInstance().isFirstLogin(username.getText())) {
                     log.info("Scene changed to firstLogin.fxml successfully");

@@ -14,9 +14,14 @@ TO DO`s:
 
 Problemchen...:
 
-Fragen:
-
-- Im Overview wird die Scene doppelt initialisiert - Warum und wie verhindern?
+Fragen an Jordine (10.01.24):
+- Unit Tests für DB-Methoden -> nicht nötig
+- Fenster Größe -> Passt
+- JavaDoc Dokumentation -> Nein
+- Im Overview wird die Scene doppelt initialisiert - Warum und wie verhindern? -> Debuggen, Breakpoint bei Methode setzen
+- Nachdenkzettel
+- Singleton -> erstmal so lassen, entweder hilfsmethode oder einfach nur in dokumentation erwähnen
+- Besprechungsstunde
 
 Ganz am Ende:
 Usertabelle leeren und neu befüllen,
