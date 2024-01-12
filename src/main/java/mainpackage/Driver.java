@@ -29,10 +29,12 @@ public class Driver extends Application {
     }
 
     public void changeScene(String fxml) throws IOException{
+        //erster Aufruf Initialize
         FXMLLoader scene = new FXMLLoader(getClass().getResource(fxml));
-        scene.load();
+        Parent pane = scene.load();
         scene.getController();
-        Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)));
+        //auskommentiert, da es zum zweiter Aufruf von Initialize führt
+        //Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)));
         stg.getScene().setRoot(pane);
     }
     public static Logger log = LogManager.getLogger(Driver.class);

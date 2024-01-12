@@ -27,7 +27,7 @@ import java.sql.SQLException;
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
-                    log.info("Username " + localUsername + " found in database");
+                    log.info("Username " + username + " found in database");
                     updateLDate();
                     updateNumLogin(username);
                     return true;
