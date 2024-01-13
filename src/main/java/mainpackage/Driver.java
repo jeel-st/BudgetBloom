@@ -28,8 +28,7 @@ public class Driver extends Application {
         stage.show();
     }
 
-    public void changeScene(String fxml) throws IOException{
-        //erster Aufruf Initialize
+    public void changeScene(String fxml) throws IOException {
         FXMLLoader scene = new FXMLLoader(getClass().getResource(fxml));
         Parent pane = scene.load();
         scene.getController();
