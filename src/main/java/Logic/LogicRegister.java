@@ -1,6 +1,7 @@
 package Logic;
 
 import Exceptions.RegisterExceptions.*;
+import javafx.scene.control.PasswordField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,28 +32,40 @@ public class LogicRegister {
             }
             return "completed";
         }catch (AllNullException ane){
+            log.warn("All fields are null");
             return "Please fill out each field";
         }catch (EmailNullException ene){
+            log.warn("Email is null");
             return "Please enter your email";
         }catch (UsernameNullException une){
+            log.warn("Username is null");
             return "Please enter your username";
         }catch (PasswordNullException pne){
+            log.warn("Password is null");
             return "Please enter your password";
         }catch (SecondPasswordNullException spne){
+            log.warn("Second password is null");
             return "Please confirm your password";
         }catch (UsernameTakenException ute){
+            log.warn("Username is already taken");
             return "The username is already taken";
         }catch (PasswordsDontMatchException pdme){
+            log.warn("Passwords do not match");
             return "Passwords do not match";
         }catch (PasswordLengthException ple){
+            log.warn("Password length is false");
             return "Password has to be between 6 and 30 characters";
         }catch (PasswordSpecialCharException psce){
+            log.warn("Password has no special characters");
             return "Password doesn't contain a special character";
         }catch (UsernameLengthException ule){
+            log.warn("Username length is false");
             return "Username has to be between 6 and 19 characters";
         } catch (SQLException e) {
+            log.error("Couldn't get a database connection");
             return "Couldn't get a database connection. Please check your internet connection";
         } catch (EmailLengthException e) {
+            log.warn("Email length is false");
             return "Email has to be between 6 and 69 characters";
         }
     }

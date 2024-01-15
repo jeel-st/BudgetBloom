@@ -57,7 +57,7 @@ public class ControllerOverview implements Initializable{
     @FXML
     private Label errorLabel;
     LogicOverview lo = new LogicOverview();
-    LogicFacade lf = LogicFacade.getInstance();
+
     public static Logger log = LogManager.getLogger(ControllerOverview.class);
 
 
@@ -76,7 +76,7 @@ public class ControllerOverview implements Initializable{
         log.debug("Finished update of balance");
         try{
             table.setItems(lo.database());
-            log.debug("Searching for data succeed");
+            log.info("Searching for data succeed");
         }catch(Exception e){
             log.error("Searching for data failed");
         }
@@ -85,13 +85,13 @@ public class ControllerOverview implements Initializable{
 
     public void userLogout(ActionEvent event)throws IOException {
         Driver d = new Driver();
-        log.info("Logout button changed scene to sample.fxml");
+        log.debug("Logout button changed scene to sample.fxml");
         d.changeScene("/FXML/sample.fxml");
     }
 
     public void userNewInput(ActionEvent event)throws IOException {
         Driver d = new Driver();
-        log.info("Changed Scene to newEntry.fxml");
+        log.debug("Changed Scene to newEntry.fxml");
         d.changeScene("/FXML/newEntry.fxml");
     }
     public void removeRow(ActionEvent event) throws SQLException {
@@ -132,7 +132,7 @@ public class ControllerOverview implements Initializable{
             } else {
                 regularityBool = false;
             }
-            log.info(amount + date + reason + accountBalance + importance + regularity);
+            log.info("The selected line has the following data: " + amount +", "+ date +", "+ reason +", "+ accountBalance +", "+ importance +", "+ regularity +", "+ payment);
 
             int rowsAffected = lo.deleteRowInDatabase(amount, date, reason, accountBalance, importance, regularityBool);
                 if (rowsAffected > 0) {
@@ -163,7 +163,7 @@ public class ControllerOverview implements Initializable{
             int importance = table.getSelectionModel().getSelectedItem().getImportance();
             String regularity = table.getSelectionModel().getSelectedItem().getRegularity();
             String payment = table.getSelectionModel().getSelectedItem().getPayment();
-            log.info("The selected line have the following data: " + amount +", "+ date +", "+ reason +", "+ accountBalance +", "+ importance +", "+ regularity +", "+ payment);
+            log.info("The selected line has the following data: " + amount +", "+ date +", "+ reason +", "+ accountBalance +", "+ importance +", "+ regularity +", "+ payment);
             if(payment.equals("-")){
                 payment = null;
             }

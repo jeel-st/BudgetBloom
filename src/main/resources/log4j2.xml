@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
+        <File name="ErrorFile" fileName="src/main/resources/LogFiles/errorLogFile">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <append>false</append>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </File>
+        <File name="InfoFile" fileName="src/main/resources/LogFiles/infoLogFile">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <append>false</append>
+            <Filters>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </File>
         <Console name="Console">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <File name="File" fileName="src/main/resources/logFile">
+        <File name="File" fileName="src/main/resources/LogFiles/logFile">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
             <append>false</append>
         </File>
@@ -13,6 +27,8 @@
         <Root level="trace">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
+            <AppenderRef ref="ErrorFile"/>
+            <AppenderRef ref="InfoFile"/>
         </Root>
     </Loggers>
 </Configuration>

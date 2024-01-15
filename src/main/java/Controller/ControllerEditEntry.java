@@ -95,7 +95,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     void userInputSave(ActionEvent event) throws SQLException, IOException {
 
         if (repeatBox.getValue().equals("Regelmäßig") && repeatabilityBox.getValue() == null) {
-            log.warn("Geben sie eine Frequenz an");
+            log.warn("Enter a frequency");
         } else {
             if (LogicFacade.getInstance().isRegularBool(inputNumber.getText())) {
                 String errorLabelText = lee.saveEdit(inputDate.getValue(), inputReason.getText(), (int) scale.getValue(), repeatBox.getValue(), inputNumber.getText(), myChoiceBox.getValue(), repeatabilityBox.getValue(), paymentMethodBox.getValue());
@@ -104,7 +104,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
                     d.changeScene("/FXML/overview.fxml");
                 }
             } else {
-                log.warn("Geben sie eine Zahl in dem vorgegebenen Format an");
+                log.warn("Enter a number in the given format");
                 errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
             }
         }
@@ -127,7 +127,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             try {
                 repeatabilityBox.setValue(lee.showContentOfRepeatabilityBox());
             } catch (Exception e) {
-                log.error("Content passt nicht in WiederholungshäufigkeitsBox");
+                log.error("Content does not fit into repeatabilityBox");
             }
         }
         repeatabilityBox.getItems().addAll(repeatability);

@@ -139,12 +139,16 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
                     rightFormat = true;
                 }
             } catch (NoteIsNullException e) {
+                log.warn("note is empty");
                 errorLabel.setText("Bitte fügen Sie einen Grund hinzu!");
             } catch (ParseDoubleException e) {
+                log.warn("format is false");
                 errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
             } catch (ParseDateException e) {
+                log.warn("date isn't set");
                 errorLabel.setText("Bitte fügen Sie ein Datum hinzu!");
             } catch (AmountChangeIsNullException e){
+                log.warn("Field for income is empty");
                 errorLabel.setText("Das Feld für ihre Einnahmen/Ausgaben ist ein Pflichtfeld");
             }
         if (rightFormat) {
@@ -152,7 +156,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
                 lne.changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBox.getValue(), paymentMethodBox.getValue());
                 d.changeScene("/FXML/overview.fxml");
             } else {
-                log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
+                log.warn("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
                 errorLabel.setText("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
             }
         }
