@@ -3,6 +3,7 @@ package Controller;
 
 import Logic.LogicDatabase;
 import Logic.LogicFacade;
+import Logic.LogicFirstLogin;
 import Singleton.SingletonUser;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -57,9 +58,9 @@ public class ControllerFirstLogin extends Application {
         stage.show();
 
     }
-
+    LogicFirstLogin lfl = new LogicFirstLogin();
     @FXML private void skipBalance(ActionEvent event) throws IOException {
-        LogicFacade.getInstance().insertInitialBalance(0);
+        lfl.insertInitialBalance(0);
         d.changeScene("/FXML/overview.fxml");
     }
 
@@ -68,7 +69,7 @@ public class ControllerFirstLogin extends Application {
         if (LogicFacade.getInstance().isBalanceNumber(balanceString)) {
             double balance = Double.parseDouble(balanceString);
             log.debug("Found Double is " + balance);
-            LogicFacade.getInstance().insertInitialBalance(balance);
+            lfl.insertInitialBalance(balance);
             d.changeScene("/FXML/overview.fxml");
         } else {
             wrongBalance.setText("Please enter a number in one of the following formats: xxxxx.yy or xxx.y or xxx");

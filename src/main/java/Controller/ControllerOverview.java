@@ -72,7 +72,7 @@ public class ControllerOverview implements Initializable{
         regularity.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("regularity"));
         payment.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("payment"));
         log.debug("Started to update balance");
-        LogicFacade.updateBalance();
+        LogicBalance.updateBalance();
         log.debug("Finished update of balance");
         try{
             table.setItems(lo.database());
