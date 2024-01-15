@@ -6,6 +6,7 @@ import Exceptions.NewEntryExceptions.ParseDateException;
 import Exceptions.NewEntryExceptions.ParseDoubleException;
 import Logic.LogicDatabase;
 import Logic.LogicFacade;
+import Logic.LogicNewEntry;
 import Singleton.SingletonUser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -77,9 +78,8 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     private String[] repeatability = {"täglich", "monatlich", "jährlich"};
     private String[] payment = {"Bar", "Paypal", "Kreditkarte", "Girokarte", "weitere Zahlungsmethode..."};
     Driver d = new Driver();
-    LogicDatabase dc = new LogicDatabase();
-    SingletonUser sp = SingletonUser.getInstance();
-    private String localUsername = sp.getName();
+
+    LogicNewEntry lne = new LogicNewEntry();
     private Boolean repeatBool;
 
     @Override
@@ -149,7 +149,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
             }
         if (rightFormat) {
             if (repeatabilityBox.getValue() != null && repeatBool || repeatabilityBox.getValue() == null && !repeatBool) {
-                LogicFacade.getInstance().changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBox.getValue(), paymentMethodBox.getValue());
+                lne.changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBox.getValue(), paymentMethodBox.getValue());
                 d.changeScene("/FXML/overview.fxml");
             } else {
                 log.error("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");

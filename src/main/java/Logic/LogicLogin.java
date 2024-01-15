@@ -18,7 +18,7 @@ import java.sql.SQLException;
 
     boolean isValidUser(String username, String password) {
         try(Connection con = dc.getConnection()) {
-            log.info("Connection to database succeed");
+            log.debug("Connection to database succeed");
             try {
                 String sql = "SELECT * FROM users WHERE username = ? AND pword = ?";
                 PreparedStatement stmt = con.prepareStatement(sql);
@@ -27,7 +27,7 @@ import java.sql.SQLException;
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
-                    log.info("Username " + username + " found in database");
+                    log.debug("Username " + username + " found in database");
                     updateLDate();
                     updateNumLogin(username);
                     return true;
@@ -49,7 +49,7 @@ import java.sql.SQLException;
 
     private void updateLDate() {
         try(Connection con = dc.getConnection()) {
-            log.info("Connection to database succeed");
+            log.debug("Connection to database succeed");
             try {
                 String sql2 = "UPDATE users SET ldate = CURRENT_DATE WHERE username = ?";
 
@@ -61,7 +61,7 @@ import java.sql.SQLException;
 
             } catch (SQLException e) {
                 //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
-                log.info("last login date updated successfully");
+                log.debug("last login date updated successfully");
 
             }
         } catch (SQLException e) {
@@ -71,7 +71,7 @@ import java.sql.SQLException;
 
     private void updateNumLogin(String username) {
         try(Connection con = dc.getConnection()) {
-            log.info("Connection to database succeed");
+            log.debug("Connection to database succeed");
             try {
                 String sql3 = "UPDATE users SET numlogin = numlogin + 1 WHERE username = ?";
                 PreparedStatement stmt3 = con.prepareStatement(sql3);
@@ -79,7 +79,7 @@ import java.sql.SQLException;
                 stmt3.executeQuery();
             } catch (SQLException e) {
                 //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
-                log.info("number of logins updated successfully");
+                log.debug("number of logins updated successfully");
             }
         } catch (SQLException e) {
             log.error("Couldn't connect to Database");
@@ -87,7 +87,7 @@ import java.sql.SQLException;
     }
     boolean isFirstLogin(String username) {
         try(Connection con = dc.getConnection()) {
-            log.info("Connection to database succeed");
+            log.debug("Connection to database succeed");
             try {
                 String sql4 = "SELECT * FROM users WHERE username = ? AND numlogin = 1";
                 PreparedStatement stmt4 = con.prepareStatement(sql4);

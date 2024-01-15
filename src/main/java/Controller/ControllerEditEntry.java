@@ -95,7 +95,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     void userInputSave(ActionEvent event) throws SQLException, IOException {
 
         if (repeatBox.getValue().equals("Regelmäßig") && repeatabilityBox.getValue() == null) {
-            log.error("Geben sie eine Frequenz an");
+            log.warn("Geben sie eine Frequenz an");
         } else {
             if (LogicFacade.getInstance().isRegularBool(inputNumber.getText())) {
                 String errorLabelText = lee.saveEdit(inputDate.getValue(), inputReason.getText(), (int) scale.getValue(), repeatBox.getValue(), inputNumber.getText(), myChoiceBox.getValue(), repeatabilityBox.getValue(), paymentMethodBox.getValue());
@@ -104,7 +104,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
                     d.changeScene("/FXML/overview.fxml");
                 }
             } else {
-                log.error("Geben sie eine Zahl in dem vorgegebenen Format an");
+                log.warn("Geben sie eine Zahl in dem vorgegebenen Format an");
                 errorLabel.setText("Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!");
             }
         }
@@ -146,9 +146,9 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
                     paymentMethodBox.setValue("Bar");
                 }
             }
-            log.info("Date was set successfully");
+
         } catch (Exception e) {
-            log.error("Date wasn't set");
+            log.error("Something went wrong with set from 'myChoiceBox' ");
         }
         inputDate.setValue(LocalDate.parse(date));
         inputReason.setText(note);

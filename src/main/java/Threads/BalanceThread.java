@@ -24,7 +24,7 @@ public class BalanceThread implements Runnable {
             Thread t1 = new Thread(task1);
             t1.start();
         } else {
-            log.info("Won't start thread yet because username is still null");
+            log.debug("Won't start thread yet because username is still null");
         }
 
     }
@@ -32,7 +32,7 @@ public class BalanceThread implements Runnable {
     static Runnable task1 = () -> {
         SingletonUser sp = SingletonUser.getInstance();
         String localUsername = sp.getName();
-        log.info("Task1 is running");
+        log.debug("Task1 is running");
 
         LogicDatabase dc = new LogicDatabase();
 

@@ -18,7 +18,8 @@ public class LogicNewEntry extends LogicSuperClass{
     private final String localUsername = sp.getName();
 
 
-    void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue, String payment) throws SQLException {
+    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue, String payment) throws SQLException {
+
         try (Connection con = lg.getConnection()) {
             log.info("Connection to database succeed");
 

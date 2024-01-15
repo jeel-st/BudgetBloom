@@ -43,7 +43,7 @@ class LogicBalance {
                             stmt2.executeQuery();
                         } catch (SQLException e) {
                             //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
-                            log.trace("bankbalance updated successfully");
+
                         }
 
                         accountBalance1 = newAccountBalance2;
@@ -53,6 +53,7 @@ class LogicBalance {
 
                 }
                 rs.close();
+                log.trace("bankbalance updated successfully");
             } catch (Exception e) {
                 log.error("Failed to transfer data from database");
             }

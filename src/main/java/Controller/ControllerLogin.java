@@ -35,7 +35,7 @@ public class ControllerLogin {
     public String localUsername;
 
     @FXML public void userLogin(ActionEvent event) throws IOException {
-        log.info("Login button pushed");
+
 
         if (username.getText().isEmpty() || password.getText().isEmpty()) {
             log.warn("Password or username is empty");
@@ -48,11 +48,11 @@ public class ControllerLogin {
                 setLocalUsername();
 
                 if (LogicFacade.getInstance().isFirstLogin(username.getText())) {
-                    log.info("Scene changed to firstLogin.fxml successfully");
+                    log.debug("Scene changed to firstLogin.fxml successfully");
                     d.changeScene("/FXML/firstLogin.fxml");
 
                 } else {
-                    log.info("Scene changed to overview.fxml successfully");
+                    log.debug("Scene changed to overview.fxml successfully");
                     d.changeScene("/FXML/overview.fxml");
                 }
 
@@ -63,11 +63,9 @@ public class ControllerLogin {
     }
 
 
-
-
     @FXML public void registerButton(ActionEvent event) throws IOException {
-        log.info("Registration button pushed");
-        log.info("Change scene to registration");
+
+        log.debug("Change scene to registration");
         d.changeScene("/FXML/register.fxml");
     }
     public void setLocalUsername(){

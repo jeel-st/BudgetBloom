@@ -147,7 +147,7 @@ public class LogicRegister {
                     "bankBalance NUMERIC NOT NULL,\n" +
                     "importance INTEGER CHECK(importance >= 0 AND importance <=10) NOT NULL,\n" +
                     "isregular BOOLEAN DEFAULT false NOT NULL,\n" +
-                    "frequency VARCHAR(10) CHECK(frequency IN ('täglich', 'monatlich', 'jährlich'))\n" +
+                    "frequency VARCHAR(10) CHECK(frequency IN ('täglich', 'monatlich', 'jährlich')),\n" +
                     "payment VARCHAR(20) DEFAULT NULL\n" +
                     ")";
             PreparedStatement stm = con.prepareStatement(sqlTable);

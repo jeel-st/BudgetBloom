@@ -26,8 +26,12 @@ public class LogicSuperClass {
     }
 
     String checkPayment(String payment, double amountChange){
+        String checknull = payment;
+        if(payment == null){
+            checknull = "-";
+        }
         PaymentFactory pf = new PaymentFactory();
-        switch(payment) {
+        switch(checknull) {
             case "Bar" -> {
                 Payment p = pf.createCash();
                 p.pay(amountChange);

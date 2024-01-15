@@ -76,7 +76,7 @@ public class ControllerOverview implements Initializable{
         log.debug("Finished update of balance");
         try{
             table.setItems(lo.database());
-            log.info("Searching for data succeed");
+            log.debug("Searching for data succeed");
         }catch(Exception e){
             log.error("Searching for data failed");
         }
@@ -109,7 +109,7 @@ public class ControllerOverview implements Initializable{
         Optional<ButtonType> result = alert.showAndWait();
 
         if(result.isEmpty()){
-            log.info("Sicherheitsfenster wurde geschlossen");
+            log.debug("Sicherheitsfenster wurde geschlossen");
             return false;
         }else if(result.get()== ButtonType.OK){
             return true;
@@ -134,12 +134,12 @@ public class ControllerOverview implements Initializable{
             }
             log.info(amount + date + reason + accountBalance + importance + regularity);
 
-            int rowsAffected = lf.deleteRowInDatabase(amount, date, reason, accountBalance, importance, regularityBool);
+            int rowsAffected = lo.deleteRowInDatabase(amount, date, reason, accountBalance, importance, regularityBool);
                 if (rowsAffected > 0) {
                     log.info("Deletion successful. Rows affected: " + rowsAffected);
                     table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
                     mainpackage.Driver d = new Driver();
-                    log.info("Reload scene overview.fxml");
+                    log.debug("Reload scene overview.fxml");
                     d.changeScene("/FXML/overview.fxml");
                 } else {
                     log.info("No rows deleted.");
@@ -147,13 +147,13 @@ public class ControllerOverview implements Initializable{
 
             } catch (Exception e) {
                 errorLabel.setText("No row selected");
-                log.error("Keine Zeile wurde ausgewählt");
+                log.warn("Keine Zeile wurde ausgewählt");
             }
 
     }
     public void editRow(ActionEvent event) throws IOException {
         Driver d = new Driver();
-        LogicOverview lo = new LogicOverview();
+
         try {
 
             double amount = table.getSelectionModel().getSelectedItem().getAmount();
@@ -163,7 +163,7 @@ public class ControllerOverview implements Initializable{
             int importance = table.getSelectionModel().getSelectedItem().getImportance();
             String regularity = table.getSelectionModel().getSelectedItem().getRegularity();
             String payment = table.getSelectionModel().getSelectedItem().getPayment();
-            log.info(payment);
+            log.info("The selected line have the following data: " + amount +", "+ date +", "+ reason +", "+ accountBalance +", "+ importance +", "+ regularity +", "+ payment);
             if(payment.equals("-")){
                 payment = null;
             }

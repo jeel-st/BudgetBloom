@@ -31,14 +31,14 @@ public class LogicEditEntry extends LogicSuperClass{
         String errorLabel;
 
         try (Connection con = dc.getConnection()) {
-            log.info("Connection to database succeed");
+            log.debug("Connection to database succeed");
 
             String sql = "UPDATE konto" + localUsername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ?, payment = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
             PreparedStatement stmt = con.prepareStatement(sql);
             try {
                 stmt.setDate(1, Date.valueOf(inputDate));
             } catch (Exception e) {
-                log.error("Datum geht nicht");
+                log.warn("date is wrong");
                 errorLabel = "Bitte fügen Sie ein Datum hinzu!";
                 return errorLabel;
             }
@@ -46,16 +46,16 @@ public class LogicEditEntry extends LogicSuperClass{
             if (!inputReason.isEmpty()) {
                 stmt.setString(2, inputReason);
             } else {
-                log.error("Grund leer");
+                log.warn("note is empty");
                 errorLabel = "Bitte fügen Sie einen Grund hinzu!";
                 return errorLabel;
             }
 
             try {
                 stmt.setDouble(3, LogicFacade.getInstance().accountChangeChecker(Double.parseDouble(inputNumber), myChoiceBox));
-                log.info("Kontoänderungseingabe erfolgreich");
+                log.info("Account change entry successful");
             } catch (Exception e) {
-                log.error("Kontoänderung geht nicht");
+                log.warn("Account change does not work");
                 errorLabel = "Bitte achten Sie bei der Einahme/Ausgabe auf das vorgegebene Format (xxx.xx)!";
                 return errorLabel;
             }
@@ -87,10 +87,7 @@ public class LogicEditEntry extends LogicSuperClass{
     public String showContentOfRepeatabilityBox() throws Exception {
 
         try (Connection con = dc.getConnection()) {
-            log.info("Connection to database succeed");
-            log.info("Der gespeicherte Wert lautet: "+isRegular);
-            log.info("Die gespeicherte Ausgabe lautet: "+ amount);
-            log.info(isRegularBool(isRegular));
+            log.debug("Connection to database succeed");
             String sql = "SELECT frequency FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
@@ -104,15 +101,15 @@ public class LogicEditEntry extends LogicSuperClass{
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         String s = rs.getString("frequency");
-                        log.info("Die gefundene Frequenz lautet: "+s);
+                        log.info("The frequency found is: "+s);
                         return s;
                     } else {
-                        log.error("Es wurde kein passender Datensatz gefunden");
+                        log.warn("No suitable data set was found");
                         throw new Exception();
                     }
                 }
             } catch (Exception e) {
-                log.error("Datenbank funktioniert nicht", e);
+                log.error("Database does not work", e);
                 throw e;
             }
         } catch (SQLException e) {

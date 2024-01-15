@@ -33,8 +33,6 @@ public class ControllerRegister {
     public PasswordField password2;
     public static Logger log = LogManager.getLogger(ControllerRegister.class);
     Driver d = new Driver();
-    LogicDatabase dc = new LogicDatabase();
-
 
     public void userToLogin(ActionEvent event) throws IOException {
         d.changeScene("/FXML/sample.fxml");
