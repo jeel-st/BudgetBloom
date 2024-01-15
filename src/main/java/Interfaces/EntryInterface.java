@@ -1,7 +1,6 @@
 package Interfaces;
 
 import javafx.event.ActionEvent;
-
 import java.io.IOException;
 
 public interface EntryInterface {

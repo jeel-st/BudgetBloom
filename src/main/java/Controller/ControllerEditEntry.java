@@ -75,7 +75,6 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     LogicEditEntry lee = new LogicEditEntry();
      String date = sev.getDate();
      String note = sev.getNote();
-     double bankBalance = sev.getAccountBalance();
      double amount = sev.getAmount();
      int importance = sev.getImportance();
      String isRegular = sev.getIsRegular();

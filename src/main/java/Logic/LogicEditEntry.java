@@ -1,8 +1,5 @@
 package Logic;
 
-import Controller.ControllerEditEntry;
-import Interfaces.Payment;
-import PaymentMethod.PaymentFactory;
 import Singleton.SingletonEditValues;
 import Singleton.SingletonUser;
 
@@ -14,17 +11,17 @@ import java.time.LocalDate;
 
 public class LogicEditEntry extends LogicSuperClass{
 
-    LogicDatabase dc = new LogicDatabase();
-    SingletonUser sp = SingletonUser.getInstance();
-    SingletonEditValues sev = SingletonEditValues.getInstance();
-    String date = sev.getDate();
-    String note = sev.getNote();
-    double bankBalance = sev.getAccountBalance();
-    double amount = sev.getAmount();
-    int importance = sev.getImportance();
-    String isRegular = sev.getIsRegular();
+    private final LogicDatabase dc = new LogicDatabase();
+    private final SingletonUser sp = SingletonUser.getInstance();
+    private final SingletonEditValues sev = SingletonEditValues.getInstance();
+    private final String date = sev.getDate();
+    private final String note = sev.getNote();
+    private final double bankBalance = sev.getAccountBalance();
+    private final double amount = sev.getAmount();
+    private final int importance = sev.getImportance();
+    private final String isRegular = sev.getIsRegular();
     private final String localUsername = sp.getName();
-    public static Logger log = LogManager.getLogger(LogicEditEntry.class);
+    private static final Logger log = LogManager.getLogger(LogicEditEntry.class);
 
 
     public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox, String payment) {

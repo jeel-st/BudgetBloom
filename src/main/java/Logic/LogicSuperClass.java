@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 public class LogicSuperClass {
 
-    public static Logger log = LogManager.getLogger(LogicSuperClass.class);
+    private static final Logger log = LogManager.getLogger(LogicSuperClass.class);
 
     public boolean isRegularBool(String s){
         return !s.equals("Einmalig");

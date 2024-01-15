@@ -4,10 +4,8 @@ import Exceptions.NewEntryExceptions.AmountChangeIsNullException;
 import Exceptions.NewEntryExceptions.NoteIsNullException;
 import Exceptions.NewEntryExceptions.ParseDateException;
 import Exceptions.NewEntryExceptions.ParseDoubleException;
-import Logic.LogicDatabase;
 import Logic.LogicFacade;
 import Logic.LogicNewEntry;
-import Singleton.SingletonUser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -15,15 +13,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import mainpackage.Driver;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
-
-
 import javafx.scene.control.Button;
-
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
