@@ -1,25 +1,17 @@
 TO DO`s:
-- UML
-- Initialize Methode in Overview debuggen       Jana
-- Logging und LogFile neu machen                Joel
+- bei log.error auch Exception ,e mit dran hängen        Ryan
+- createInstance bei Factory                            Joel
+- Projekt Link schicken, damit nach Singleton Problem schauen   Joel
 - Dokumentation:
-    - Kurzbeschreibung: Ryan
-    - Startklasse: Ryan (mainpackage, Driver)
-    - Besonderheiten: Joel (evtl. Singleton)
-    - Stellungnahme: Joel
-    - UML- Anfang: Jana
+    - Use Case Diagramm: Ryan
+    - Sequence Diagramm: Joel
+    - Klassendiagramm: Jana
     - Bewertungsbogen: zusammen Ausfüllen
 
-- (evtl Sceneswitcher in externe Klasse)
-- Beschriftungen Login teilweise noch auf Englisch
+- (evtl Sceneswitcher in externe Klasse)- Beschriftungen Login teilweise noch auf Englisch
 
 Besprechung Jordine (17.02.24):
-createInstance bei Factory
-updateBalance nicht static
-bei log.error auch Exception e mit dran hängen (in Doku)
 pfeil bei Vererbung darf nicht ausgefüllt sein
-
-Projekt Link schicken, damit nach Singleton Problem schauen
 
 
 Ganz am Ende:
