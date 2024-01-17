@@ -4,6 +4,7 @@ import Exceptions.NewEntryExceptions.AmountChangeIsNullException;
 import Exceptions.NewEntryExceptions.NoteIsNullException;
 import Exceptions.NewEntryExceptions.ParseDateException;
 import Exceptions.NewEntryExceptions.ParseDoubleException;
+import Logic.LogicBalance;
 import Logic.LogicFacade;
 import Logic.LogicNewEntry;
 import javafx.beans.value.ChangeListener;
@@ -147,7 +148,12 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
             }
         if (rightFormat) {
             if (repeatabilityBox.getValue() != null && repeatBool || repeatabilityBox.getValue() == null && !repeatBool) {
+
                 lne.changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBox.getValue(), paymentMethodBox.getValue());
+
+                //Direkten Klassenaufruf auskommentieren und den Aufruf, der über die LogicFacade statt findet benutzen, der im Moment auskommentiert ist.
+                //LogicFacade.getInstance().changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBox.getValue(), paymentMethodBox.getValue());
+
                 d.changeScene("/FXML/overview.fxml");
             } else {
                 log.warn("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
