@@ -57,9 +57,9 @@ public class ControllerOverview implements Initializable{
     @FXML
     private Label errorLabel;
     LogicOverview lo = new LogicOverview();
+    LogicBalance lb = new LogicBalance();
 
     public static Logger log = LogManager.getLogger(ControllerOverview.class);
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,7 +72,7 @@ public class ControllerOverview implements Initializable{
         regularity.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("regularity"));
         payment.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("payment"));
         log.debug("Started to update balance");
-        LogicBalance.updateBalance();
+        lb.updateBalance();
         log.debug("Finished update of balance");
         try{
             table.setItems(lo.database());
