@@ -38,7 +38,8 @@ public class LogicFacade {
     }
 
     public static void updateBalance() {
-        LogicBalance.updateBalance();
+        LogicBalance lb = new LogicBalance();
+        lb.updateBalance();
     }
 
 

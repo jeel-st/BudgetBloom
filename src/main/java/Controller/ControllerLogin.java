@@ -31,7 +31,7 @@ public class ControllerLogin {
     private Button register;
     Driver d = new Driver();
     LogicDatabase dc = new LogicDatabase();
-    public static Logger log = LogManager.getLogger(ControllerLogin.class);
+    private static Logger log = LogManager.getLogger(ControllerLogin.class);
     public String localUsername;
 
     @FXML public void userLogin(ActionEvent event) throws IOException {
