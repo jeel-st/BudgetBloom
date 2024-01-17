@@ -13,14 +13,14 @@ TO DO`s:
 - (evtl Sceneswitcher in externe Klasse)
 - Beschriftungen Login teilweise noch auf Englisch
 
-Fragen an Jordine (10.01.24):
-- Unit Tests für DB-Methoden -> nicht nötig
-- Fenster Größe -> Passt
-- JavaDoc Dokumentation -> Nein
-- Im Overview wird die Scene doppelt initialisiert - Warum und wie verhindern? -> Debuggen, Breakpoint bei Methode setzen
-- Nachdenkzettel
-- Singleton -> erstmal so lassen, entweder hilfsmethode oder einfach nur in dokumentation erwähnen
-- Besprechungsstunde
+Besprechung Jordine (17.02.24):
+createInstance bei Factory
+updateBalance nicht static
+bei log.error auch Exception e mit dran hängen (in Doku)
+pfeil bei Vererbung darf nicht ausgefüllt sein
+
+Projekt Link schicken, damit nach Singleton Problem schauen
+
 
 Ganz am Ende:
 Usertabelle leeren und neu befüllen,
