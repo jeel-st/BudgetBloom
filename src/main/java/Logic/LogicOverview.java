@@ -51,7 +51,7 @@ public class LogicOverview {
 
                     return list;
                 } catch (Exception e) {
-                    log.error("Failed to transfer data from database");
+                    log.error("Failed to transfer data from database", e);
                 }
             } else {
                 log.error("Username is null");

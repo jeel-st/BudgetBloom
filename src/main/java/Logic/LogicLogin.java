@@ -38,11 +38,11 @@ import java.sql.SQLException;
                 }
 
             } catch (SQLException e ) {
-                log.error("SQL query failed");
+                log.error("SQL query failed", e);
             }
 
         } catch (SQLException e) {
-            log.error("Couldn't connect to Database");
+            log.error("Couldn't connect to Database", e);
         }
         return false;
     }
@@ -65,7 +65,7 @@ import java.sql.SQLException;
 
             }
         } catch (SQLException e) {
-            log.error("Couldn't connect to Database");
+            log.error("Couldn't connect to Database", e);
         }
     }
 
@@ -82,7 +82,7 @@ import java.sql.SQLException;
                 log.debug("number of logins updated successfully");
             }
         } catch (SQLException e) {
-            log.error("Couldn't connect to Database");
+            log.error("Couldn't connect to Database", e);
         }
     }
     boolean isFirstLogin(String username) {
@@ -95,10 +95,10 @@ import java.sql.SQLException;
                 ResultSet rs2 = stmt4.executeQuery();
                 return rs2.next();
             } catch (SQLException e) {
-                log.error("SQL Exception " + e + " while finding out if is first login");
+                log.error("SQL Exception " + e + " while finding out if is first login", e);
             }
         } catch (SQLException e) {
-            log.error("Couldn't connect to Database");
+            log.error("Couldn't connect to Database", e);
         }
         return false;
     }

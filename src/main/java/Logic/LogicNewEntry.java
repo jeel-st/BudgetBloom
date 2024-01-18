@@ -29,7 +29,7 @@ public class LogicNewEntry extends LogicSuperClass{
                 stmt.setDouble(3, accountChangeChecker(amountChange, choiceBoxValue));
                 log.debug("Kontoänderungseingabe erfolgreich");
             } catch (Exception e) {
-                log.error("Kontoänderungseingabe hat nicht geklappt");
+                log.error("Kontoänderungseingabe hat nicht geklappt", e);
 
             }
             stmt.setString(2, note);
@@ -39,7 +39,7 @@ public class LogicNewEntry extends LogicSuperClass{
                 log.info("Neuer Kontostand: " + newAccountBalance);
                 stmt.setDouble(4, newAccountBalance);
             } catch (Exception e) {
-                log.error("Couldn't connect to Database");
+                log.error("Couldn't connect to Database", e);
             }
             stmt.setInt(5, sliderValue);
             stmt.setBoolean(6, super.isRegularBool(repeatBoxValue));
@@ -77,7 +77,7 @@ public class LogicNewEntry extends LogicSuperClass{
                     return newAccountBalance;
                 }
             } catch (Exception e) {
-                log.error("kein Kontostand gefunden");
+                log.error("kein Kontostand gefunden", e);
             }
 
             throw new Exception();
