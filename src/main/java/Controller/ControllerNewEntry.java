@@ -125,7 +125,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     }
 
 
-    public void userInputAdd(ActionEvent event) throws SQLException, IOException {
+    public void userInputAdd(ActionEvent event) throws Exception {
             repeatBool = LogicFacade.getInstance().isRegularBool(repeatBox.getValue());
             int sliderValue = (int) scale.getValue();
             boolean rightFormat = false;

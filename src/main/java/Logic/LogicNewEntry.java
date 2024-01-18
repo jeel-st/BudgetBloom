@@ -18,7 +18,7 @@ public class LogicNewEntry extends LogicSuperClass{
     private final String localUsername = sp.getName();
 
 
-    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue, String payment) throws SQLException {
+    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue, String payment) throws Exception {
 
         try (Connection con = lg.getConnection()) {
             log.debug("Connection to database succeed");
@@ -44,7 +44,11 @@ public class LogicNewEntry extends LogicSuperClass{
             stmt.setInt(5, sliderValue);
             stmt.setBoolean(6, super.isRegularBool(repeatBoxValue));
             stmt.setString(7, super.checkFrequency(repeatBoxValue, repetitionFrequency));
-            stmt.setString(8, super.checkPayment(payment, amountChange));
+            try {
+                stmt.setString(8, super.checkPayment(payment, amountChange));
+            }catch (Exception e){
+                log.warn("Your payment method wasn't accepted.");
+            }
             try {
                 stmt.executeUpdate();
             } catch (Exception e) {

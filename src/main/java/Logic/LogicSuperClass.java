@@ -25,39 +25,39 @@ public class LogicSuperClass {
         }
     }
 
-    String checkPayment(String payment, double amountChange){
+    String checkPayment(String payment, double amountChange) throws Exception {
         String checknull = payment;
         if(payment == null){
             checknull = "-";
         }
-        PaymentFactory pf = new PaymentFactory();
+
         switch(checknull) {
             case "Bar" -> {
-                Payment p = pf.createCash();
+                Payment p = PaymentFactory.getInstance("Bar");
                 p.pay(amountChange);
                 log.info(p.transactionDetails());
                 return payment;
             }
             case "Paypal" -> {
-                Payment p = pf.createPaypal();
+                Payment p = PaymentFactory.getInstance("Paypal");
                 p.pay(amountChange);
                 log.info(p.transactionDetails());
                 return payment;
             }
             case "Kreditkarte" -> {
-                Payment p = pf.createCreditcard();
+                Payment p = PaymentFactory.getInstance("Kreditkarte");
                 p.pay(amountChange);
                 log.info(p.transactionDetails());
                 return payment;
             }
             case "Girokarte" -> {
-                Payment p = pf.createGirocard();
+                Payment p = PaymentFactory.getInstance("Girokarte");
                 p.pay(amountChange);
                 log.info(p.transactionDetails());
                 return payment;
             }
             case "weitere Zahlungsmethode..." -> {
-                Payment p = pf.createOtherPayment();
+                Payment p = PaymentFactory.getInstance("weitere Zahlungsmethode...");
                 p.pay(amountChange);
                 log.info(p.transactionDetails());
                 return payment;

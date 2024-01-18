@@ -24,7 +24,7 @@ public class LogicEditEntry extends LogicSuperClass{
     private static final Logger log = LogManager.getLogger(LogicEditEntry.class);
 
 
-    public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox, String payment) {
+    public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox, String payment) throws Exception{
         String errorLabel;
 
         try (Connection con = dc.getConnection()) {
@@ -61,7 +61,11 @@ public class LogicEditEntry extends LogicSuperClass{
             stmt.setInt(4, scale);
             stmt.setBoolean(5, isRegularBool(repeatBox));
             stmt.setString(6, checkFrequency(repeatBox, repeatabilityBox));
-            stmt.setString(7, super.checkPayment(payment, Double.parseDouble(inputNumber)));
+            try {
+                stmt.setString(7, super.checkPayment(payment, Double.parseDouble(inputNumber)));
+            }catch (Exception e){
+                log.warn("Your payment method wasn't accepted.");
+            }
             stmt.setDate(8, Date.valueOf(date));
             stmt.setString(9, note);
             stmt.setDouble(10, amount);

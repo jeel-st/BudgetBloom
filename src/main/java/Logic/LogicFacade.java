@@ -71,7 +71,7 @@ public class LogicFacade {
         return overview.deleteRowInDatabase(amount, date, reason, accountBalance, importance, regularityBool);
     }
 
-    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue, String payment) throws SQLException{
+    public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue, String payment) throws Exception{
         newEntry.changedAccount(amountChange, choiceBoxValue, sliderValue, note, date, repetitionFrequency, repeatBoxValue, payment);
     }
     public boolean checkingFormats(String amountChange, String note, LocalDate date) throws NoteIsNullException, ParseDoubleException, ParseDateException, AmountChangeIsNullException {

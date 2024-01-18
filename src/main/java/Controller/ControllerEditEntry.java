@@ -91,7 +91,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     }
 
     @FXML
-    void userInputSave(ActionEvent event) throws SQLException, IOException {
+    void userInputSave(ActionEvent event) throws Exception {
 
         if (repeatBox.getValue().equals("Regelmäßig") && repeatabilityBox.getValue() == null) {
             log.warn("Enter a frequency");
