@@ -62,7 +62,7 @@ public class LogicRegister {
             log.warn("Username length is false");
             return "Username has to be between 6 and 19 characters";
         } catch (SQLException e) {
-            log.error("Couldn't get a database connection");
+            log.error("Couldn't get a database connection", e);
             return "Couldn't get a database connection. Please check your internet connection";
         } catch (EmailLengthException e) {
             log.warn("Email length is false");
@@ -169,7 +169,7 @@ public class LogicRegister {
             log.info("Table build successfully");
             con.close();
         } catch (SQLException ex) {
-            log.error("table build failed");
+            log.error("table build failed", ex);
             ex.printStackTrace();
         }
     }

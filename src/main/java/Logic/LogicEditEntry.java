@@ -72,7 +72,7 @@ public class LogicEditEntry extends LogicSuperClass{
             errorLabel = "Edit was saved successfully";
             return errorLabel;
         } catch (SQLException e) {
-            log.error("Couldn't connect to Database");
+            log.error("Couldn't connect to Database", e);
             errorLabel = "Lost connection to database";
             return errorLabel;
         }

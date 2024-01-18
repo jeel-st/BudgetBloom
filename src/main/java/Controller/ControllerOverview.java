@@ -78,7 +78,7 @@ public class ControllerOverview implements Initializable{
             table.setItems(lo.database());
             log.info("Searching for data succeed");
         }catch(Exception e){
-            log.error("Searching for data failed");
+            log.error("Searching for data failed", e);
         }
 
     }
@@ -171,7 +171,7 @@ public class ControllerOverview implements Initializable{
             d.changeScene("/FXML/editEntry.fxml");
         }catch(Exception e ){
             errorLabel.setText("No row selected");
-            log.error("Keine Zeile wurde ausgewählt");
+            log.error("Keine Zeile wurde ausgewählt", e);
         }
     }
 

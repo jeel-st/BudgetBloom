@@ -55,10 +55,10 @@ public class LogicBalance {
                 rs.close();
                 log.trace("bankbalance updated successfully");
             } catch (Exception e) {
-                log.error("Failed to transfer data from database");
+                log.error("Failed to transfer data from database", e);
             }
         } catch (SQLException e) {
-            log.error("Couldn't connect to Database");
+            log.error("Couldn't connect to Database", e);
         }
 
 

@@ -126,7 +126,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             try {
                 repeatabilityBox.setValue(lee.showContentOfRepeatabilityBox());
             } catch (Exception e) {
-                log.error("Content does not fit into repeatabilityBox");
+                log.error("Content does not fit into repeatabilityBox", e);
             }
         }
         repeatabilityBox.getItems().addAll(repeatability);
@@ -147,7 +147,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             }
 
         } catch (Exception e) {
-            log.error("Something went wrong with set from 'myChoiceBox' ");
+            log.error("Something went wrong with set from 'myChoiceBox' ", e);
         }
         inputDate.setValue(LocalDate.parse(date));
         inputReason.setText(note);

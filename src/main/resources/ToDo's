@@ -1,5 +1,4 @@
 TO DO`s:
-- bei log.error auch Exception ,e mit dran hängen        Ryan
 - createInstance bei Factory                            Joel
 - Projekt Link schicken, damit nach Singleton Problem schauen   Joel
 - Dokumentation:
