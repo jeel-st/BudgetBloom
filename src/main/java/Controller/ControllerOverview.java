@@ -95,16 +95,25 @@ public class ControllerOverview implements Initializable{
         d.changeScene("/FXML/newEntry.fxml");
     }
     public void removeRow(ActionEvent event) throws SQLException {
-        if(safetyCheck()){
-            deleteRow();
+        String reason = table.getSelectionModel().getSelectedItem().getReason();
+        if (!reason.equals("initial konto balance")) {
+            if(safetyCheck()){
+                deleteRow();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setContentText("You cannot delete the initial konto balance");
+            alert.showAndWait();
         }
+
     }
 
 
 
     public boolean safetyCheck(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Warning");
+        alert.setTitle("Bestätigung");
         alert.setContentText("Are you sure you want to delete this row? The data cannot be restored afterwards.");
         Optional<ButtonType> result = alert.showAndWait();
 
