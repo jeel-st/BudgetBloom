@@ -23,26 +23,26 @@
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFA54F;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fda636;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="179.0" fitWidth="192.0" layoutX="99.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="179.0" fitWidth="192.0" layoutX="103.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../LoginPerson.png" />
                </image>
             </ImageView>
-            <TextField fx:id="username" layoutX="112.0" layoutY="214.0" prefHeight="35.0" prefWidth="160.0" promptText="Username" style="-fx-background-color: #BFEFFF;">
+            <TextField fx:id="username" layoutX="112.0" layoutY="214.0" prefHeight="35.0" prefWidth="160.0" promptText="Benutzername" style="-fx-background-color: #8bd78d;">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="password" layoutX="112.0" layoutY="264.0" prefHeight="35.0" prefWidth="160.0" promptText="Password" style="-fx-background-color: #BFEFFF;">
+            <PasswordField fx:id="password" layoutX="112.0" layoutY="264.0" prefHeight="35.0" prefWidth="160.0" promptText="Passwort" style="-fx-background-color: #8bd78d;">
                <font>
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Button fx:id="login" layoutX="226.0" layoutY="318.0" mnemonicParsing="false" onAction="#userLogin" style="-fx-background-color: #4682B4;" text="Login" />
+            <Button fx:id="login" layoutX="226.0" layoutY="318.0" mnemonicParsing="false" onAction="#userLogin" style="-fx-background-color: #45af46;" text="Login" />
             <Label fx:id="wrongLogin" layoutX="70.0" layoutY="191.0" prefHeight="18.0" prefWidth="243.0" textAlignment="CENTER" textFill="RED" />
-            <Button fx:id="register" layoutX="112.0" layoutY="318.0" mnemonicParsing="false" onAction="#registerButton" style="-fx-background-color: #4682B4;" text="Register" />
+            <Button fx:id="register" layoutX="112.0" layoutY="318.0" mnemonicParsing="false" onAction="#registerButton" style="-fx-background-color: #45af46;" text="Registrierung" />
          </children>
       </AnchorPane>
    </center>

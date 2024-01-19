@@ -1,6 +1,5 @@
 package Controller;
 
-import Logic.LogicDatabase;
 import Logic.LogicFacade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +34,7 @@ public class ControllerRegister {
     Driver d = new Driver();
 
     public void userToLogin(ActionEvent event) throws IOException {
-        d.changeScene("/FXML/sample.fxml");
+        d.changeScene("/FXML/login.fxml");
     }
 
     public void userCreate(ActionEvent event) throws IOException{
@@ -45,7 +44,7 @@ public class ControllerRegister {
         if(!(LabelText.equals("completed"))){
             wrongRegister.setText(LabelText);
         }else {
-            d.changeScene("/FXML/sample.fxml");
+            d.changeScene("/FXML/login.fxml");
         }
 
     }

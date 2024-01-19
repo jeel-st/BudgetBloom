@@ -22,7 +22,7 @@ public class Driver extends Application {
         stg = stage;
         stage.setResizable(false);
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/FXML/sample.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/FXML/login.fxml")));
         stage.setTitle("BudgetBloom");
         stage.setScene(new Scene(root, 600,400));
         stage.show();

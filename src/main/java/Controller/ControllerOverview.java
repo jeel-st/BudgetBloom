@@ -1,7 +1,6 @@
 package Controller;
 
 import Logic.*;
-import Singleton.SingletonUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -85,8 +84,8 @@ public class ControllerOverview implements Initializable{
 
     public void userLogout(ActionEvent event)throws IOException {
         Driver d = new Driver();
-        log.debug("Logout button changed scene to sample.fxml");
-        d.changeScene("/FXML/sample.fxml");
+        log.debug("Logout button changed scene to login.fxml");
+        d.changeScene("/FXML/login.fxml");
     }
 
     public void userNewInput(ActionEvent event)throws IOException {
