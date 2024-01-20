@@ -2,7 +2,6 @@ package Singleton;
 
 public class SingletonEditValues {
     private static SingletonEditValues instance;
-
     private String date;
     private String note;
     private double accountBalance;
@@ -13,8 +12,7 @@ public class SingletonEditValues {
 
     private SingletonEditValues() {
         date = null;
-    }  // Privater Konstruktor, um die Instanz zu verhindern
-
+    }
 
     public static SingletonEditValues getInstance() {
         if (instance == null) {
@@ -32,7 +30,6 @@ public class SingletonEditValues {
     public double getAmount() { return amount; }
     public int getImportance() { return importance; }
     public String getPayment(){return payment;}
-
 
     public void setDate(String date) {
         this.date = date;

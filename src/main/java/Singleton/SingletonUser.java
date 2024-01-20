@@ -2,7 +2,6 @@ package Singleton;
 
 public class SingletonUser {
     private static SingletonUser instance;
-
     private String LocalUsername;
 
     private SingletonUser() {

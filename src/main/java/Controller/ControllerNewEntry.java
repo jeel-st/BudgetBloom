@@ -4,7 +4,6 @@ import Exceptions.NewEntryExceptions.AmountChangeIsNullException;
 import Exceptions.NewEntryExceptions.NoteIsNullException;
 import Exceptions.NewEntryExceptions.ParseDateException;
 import Exceptions.NewEntryExceptions.ParseDoubleException;
-import Logic.LogicBalance;
 import Logic.LogicFacade;
 import Logic.LogicNewEntry;
 import javafx.beans.value.ChangeListener;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -29,35 +27,21 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
 
     @FXML
     private Label inputText;
-
     @FXML
     private Label errorLabel;
-
     @FXML
     private DatePicker inputDate;
-
     @FXML
     private TextField inputReason;
-
     @FXML
     private ChoiceBox<String> myChoiceBox;
-
     @FXML
     private TextField inputNumber;
-
     @FXML
     private Label scaleLabel;
-
-    int myScaleNumber;
-
+    private int myScaleNumber;
     @FXML
     private Slider scale;
-
-    @FXML
-    private Button inputAdd;
-
-    @FXML
-    private Button cancel;
     @FXML
     private ChoiceBox<String> repeatBox;
     @FXML
@@ -65,24 +49,19 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     @FXML
     private ChoiceBox<String> paymentMethodBox;
 
-    public static Logger log = LogManager.getLogger(ControllerNewEntry.class);
-
-    private String[] repetitions = {"Einmalig", "Regelmäßig"};
-    //kommt in die choicebox:
-    private String[] input = {"Einnahme", "Ausgabe"};
-    private String[] repeatability = {"täglich", "monatlich", "jährlich"};
-    private String[] payment = {"Bar", "Paypal", "Kreditkarte", "Girokarte", "weitere Zahlungsmethode..."};
-    Driver d = new Driver();
-
-    LogicNewEntry lne = new LogicNewEntry();
+    private static final Logger log = LogManager.getLogger(ControllerNewEntry.class);
+    private final String[] repetitions = {"Einmalig", "Regelmäßig"};
+    private final String[] input = {"Einnahme", "Ausgabe"};
+    private final String[] repeatability = {"täglich", "monatlich", "jährlich"};
+    private final String[] payment = {"Bar", "Paypal", "Kreditkarte", "Girokarte", "weitere Zahlungsmethode..."};
+    private final Driver d = new Driver();
+    private final LogicNewEntry lne = new LogicNewEntry();
     private Boolean repeatBool;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        //ChoiceBox:
         myChoiceBox.getItems().addAll(input);
-        myChoiceBox.setOnAction(this::getInput);  //this:: ist ein reverence operator (zum Label)
+        myChoiceBox.setOnAction(this::getInput);
         myChoiceBox.setValue("Einnahme");
         repeatBox.getItems().addAll(repetitions);
         repeatBox.setOnAction(this::getRepeat);
@@ -92,7 +71,6 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
         paymentMethodBox.getItems().addAll(payment);
         paymentMethodBox.setVisible(false);
 
-        //WichtigkeitsSkala (Slider + Label):
         myScaleNumber = (int) scale.getValue();
         scaleLabel.setText(Integer.toString(myScaleNumber));
         scale.valueProperty().addListener(new ChangeListener<Number>() {
@@ -105,11 +83,12 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
             }
         });
     }
+
     public void getRepeat(ActionEvent event){
         String repetition = repeatBox.getValue();
         repeatabilityBox.setVisible("Regelmäßig".equalsIgnoreCase(repetition));
     }
-    //Label verknüpfen:
+
     public void getInput(ActionEvent event) {
         String myInput = myChoiceBox.getValue();
         inputText.setText("Neue " + myInput + ":");
@@ -119,11 +98,9 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
         }
     }
 
-
     public void userCancel(ActionEvent event) throws IOException {
         d.changeScene("/FXML/overview.fxml");
     }
-
 
     public void userInputAdd(ActionEvent event) throws Exception {
             repeatBool = LogicFacade.getInstance().isRegularBool(repeatBox.getValue());
@@ -160,8 +137,6 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
                 errorLabel.setText("Geben sie an, wie oft die Ausgabe/Einnahme wiederholt werden soll");
             }
         }
-        }
-
-
+    }
 }
 

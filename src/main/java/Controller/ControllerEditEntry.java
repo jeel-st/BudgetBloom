@@ -1,7 +1,6 @@
 package Controller;
 
 import Interfaces.EntryInterface;
-import Logic.LogicDatabase;
 import Logic.LogicEditEntry;
 import Logic.LogicFacade;
 import Singleton.SingletonEditValues;
@@ -10,7 +9,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -20,10 +18,8 @@ import mainpackage.Driver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javafx.fxml.Initializable;
-
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -32,58 +28,41 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
 
     @FXML
     private Label errorLabel;
-
-    @FXML
-    private Button cancel;
-
     @FXML
     private DatePicker inputDate;
-
     @FXML
     private TextField inputReason;
-
-    @FXML
-    private Button inputSave;
-
     @FXML
     private Label inputText;
-
     @FXML
     private TextField inputNumber;
-
     @FXML
     private ChoiceBox<String> myChoiceBox;
-
     @FXML
     private Slider scale;
-
     @FXML
     private Label scaleLabel;
-
     @FXML
     private ChoiceBox<String> repeatBox;
     @FXML
     private ChoiceBox<String> repeatabilityBox;
     @FXML
     private ChoiceBox<String> paymentMethodBox;
-    private String[] paymentArr = {"Bar", "Paypal", "Kreditkarte", "Girokarte", "weitere Zahlungsmethode..."};
-    private String[] repetitions = {"Einmalig", "Regelmäßig"};
-    private String[] repeatability = {"täglich", "monatlich", "jährlich"};
-    int myScaleNumber;
-    private String[] input = {"Einnahme", "Ausgabe"};
-    SingletonEditValues sev = SingletonEditValues.getInstance();
-    LogicEditEntry lee = new LogicEditEntry();
-     String date = sev.getDate();
-     String note = sev.getNote();
-     double amount = sev.getAmount();
-     int importance = sev.getImportance();
-     String isRegular = sev.getIsRegular();
-     String payment = sev.getPayment();
-    Driver d = new Driver();
-
-    SingletonUser sp = SingletonUser.getInstance();
-
-    public static Logger log = LogManager.getLogger(ControllerEditEntry.class);
+    private final String[] paymentArr = {"Bar", "Paypal", "Kreditkarte", "Girokarte", "weitere Zahlungsmethode..."};
+    private final String[] repetitions = {"Einmalig", "Regelmäßig"};
+    private final String[] repeatability = {"täglich", "monatlich", "jährlich"};
+    private int myScaleNumber;
+    private final String[] input = {"Einnahme", "Ausgabe"};
+    private final SingletonEditValues sev = SingletonEditValues.getInstance();
+    private final LogicEditEntry lee = new LogicEditEntry();
+    private final String date = sev.getDate();
+    private final String note = sev.getNote();
+    private final double amount = sev.getAmount();
+    private final int importance = sev.getImportance();
+    private final String isRegular = sev.getIsRegular();
+    private final String payment = sev.getPayment();
+    private final Driver d = new Driver();
+    private static final Logger log = LogManager.getLogger(ControllerEditEntry.class);
 
     @FXML
     public void userCancel(ActionEvent event) throws IOException {
@@ -92,7 +71,6 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
 
     @FXML
     void userInputSave(ActionEvent event) throws Exception {
-
         if (repeatBox.getValue().equals("Regelmäßig") && repeatabilityBox.getValue() == null) {
             log.warn("Enter a frequency");
         } else {
@@ -111,12 +89,8 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         repeatBox.getItems().addAll(repetitions);
         repeatBox.setOnAction(this::getRepeat);
-
-        // bis hier stehen lassen
-
         if (isRegular.equals("Einmalig")) {
             repeatBox.setValue(isRegular);
             repeatabilityBox.setVisible(false);
@@ -130,7 +104,6 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             }
         }
         repeatabilityBox.getItems().addAll(repeatability);
-
 
         try {
             if (amount >= 0) {
@@ -154,46 +127,41 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
         inputNumber.setText(String.valueOf(amount));
         scale.setValue(importance);
 
-
-        //ChoiceBox:
         myChoiceBox.getItems().addAll(input);
-        myChoiceBox.setOnAction(this::getInput);  //this:: ist ein reverence operator (zum Label)
+        myChoiceBox.setOnAction(this::getInput);
         paymentMethodBox.getItems().addAll(paymentArr);
 
-        //WichtigkeitsSkala (Slider + Label):
         myScaleNumber = (int) scale.getValue();
         scaleLabel.setText(Integer.toString(myScaleNumber));
         scale.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-
                 myScaleNumber = (int) scale.getValue();
                 scaleLabel.setText(Integer.toString(myScaleNumber));
-
             }
         });
-
     }
-            public void getRepeat (ActionEvent event){
-                String repetition = repeatBox.getValue();
-                if ("Regelmäßig".equalsIgnoreCase(repetition)) {
-                    repeatabilityBox.setVisible(true);
-                } else {
-                    repeatabilityBox.setVisible(false);
-                }
-            }
-            public void getInput(ActionEvent event){
-                String myInput = myChoiceBox.getValue();
-                inputText.setText("Neue " + myInput + ":");
-                paymentMethodBox.setVisible("Ausgabe".equalsIgnoreCase(myInput));
-                if(paymentMethodBox.isVisible()){
-                    if(payment != null) {
-                        paymentMethodBox.setValue(payment);
-                    }else{
-                        paymentMethodBox.setValue("Bar");
-                    }
-                }
-            }
 
+        public void getRepeat (ActionEvent event){
+            String repetition = repeatBox.getValue();
+            if ("Regelmäßig".equalsIgnoreCase(repetition)) {
+                repeatabilityBox.setVisible(true);
+            } else {
+                repeatabilityBox.setVisible(false);
+            }
+        }
+
+        public void getInput(ActionEvent event){
+            String myInput = myChoiceBox.getValue();
+            inputText.setText("Neue " + myInput + ":");
+            paymentMethodBox.setVisible("Ausgabe".equalsIgnoreCase(myInput));
+            if(paymentMethodBox.isVisible()){
+                if(payment != null) {
+                    paymentMethodBox.setValue(payment);
+                }else{
+                    paymentMethodBox.setValue("Bar");
+                }
+            }
+        }
     }
 

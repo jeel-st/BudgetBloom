@@ -23,42 +23,26 @@ public class ControllerOverview implements Initializable{
 
     @FXML
     private TableView<LogicTableEntry> table;
-
     @FXML
     private TableColumn<LogicTableEntry, String> date;
-
     @FXML
     private TableColumn<LogicTableEntry, String> reason;
-
     @FXML
     private TableColumn<LogicTableEntry, Double> amount;
-
     @FXML
     private TableColumn<LogicTableEntry, Double> accountBalance;
-
     @FXML
     private TableColumn<LogicTableEntry, Integer> importance;
     @FXML
     private TableColumn<LogicTableEntry, String> regularity;
     @FXML
     private TableColumn<LogicTableEntry, String> payment;
-
-    @FXML
-    private Button logout;
-
-    @FXML
-    private Button newInput;
-
-    @FXML
-    private Button inputDelete;
-    @FXML
-    private Button inputEdit;
     @FXML
     private Label errorLabel;
-    LogicOverview lo = new LogicOverview();
-    LogicBalance lb = new LogicBalance();
 
-    public static Logger log = LogManager.getLogger(ControllerOverview.class);
+    private final LogicOverview lo = new LogicOverview();
+    private final LogicBalance lb = new LogicBalance();
+    private static final Logger log = LogManager.getLogger(ControllerOverview.class);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -108,8 +92,6 @@ public class ControllerOverview implements Initializable{
 
     }
 
-
-
     public boolean safetyCheck(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Bestätigung");
@@ -126,6 +108,7 @@ public class ControllerOverview implements Initializable{
         }
 
     }
+
     public void deleteRow(){
         try {
             double amount = table.getSelectionModel().getSelectedItem().getAmount();
@@ -159,11 +142,10 @@ public class ControllerOverview implements Initializable{
             }
 
     }
+
     public void editRow(ActionEvent event) throws IOException {
         Driver d = new Driver();
-
         try {
-
             double amount = table.getSelectionModel().getSelectedItem().getAmount();
             String date = table.getSelectionModel().getSelectedItem().getDate();
             String reason = table.getSelectionModel().getSelectedItem().getReason();
@@ -177,10 +159,9 @@ public class ControllerOverview implements Initializable{
             }
             lo.saveValues(amount, date, reason, accountBalance, importance, regularity, payment);
             d.changeScene("/FXML/editEntry.fxml");
-        }catch(Exception e ){
+        } catch(Exception e ){
             errorLabel.setText("No row selected");
             log.error("Keine Zeile wurde ausgewählt", e);
         }
     }
-
 }

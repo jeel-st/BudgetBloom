@@ -3,7 +3,6 @@ package Controller;
 import Logic.LogicFacade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -14,12 +13,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 public class ControllerRegister {
-
-
-    @FXML
-    private Button backToLogin;
-    @FXML
-    private Button createAccount;
     @FXML
     public TextField email;
     @FXML
@@ -30,8 +23,8 @@ public class ControllerRegister {
     public Label wrongRegister;
     @FXML
     public PasswordField password2;
-    public static Logger log = LogManager.getLogger(ControllerRegister.class);
-    Driver d = new Driver();
+    private static final Logger log = LogManager.getLogger(ControllerRegister.class);
+    private final Driver d = new Driver();
 
     public void userToLogin(ActionEvent event) throws IOException {
         d.changeScene("/FXML/login.fxml");
@@ -43,11 +36,8 @@ public class ControllerRegister {
         log.info(LabelText);
         if(!(LabelText.equals("completed"))){
             wrongRegister.setText(LabelText);
-        }else {
+        } else {
             d.changeScene("/FXML/login.fxml");
         }
-
     }
-
-
 }

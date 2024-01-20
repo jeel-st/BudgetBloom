@@ -1,10 +1,7 @@
 package Controller;
 
-
-import Logic.LogicDatabase;
 import Logic.LogicFacade;
 import Logic.LogicFirstLogin;
-import Singleton.SingletonUser;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,9 +17,7 @@ import javafx.stage.Stage;
 import mainpackage.Driver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
-
 
 public class ControllerFirstLogin extends Application {
     @FXML
@@ -41,13 +36,9 @@ public class ControllerFirstLogin extends Application {
     public Label skipText;
     @FXML
     public Image image;
-    Driver d = new Driver();
-    LogicDatabase dc = new LogicDatabase();
-    SingletonUser sp = SingletonUser.getInstance();
-    private String localUsername = sp.getName();
+    private final Driver d = new Driver();
+    private final LogicFirstLogin lfl = new LogicFirstLogin();
     public static Logger log = LogManager.getLogger(ControllerLogin.class);
-
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -56,9 +47,8 @@ public class ControllerFirstLogin extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
-    LogicFirstLogin lfl = new LogicFirstLogin();
+
     @FXML private void skipBalance(ActionEvent event) throws IOException {
         lfl.insertInitialBalance(0);
         d.changeScene("/FXML/overview.fxml");
