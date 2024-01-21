@@ -1,10 +1,8 @@
 package Logic;
 
-import Controller.ControllerOverview;
 import Singleton.SingletonUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.*;
 
 public class LogicBalance {
@@ -18,23 +16,18 @@ public class LogicBalance {
         try(Connection con = dc.getConnection()){
             try {
                 String sql = "SELECT id, amount, bankbalance FROM konto" + localUsername + " ORDER BY edate ASC, id ASC";
-
                 PreparedStatement stmt = con.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery();
-
                 int id2;
                 double amount2, accountBalance1 = 0;
                 int i = 1;
-
                 while (rs.next()) {
                     if (i == 1) {
                         accountBalance1 = (rs.getDouble("bankbalance"));
                     } else {
                         id2 = (rs.getInt("id"));
                         amount2 = (rs.getDouble("amount"));
-
                         double newAccountBalance2 = accountBalance1 + amount2;
-
                         try {
                             String sql2 = "UPDATE konto" + localUsername + " SET bankbalance = ? WHERE id = ?";
                             PreparedStatement stmt2 = con.prepareStatement(sql2);
@@ -43,14 +36,10 @@ public class LogicBalance {
                             stmt2.executeQuery();
                         } catch (SQLException e) {
                             //exception fliegt immer, da die UPDATE Abfrage kein Ergebnis liefert
-
                         }
-
                         accountBalance1 = newAccountBalance2;
                     }
-
                     i++;
-
                 }
                 rs.close();
                 log.trace("bankbalance updated successfully");
@@ -60,9 +49,5 @@ public class LogicBalance {
         } catch (SQLException e) {
             log.error("Couldn't connect to Database", e);
         }
-
-
-
-
     }
 }

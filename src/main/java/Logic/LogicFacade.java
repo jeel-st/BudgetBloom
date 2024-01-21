@@ -1,23 +1,20 @@
 package Logic;
-import Exceptions.NewEntryExceptions.*;
 
+import Exceptions.NewEntryExceptions.*;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
 
 public class LogicFacade {
 
     private static LogicFacade instance;
     private final LogicEditEntry editEntry;
     private final LogicFirstLogin firstLogin;
-
     private final LogicLogin login;
     private final LogicOverview overview;
     private final LogicRegister register;
     private final LogicNewEntry newEntry;
-    //private LogicTableEntry tableEntry;
     private final LogicSuperClass superClass;
 
     private LogicFacade(){
@@ -41,7 +38,6 @@ public class LogicFacade {
         LogicBalance lb = new LogicBalance();
         lb.updateBalance();
     }
-
 
     public double accountChangeChecker(double inputNumber, String myChoiceBox) {
         return newEntry.accountChangeChecker(inputNumber, myChoiceBox);
@@ -67,7 +63,7 @@ public class LogicFacade {
         return register.proveRegisterTextFields(username, password, password2, email);
     }
 
-    public int deleteRowInDatabase(double amount, String date, String reason, double accountBalance, int importance, Boolean regularityBool) throws SQLException{
+    public int deleteRowInDatabase(double amount, String date, String reason, double accountBalance, int importance, boolean regularityBool) throws SQLException{
         return overview.deleteRowInDatabase(amount, date, reason, accountBalance, importance, regularityBool);
     }
 

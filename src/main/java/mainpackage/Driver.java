@@ -11,17 +11,17 @@ import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Driver extends Application {
     private static Stage stg;
+    public static Logger log = LogManager.getLogger(Driver.class);
+
     @Override
     public void start(Stage stage) throws IOException {
         stg = stage;
         stage.setResizable(false);
-
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/FXML/login.fxml")));
         stage.setTitle("BudgetBloom");
         stage.setScene(new Scene(root, 600,400));
@@ -32,22 +32,15 @@ public class Driver extends Application {
         FXMLLoader scene = new FXMLLoader(getClass().getResource(fxml));
         Parent pane = scene.load();
         scene.getController();
-        //auskommentiert, da es zum zweiter Aufruf von Initialize führt
-        //Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)));
         stg.getScene().setRoot(pane);
     }
-    public static Logger log = LogManager.getLogger(Driver.class);
+
     public static void main(String[] args){
-        log.info("Programm started");
+        log.info("Program started");
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        // Startet den Thread sofort und führe ihn jede Minute aus
         executor.scheduleAtFixedRate(new BalanceThread(), 0, 1, TimeUnit.MINUTES);
-
         launch(args);
-
         executor.shutdown();
-
-
     }
     
 }

@@ -1,6 +1,5 @@
 package Logic;
 
-import Controller.ControllerLogin;
 import Singleton.SingletonUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,13 +9,12 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class LogicFirstLogin {
-    LogicDatabase dc = new LogicDatabase();
-    SingletonUser sp = SingletonUser.getInstance();
-    private String localUsername = sp.getName();
-    public static Logger log = LogManager.getLogger(LogicFirstLogin.class);
+    private final LogicDatabase dc = new LogicDatabase();
+    private final SingletonUser sp = SingletonUser.getInstance();
+    private final String localUsername = sp.getName();
+    private static final Logger log = LogManager.getLogger(LogicFirstLogin.class);
 
      public void insertInitialBalance(double balance) {
-
         try(Connection con = dc.getConnection()) {
             String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10, DEFAULT, NULL, NULL)";
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -31,11 +29,8 @@ public class LogicFirstLogin {
 
      public boolean isBalanceNumber(String balance) {
         String regex = "^[-]?[0-9]+([.][0-9][0-9]?)?$";
-
         Pattern pattern = Pattern.compile(regex);
-
         Matcher matcher = pattern.matcher(balance);
-
         return matcher.find();
     }
 
