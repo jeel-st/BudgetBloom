@@ -29,7 +29,7 @@ public class LogicOverview {
                         String reason = (rs.getString("note"));
                         double amount = (rs.getDouble("amount"));
                         double accountBalance = (rs.getDouble("bankbalance"));
-                        Integer importance = (rs.getInt("importance"));
+                        int importance = (rs.getInt("importance"));
                         boolean regularityBool = (rs.getBoolean("isregular"));
                         String payment = (rs.getString("payment"));
                         if(payment == null){

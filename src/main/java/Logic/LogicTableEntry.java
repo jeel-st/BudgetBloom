@@ -1,18 +1,15 @@
 package Logic;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class LogicTableEntry {
     private final String date;
     private final String reason;
-    private final Double amount;
-    private final Double accountBalance;
-    private final Integer importance;
+    private final double amount;
+    private final double accountBalance;
+    private final int importance;
     private final String regularity;
     private final String payment;
 
-    public LogicTableEntry(String date, String reason, Double amount, Double accountBalance, Integer importance, String regularity, String payment) {
+    public LogicTableEntry(String date, String reason, double amount, double accountBalance, int importance, String regularity, String payment) {
         this.date = date;
         this.reason = reason;
         this.amount = amount;
@@ -24,9 +21,9 @@ public class LogicTableEntry {
 
     public String getDate() {return date;}
     public String getReason() {return reason;}
-    public Double getAmount() {return amount;}
-    public Double getAccountBalance() {return accountBalance;}
-    public Integer getImportance() {return importance;}
+    public double getAmount() {return amount;}
+    public double getAccountBalance() {return accountBalance;}
+    public int getImportance() {return importance;}
     public String getRegularity() {return regularity;}
     public String getPayment() {return payment;}
 }

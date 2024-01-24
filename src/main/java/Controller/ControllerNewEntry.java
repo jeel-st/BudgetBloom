@@ -56,7 +56,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     private final String[] payment = {"Bar", "Paypal", "Kreditkarte", "Girokarte", "weitere Zahlungsmethode..."};
     private final Driver d = new Driver();
     private final LogicNewEntry lne = new LogicNewEntry();
-    private Boolean repeatBool;
+    private boolean repeatBool;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
