@@ -26,6 +26,7 @@ public class ControllerLogin {
     public String localUsername;
 
     @FXML public void userLogin(ActionEvent event) throws IOException {
+        //Start des Sequence- Diagramms
         if (username.getText().isEmpty() || password.getText().isEmpty()) {
             log.warn("Password or username is empty");
             wrongLogin.setText("Please enter your username and password.");

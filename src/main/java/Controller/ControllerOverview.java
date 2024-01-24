@@ -63,7 +63,7 @@ public class ControllerOverview implements Initializable{
         }catch(Exception e){
             log.error("Searching for data failed", e);
         }
-
+        // Ende des Sequence- Diagramms
     }
 
     public void userLogout(ActionEvent event)throws IOException {
