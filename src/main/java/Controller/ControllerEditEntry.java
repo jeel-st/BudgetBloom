@@ -54,7 +54,6 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
     private int myScaleNumber;
     private final String[] input = {"Einnahme", "Ausgabe"};
     private final SingletonEditValues sev = SingletonEditValues.getInstance();
-    private final LogicEditEntry lee = new LogicEditEntry();
     private final String date = sev.getDate();
     private final String note = sev.getNote();
     private final double amount = sev.getAmount();
@@ -75,7 +74,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             log.warn("Enter a frequency");
         } else {
             if (LogicFacade.getInstance().isRegularBool(inputNumber.getText())) {
-                String errorLabelText = lee.saveEdit(inputDate.getValue(), inputReason.getText(), (int) scale.getValue(), repeatBox.getValue(), inputNumber.getText(), myChoiceBox.getValue(), repeatabilityBox.getValue(), paymentMethodBox.getValue());
+                String errorLabelText = LogicFacade.getInstance().saveEdit(inputDate.getValue(), inputReason.getText(), (int) scale.getValue(), repeatBox.getValue(), inputNumber.getText(), myChoiceBox.getValue(), repeatabilityBox.getValue(), paymentMethodBox.getValue());
                 errorLabel.setText(errorLabelText);
                 if (Objects.equals(errorLabelText, "Edit was saved successfully")) {
                     d.changeScene("/FXML/overview.fxml");
@@ -98,7 +97,7 @@ public class ControllerEditEntry implements Initializable, EntryInterface {
             repeatBox.setValue(isRegular);
             repeatabilityBox.setVisible(true);
             try {
-                repeatabilityBox.setValue(lee.showContentOfRepeatabilityBox());
+                repeatabilityBox.setValue(LogicFacade.getInstance().showContentOfRepeatabilityBox());
             } catch (Exception e) {
                 log.error("Content does not fit into repeatabilityBox", e);
             }

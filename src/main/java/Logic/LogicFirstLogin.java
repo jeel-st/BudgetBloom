@@ -11,12 +11,12 @@ import java.util.regex.Pattern;
 public class LogicFirstLogin {
     private final LogicDatabase dc = new LogicDatabase();
     private final SingletonUser sp = SingletonUser.getInstance();
-    private final String localUsername = sp.getName();
+
     private static final Logger log = LogManager.getLogger(LogicFirstLogin.class);
 
      public void insertInitialBalance(double balance) {
         try(Connection con = dc.getConnection()) {
-            String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10, DEFAULT, NULL, NULL)";
+            String sql = "INSERT INTO konto" + sp.getName() + " VALUES (DEFAULT, DEFAULT, 'initial konto balance', ?, ?, 10, DEFAULT, NULL, NULL)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setDouble(1, balance);
             stmt.setDouble(2, balance);

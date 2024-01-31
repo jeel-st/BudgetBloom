@@ -11,17 +11,16 @@ import java.sql.*;
 public class LogicOverview {
     private static final Logger log = LogManager.getLogger(LogicOverview.class);
     private final LogicDatabase lg = new LogicDatabase();
-    private final SingletonUser su = SingletonUser.getInstance();
-    private final String localUsername = su.getName();
+    private final SingletonUser sp = SingletonUser.getInstance();
     private ObservableList<LogicTableEntry> list = FXCollections.observableArrayList(
             //new User("17.11.2023", "Lebensmittel", -12.3, 123.45)
     );
 
     public ObservableList<LogicTableEntry> database() throws Exception {
         try (Connection con = lg.getConnection()) {
-            if (localUsername != null) {
+            if (sp.getName() != null) {
                 try {
-                    String sql = "SELECT edate, note, amount, bankbalance, importance, isregular, payment FROM konto" + localUsername + " ORDER BY edate DESC, id DESC";
+                    String sql = "SELECT edate, note, amount, bankbalance, importance, isregular, payment FROM konto" + sp.getName() + " ORDER BY edate DESC, id DESC";
                     PreparedStatement stmt = con.prepareStatement(sql);
                     ResultSet rs = stmt.executeQuery();
                     while (rs.next()) {
@@ -61,7 +60,7 @@ public class LogicOverview {
     public int deleteRowInDatabase(double amount, String date, String reason, double accountBalance, int importance, boolean regularityBool) throws SQLException {
         try (Connection con = lg.getConnection()) {
             log.info("Connection to database succeed");
-            String sql = "DELETE FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";
+            String sql = "DELETE FROM konto" + sp.getName() + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setDate(1, Date.valueOf(date));
             stmt.setString(2, reason);

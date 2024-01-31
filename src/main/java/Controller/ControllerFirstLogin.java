@@ -37,7 +37,6 @@ public class ControllerFirstLogin extends Application {
     @FXML
     public Image image;
     private final Driver d = new Driver();
-    private final LogicFirstLogin lfl = new LogicFirstLogin();
     public static Logger log = LogManager.getLogger(ControllerLogin.class);
 
     @Override
@@ -50,7 +49,7 @@ public class ControllerFirstLogin extends Application {
     }
 
     @FXML private void skipBalance(ActionEvent event) throws IOException {
-        lfl.insertInitialBalance(0);
+        LogicFacade.getInstance().insertInitialBalance(0);
         d.changeScene("/FXML/overview.fxml");
     }
 
@@ -59,7 +58,7 @@ public class ControllerFirstLogin extends Application {
         if (LogicFacade.getInstance().isBalanceNumber(balanceString)) {
             double balance = Double.parseDouble(balanceString);
             log.debug("Found Double is " + balance);
-            lfl.insertInitialBalance(balance);
+            LogicFacade.getInstance().insertInitialBalance(balance);
             d.changeScene("/FXML/overview.fxml");
         } else {
             wrongBalance.setText("Please enter a number in one of the following formats: xxxxx.yy or xxx.y or xxx");

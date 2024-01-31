@@ -15,7 +15,7 @@ public class LogicNewEntry extends LogicSuperClass{
     public static Logger log = LogManager.getLogger(LogicNewEntry.class);
     private final LogicDatabase lg = new LogicDatabase();
     private final SingletonUser sp = SingletonUser.getInstance();
-    private final String localUsername = sp.getName();
+    //private final String localUsername = sp.getName();
 
 
     public void changedAccount(double amountChange, String choiceBoxValue, int sliderValue, String note, Date date, String repetitionFrequency, String repeatBoxValue, String payment) throws Exception {
@@ -23,7 +23,7 @@ public class LogicNewEntry extends LogicSuperClass{
         try (Connection con = lg.getConnection()) {
             log.debug("Connection to database succeed");
 
-            String sql = "INSERT INTO konto" + localUsername + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO konto" + sp.getName() + " VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             try {
                 stmt.setDouble(3, accountChangeChecker(amountChange, choiceBoxValue));
@@ -64,7 +64,7 @@ public class LogicNewEntry extends LogicSuperClass{
         try (Connection con = lg.getConnection()) {
             log.debug("Connection to database succeed");
 
-            String sql = "SELECT bankBalance FROM konto" + localUsername + " ORDER BY edate DESC, id DESC LIMIT 1";
+            String sql = "SELECT bankBalance FROM konto" + sp.getName() + " ORDER BY edate DESC, id DESC LIMIT 1";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             try {

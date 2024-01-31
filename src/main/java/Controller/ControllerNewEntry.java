@@ -55,7 +55,6 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
     private final String[] repeatability = {"täglich", "monatlich", "jährlich"};
     private final String[] payment = {"Bar", "Paypal", "Kreditkarte", "Girokarte", "weitere Zahlungsmethode..."};
     private final Driver d = new Driver();
-    private final LogicNewEntry lne = new LogicNewEntry();
     private boolean repeatBool;
 
     @Override
@@ -126,7 +125,7 @@ public class ControllerNewEntry implements Initializable, EntryInterface {
         if (rightFormat) {
             if (repeatabilityBox.getValue() != null && repeatBool || repeatabilityBox.getValue() == null && !repeatBool) {
 
-                lne.changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBox.getValue(), paymentMethodBox.getValue());
+                LogicFacade.getInstance().changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBox.getValue(), paymentMethodBox.getValue());
 
                 //Direkten Klassenaufruf auskommentieren und den Aufruf, der über die LogicFacade statt findet benutzen, der im Moment auskommentiert ist.
                 //LogicFacade.getInstance().changedAccount((Double.parseDouble(inputNumber.getText())), myChoiceBox.getValue(), sliderValue, inputReason.getText(), Date.valueOf((inputDate.getValue())), repeatabilityBox.getValue(), repeatBox.getValue(), paymentMethodBox.getValue());

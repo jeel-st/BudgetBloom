@@ -41,9 +41,7 @@ public class ControllerOverview implements Initializable{
     private Label errorLabel;
 
     private final LogicOverview lo = new LogicOverview();
-    private final LogicBalance lb = new LogicBalance();
     private static final Logger log = LogManager.getLogger(ControllerOverview.class);
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         log.info("started to initialize");
@@ -55,7 +53,7 @@ public class ControllerOverview implements Initializable{
         regularity.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("regularity"));
         payment.setCellValueFactory(new PropertyValueFactory<LogicTableEntry, String>("payment"));
         log.debug("Started to update balance");
-        lb.updateBalance();
+        LogicFacade.getInstance().updateBalance();
         log.debug("Finished update of balance");
         try{
             table.setItems(lo.database());
@@ -125,7 +123,7 @@ public class ControllerOverview implements Initializable{
             }
             log.info("The selected line has the following data: " + amount +", "+ date +", "+ reason +", "+ accountBalance +", "+ importance +", "+ regularity +", "+ payment);
 
-            int rowsAffected = lo.deleteRowInDatabase(amount, date, reason, accountBalance, importance, regularityBool);
+            int rowsAffected = LogicFacade.getInstance().deleteRowInDatabase(amount, date, reason, accountBalance, importance, regularityBool);
                 if (rowsAffected > 0) {
                     log.info("Deletion successful. Rows affected: " + rowsAffected);
                     table.getItems().removeAll(table.getSelectionModel().getSelectedItem());

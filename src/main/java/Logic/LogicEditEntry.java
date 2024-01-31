@@ -20,17 +20,16 @@ public class LogicEditEntry extends LogicSuperClass{
     private final double amount = sev.getAmount();
     private final int importance = sev.getImportance();
     private final String isRegular = sev.getIsRegular();
-    private final String localUsername = sp.getName();
     private static final Logger log = LogManager.getLogger(LogicEditEntry.class);
 
 
-    public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox, String payment) throws Exception{
+    String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox, String payment) throws Exception{
         String errorLabel;
 
         try (Connection con = dc.getConnection()) {
             log.debug("Connection to database succeed");
 
-            String sql = "UPDATE konto" + localUsername + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ?, payment = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
+            String sql = "UPDATE konto" + sp.getName() + " SET edate = ?, note = ?, amount = ?, importance = ? , isregular = ?, frequency = ?, payment = ? WHERE edate= ? AND note = ? AND amount = ? AND bankbalance = ? AND isregular = ? ";
             PreparedStatement stmt = con.prepareStatement(sql);
             try {
                 stmt.setDate(1, Date.valueOf(inputDate));
@@ -85,11 +84,11 @@ public class LogicEditEntry extends LogicSuperClass{
     }
 
 
-    public String showContentOfRepeatabilityBox() throws Exception {
+    String showContentOfRepeatabilityBox() throws Exception {
 
         try (Connection con = dc.getConnection()) {
             log.debug("Connection to database succeed");
-            String sql = "SELECT frequency FROM konto" + localUsername + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
+            String sql = "SELECT frequency FROM konto" + sp.getName() + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
                 stmt.setDate(1, Date.valueOf(date));

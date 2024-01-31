@@ -1,19 +1,9 @@
 TO DO`s:
-- createInstance bei Factory                            Joel
-- Projekt Link schicken, damit nach Singleton Problem schauen   Joel
-- Dokumentation:
-    - Use Case Diagramm: Ryan
-    - Sequence Diagramm: Joel
-    - Klassendiagramm: Jana
-    - Bewertungsbogen: zusammen Ausfüllen
 
-- (evtl Sceneswitcher in externe Klasse)
-- Alerts beim Löschen und Initial konto balance noch auf Englisch
-
-Besprechung Jordine (17.02.24):
-pfeil bei Vererbung darf nicht ausgefüllt sein
+- Singleton Problem localusername immer in Methode ziehen und Fassade zurückbauen
+- Datenbanken komplett löschen außer tester, Userdaten löschen außer tester
+- toLowerCase für Usertabelle
+- Exceltabelle
+- Doku: Klassendiagramm und JavaFX
 
 
-Ganz am Ende:
-Usertabelle leeren und neu befüllen,
-entsprechende Kontotabellen löschen

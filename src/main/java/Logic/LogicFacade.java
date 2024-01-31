@@ -1,6 +1,8 @@
 package Logic;
 
 import Exceptions.NewEntryExceptions.*;
+import javafx.collections.ObservableList;
+
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -34,7 +36,7 @@ public class LogicFacade {
         return instance;
     }
 
-    public static void updateBalance() {
+    public void updateBalance() {
         LogicBalance lb = new LogicBalance();
         lb.updateBalance();
     }
@@ -76,6 +78,12 @@ public class LogicFacade {
 
     public boolean isRegularBool(String s){
         return superClass.isRegularBool(s);
+    }
+    public String saveEdit(LocalDate inputDate, String inputReason, int scale, String repeatBox, String inputNumber, String myChoiceBox, String repeatabilityBox, String payment)throws Exception{
+        return editEntry.saveEdit(inputDate, inputReason, scale, repeatBox, inputNumber, myChoiceBox, repeatabilityBox, payment);
+    }
+    public String showContentOfRepeatabilityBox() throws Exception{
+        return editEntry.showContentOfRepeatabilityBox();
     }
 
 }
