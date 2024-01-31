@@ -1,13 +1,27 @@
+SQL-Befehl zum Erstellen der users-Tabelle:
+
 CREATE TABLE users (
 	id SERIAL UNIQUE,
 	username VARCHAR(20) UNIQUE NOT NULL,
 	pword VARCHAR(30) NOT NULL,
 	email VARCHAR(70) NOT NULL,
 	rdate DATE DEFAULT CURRENT_DATE,
-	ldate DATE DEFAULT CURRENT_DATE
+	ldate DATE DEFAULT CURRENT_DATE,
+	numlogin INTEGER NOT NULL
 	);
 
-INSERT INTO users VALUES (DEFAULT, 'tester', '123456789', 'tester@web.de');
+
+
+
+--------------------------------------------------------------------------------------------
+
+Einfügen des tester-Benutzers:
+
+INSERT INTO users VALUES (DEFAULT, 'tester', '123456789', 'tester@web.de', DEFAULT, DEFAULT, 0);
+
+
+Erstellen der einzelnen Konto-Tabellen:
+ -> username mit Nutzername des gewünschten Users ersetzen!
 
 CREATE TABLE konto+username(
     id SERIAL PRIMARY KEY,
@@ -21,6 +35,8 @@ CREATE TABLE konto+username(
     payment VARCHAR(20) DEFAULT NULL
 );
 
+
+Sonstige Befehle aus dem Entwicklungsprozess des Projekts:
 
 ALTER TABLE users ADD numlogin INTEGER DEFAULT 0;
 ALTER TABLE users ALTER numlogin SET NOT NULL;
