@@ -14,12 +14,7 @@ public class LogicEditEntry extends LogicSuperClass{
     private final LogicDatabase dc = new LogicDatabase();
     private final SingletonUser sp = SingletonUser.getInstance();
     private final SingletonEditValues sev = SingletonEditValues.getInstance();
-    private final String date = sev.getDate();
-    private final String note = sev.getNote();
-    private final double bankBalance = sev.getAccountBalance();
-    private final double amount = sev.getAmount();
-    private final int importance = sev.getImportance();
-    private final String isRegular = sev.getIsRegular();
+
     private static final Logger log = LogManager.getLogger(LogicEditEntry.class);
 
 
@@ -65,11 +60,12 @@ public class LogicEditEntry extends LogicSuperClass{
             }catch (Exception e){
                 log.warn("Your payment method wasn't accepted.");
             }
-            stmt.setDate(8, Date.valueOf(date));
-            stmt.setString(9, note);
-            stmt.setDouble(10, amount);
-            stmt.setDouble(11, bankBalance);
-            stmt.setBoolean(12, isRegularBool(isRegular));
+            log.debug(sev.getDate());
+            stmt.setDate(8, Date.valueOf(sev.getDate()));
+            stmt.setString(9, sev.getNote());
+            stmt.setDouble(10, sev.getAmount());
+            stmt.setDouble(11, sev.getAccountBalance());
+            stmt.setBoolean(12, isRegularBool(sev.getIsRegular()));
             stmt.executeUpdate();
 
             errorLabel = "Edit was saved successfully";
@@ -91,12 +87,12 @@ public class LogicEditEntry extends LogicSuperClass{
             String sql = "SELECT frequency FROM konto" + sp.getName() + " WHERE edate = ? AND note = ? AND amount = ? AND bankBalance = ? AND importance = ? AND isregular = ?";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
-                stmt.setDate(1, Date.valueOf(date));
-                stmt.setString(2, note);
-                stmt.setDouble(3, amount);
-                stmt.setDouble(4, bankBalance);
-                stmt.setInt(5, importance);
-                stmt.setBoolean(6, isRegularBool(isRegular));
+                stmt.setDate(1, Date.valueOf(sev.getDate()));
+                stmt.setString(2, sev.getNote());
+                stmt.setDouble(3, sev.getAmount());
+                stmt.setDouble(4, sev.getAccountBalance());
+                stmt.setInt(5, sev.getImportance());
+                stmt.setBoolean(6, isRegularBool(sev.getIsRegular()));
 
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
