@@ -57,7 +57,7 @@ public class LogicOverview {
         throw new Exception("Searching for data failed");
     }
 
-    public int deleteRowInDatabase(double amount, String date, String reason, double accountBalance, int importance, boolean regularityBool) throws SQLException {
+    int deleteRowInDatabase(double amount, String date, String reason, double accountBalance, int importance, boolean regularityBool) throws SQLException {
         try (Connection con = lg.getConnection()) {
             log.info("Connection to database succeed");
             String sql = "DELETE FROM konto" + sp.getName() + " WHERE edate = ? AND note = ? AND amount = ? AND bankbalance = ? AND importance = ? AND isregular = ?";

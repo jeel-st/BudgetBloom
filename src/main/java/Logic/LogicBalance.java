@@ -9,7 +9,7 @@ public class LogicBalance {
 
     public static Logger log = LogManager.getLogger(LogicBalance.class);
 
-    public void updateBalance() {
+    void updateBalance() {
         SingletonUser sp = SingletonUser.getInstance();
         String localUsername = sp.getName();
         LogicDatabase dc = new LogicDatabase();
