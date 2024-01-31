@@ -32,11 +32,11 @@ public class ControllerLogin {
             wrongLogin.setText("Please enter your username and password.");
 
         } else {
-            if (LogicFacade.getInstance().isValidUser(username.getText(), password.getText())) {
+            if (LogicFacade.getInstance().isValidUser(username.getText().toLowerCase(), password.getText())) {
                 wrongLogin.setText("Success!");
                 setLocalUsername();
 
-                if (LogicFacade.getInstance().isFirstLogin(username.getText())) {
+                if (LogicFacade.getInstance().isFirstLogin(username.getText().toLowerCase())) {
                     log.debug("Scene changed to firstLogin.fxml successfully");
                     d.changeScene("/FXML/firstLogin.fxml");
 
