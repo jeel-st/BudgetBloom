@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 public class LogicFirstLogin {
     private final LogicDatabase dc = new LogicDatabase();
     private final SingletonUser sp = SingletonUser.getInstance();
-
     private static final Logger log = LogManager.getLogger(LogicFirstLogin.class);
 
      public void insertInitialBalance(double balance) {

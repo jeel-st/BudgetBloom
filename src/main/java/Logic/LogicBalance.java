@@ -5,9 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.sql.*;
 
-public class LogicBalance {
+class LogicBalance {
 
-    public static Logger log = LogManager.getLogger(LogicBalance.class);
+    private static final Logger log = LogManager.getLogger(LogicBalance.class);
 
     void updateBalance() {
         SingletonUser sp = SingletonUser.getInstance();

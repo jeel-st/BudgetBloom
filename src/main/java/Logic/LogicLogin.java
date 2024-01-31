@@ -12,7 +12,6 @@ import java.sql.SQLException;
 
     private final LogicDatabase dc = new LogicDatabase();
     private final SingletonUser sp = SingletonUser.getInstance();
-    private final String localUsername = sp.getName();
     private static final Logger log = LogManager.getLogger(LogicLogin.class);
 
     boolean isValidUser(String username, String password) {
@@ -51,7 +50,7 @@ import java.sql.SQLException;
             try {
                 String sql2 = "UPDATE users SET ldate = CURRENT_DATE WHERE username = ?";
                 PreparedStatement stmt2 = con.prepareStatement(sql2);
-                stmt2.setString(1, localUsername);
+                stmt2.setString(1, sp.getName());
                 stmt2.executeQuery();
 
             } catch (SQLException e) {

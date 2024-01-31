@@ -23,7 +23,6 @@ public class ControllerLogin {
     public PasswordField password;
     private final Driver d = new Driver();
     private static final Logger log = LogManager.getLogger(ControllerLogin.class);
-    public String localUsername;
 
     @FXML public void userLogin(ActionEvent event) throws IOException {
         //Start des Sequence- Diagramms
@@ -58,6 +57,5 @@ public class ControllerLogin {
     public void setLocalUsername(){
         SingletonUser s = SingletonUser.getInstance();
         s.setName(username.getText().toLowerCase());
-        localUsername = s.getName();
     }
 }

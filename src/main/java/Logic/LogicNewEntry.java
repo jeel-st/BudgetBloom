@@ -12,7 +12,7 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class LogicNewEntry extends LogicSuperClass{
-    public static Logger log = LogManager.getLogger(LogicNewEntry.class);
+    private static final Logger log = LogManager.getLogger(LogicNewEntry.class);
     private final LogicDatabase lg = new LogicDatabase();
     private final SingletonUser sp = SingletonUser.getInstance();
     //private final String localUsername = sp.getName();
