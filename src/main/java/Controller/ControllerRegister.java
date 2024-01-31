@@ -32,7 +32,7 @@ public class ControllerRegister {
 
     public void userCreate(ActionEvent event) throws IOException{
         log.info("User creation started");
-        String LabelText = LogicFacade.getInstance().proveRegisterTextFields(username.getText(),password.getText(), password2.getText(),email.getText());
+        String LabelText = LogicFacade.getInstance().proveRegisterTextFields(username.getText().toLowerCase(),password.getText(), password2.getText(),email.getText());
         log.info(LabelText);
         if(!(LabelText.equals("completed"))){
             wrongRegister.setText(LabelText);

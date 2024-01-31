@@ -57,7 +57,7 @@ public class ControllerLogin {
     }
     public void setLocalUsername(){
         SingletonUser s = SingletonUser.getInstance();
-        s.setName(username.getText());
+        s.setName(username.getText().toLowerCase());
         localUsername = s.getName();
     }
 }
