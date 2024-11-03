@@ -8,7 +8,7 @@ public class LogicDatabase {
     public Connection getConnection() throws SQLException {
         String URL = "jdbc:postgresql://foo.mi.hdm-stuttgart.de/js486";
         String USER = "js486";
-        String PASSWORD = "(JJS)2003ab";
+        String PASSWORD = "xxx";
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
